@@ -7,7 +7,7 @@ An online E-store system built in Java 11=> and ___ _replace with other platform
 
 - Ryan Webb
 - Noah Landis
-- MEMBER3
+- Priyank Patel
 - MEMBER4
 
 
