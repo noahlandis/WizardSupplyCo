@@ -7,7 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 
-import com.estore.api.estoreapi.persistence.ProductDAO;
+import com.estore.api.estoreapi.persistence.InventoryDAO;
 import com.estore.api.estoreapi.model.Product;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +24,7 @@ import org.springframework.http.ResponseEntity;
 @Tag("Controller-tier")
 public class ProductControllerTest {
     private ProductController productController;
-    private ProductDAO mockProductDAO;
+    private InventoryDAO mockProductDAO;
 
     /**
      * Before each test, create a new ProductController object and inject
@@ -32,7 +32,7 @@ public class ProductControllerTest {
      */
     @BeforeEach
     public void setupProductController() {
-        mockProductDAO = mock(ProductDAO.class);
+        mockProductDAO = mock(InventoryDAO.class);
         productController = new ProductController(mockProductDAO);
     }
 

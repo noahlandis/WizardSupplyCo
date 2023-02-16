@@ -23,8 +23,8 @@ import com.estore.api.estoreapi.model.Product;
  * @author SWEN Faculty
  */
 @Component
-public class ProductFileDAO implements ProductDAO {
-    private static final Logger LOG = Logger.getLogger(ProductFileDAO.class.getName());
+public class InventoryFileDAO implements InventoryDAO {
+    private static final Logger LOG = Logger.getLogger(InventoryFileDAO.class.getName());
     Map<Integer,Product> products;   // Provides a local cache of the product objects
                                 // so that we don't need to read from the file
                                 // each time
@@ -35,14 +35,14 @@ public class ProductFileDAO implements ProductDAO {
     private String filename;    // Filename to read from and write to
 
     /**
-     * Creates a Product File Data Access Object
+     * Creates an Inventory File Data Access Object
      * 
      * @param filename Filename to read from and write to
      * @param objectMapper Provides JSON Object to/from Java Object serialization and deserialization
      * 
      * @throws IOException when file cannot be accessed or read from
      */
-    public ProductFileDAO(@Value("${products.file}") String filename,ObjectMapper objectMapper) throws IOException {
+    public InventoryFileDAO(@Value("${products.file}") String filename,ObjectMapper objectMapper) throws IOException {
         this.filename = filename;
         this.objectMapper = objectMapper;
         load();  // load the products from the file

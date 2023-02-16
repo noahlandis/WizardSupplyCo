@@ -4,11 +4,11 @@ import java.io.IOException;
 import com.estore.api.estoreapi.model.Product;
 
 /**
- * Defines the interface for Product object persistence
+ * Defines the Inventory interface for Product object persistence
  * 
  * @author SWEN Faculty
  */
-public interface ProductDAO {
+public interface InventoryDAO {
     /**
      * Retrieves all {@linkplain Product products}
      * 

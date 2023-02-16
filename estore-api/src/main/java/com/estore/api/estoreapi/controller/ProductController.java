@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.estore.api.estoreapi.persistence.ProductDAO;
+import com.estore.api.estoreapi.persistence.InventoryDAO;
 import com.estore.api.estoreapi.model.Product;
 
 /**
@@ -33,16 +33,16 @@ import com.estore.api.estoreapi.model.Product;
 @RequestMapping("products")
 public class ProductController {
     private static final Logger LOG = Logger.getLogger(ProductController.class.getName());
-    private ProductDAO productDao;
+    private InventoryDAO productDao;
 
     /**
      * Creates a REST API controller to reponds to requests
      * 
-     * @param productDao The {@link ProductDAO Product Data Access Object} to perform CRUD operations
+     * @param productDao The {@link InventoryDAO Product Data Access Object} to perform CRUD operations
      * <br>
      * This dependency is injected by the Spring Framework
      */
-    public ProductController(ProductDAO productDao) {
+    public ProductController(InventoryDAO productDao) {
         this.productDao = productDao;
     }
 
