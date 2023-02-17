@@ -27,7 +27,7 @@ public class Description {
 
     /**
      * Creates a description
-     * @param description A description of the product
+     * @param summary A summary of the product
      */
     public Description(@JsonProperty("description") String summary) {
         this(summary, new HashSet<>());        
