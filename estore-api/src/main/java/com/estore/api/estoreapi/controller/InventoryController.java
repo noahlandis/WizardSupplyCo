@@ -134,7 +134,7 @@ public class InventoryController {
         LOG.info("POST /products " + product);
 
         try {
-            if (inventoryDao.getProduct(product.getId()) != null)
+            if (inventoryDao.getProduct(product.getSku()) != null)
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
 
             return new ResponseEntity<Product>(inventoryDao.createProduct(product), HttpStatus.CREATED);
