@@ -39,12 +39,12 @@ public class InventoryControllerTest {
     @Test
     public void testGetProduct() throws IOException {  // getProduct may throw IOException
         // Setup
-        Product product = new Product(99,"Frog legs (100 pack)");
+        Product product = new Product(99,"Frog legs (100 pack)", 9.99f);
         // When the same id is passed in, our mock Inventory DAO will return the Product object
-        when(mockInventoryDAO.getProduct(product.getId())).thenReturn(product);
+        when(mockInventoryDAO.getProduct(product.getSku())).thenReturn(product);
 
         // Invoke
-        ResponseEntity<Product> response = inventoryController.getProduct(product.getId());
+        ResponseEntity<Product> response = inventoryController.getProduct(product.getSku());
 
         // Analyze
         assertEquals(HttpStatus.OK,response.getStatusCode());
@@ -88,7 +88,7 @@ public class InventoryControllerTest {
     @Test
     public void testCreateProduct() throws IOException {  // createProduct may throw IOException
         // Setup
-        Product product = new Product(99,"Elf Ears (20 pack)");
+        Product product = new Product(99,"Elf Ears (20 pack)", 9.99f);
         // when createProduct is called, return true simulating successful
         // creation and save
         when(mockInventoryDAO.createProduct(product)).thenReturn(product);
@@ -104,7 +104,7 @@ public class InventoryControllerTest {
     @Test
     public void testCreateProductFailed() throws IOException {  // createProduct may throw IOException
         // Setup
-        Product product = new Product(99,"Truth Serum Vial");
+        Product product = new Product(99,"Truth Serum Vial", 9.99f);
         // when createProduct is called, return false simulating failed
         // creation and save
         when(mockInventoryDAO.createProduct(product)).thenReturn(null);
@@ -119,7 +119,7 @@ public class InventoryControllerTest {
     @Test
     public void testCreateProductHandleException() throws IOException {  // createProduct may throw IOException
         // Setup
-        Product product = new Product(99,"Deathwart Stalks (10 pack)");
+        Product product = new Product(99,"Deathwart Stalks (10 pack)", 9.99f);
 
         // When createProduct is called on the Mock Inventory DAO, throw an IOException
         doThrow(new IOException()).when(mockInventoryDAO).createProduct(product);
@@ -134,7 +134,7 @@ public class InventoryControllerTest {
     @Test
     public void testUpdateProduct() throws IOException { // updateProduct may throw IOException
         // Setup
-        Product product = new Product(99,"Crystal Ball");
+        Product product = new Product(99,"Crystal Ball", 9.99f);
         // when updateProduct is called, return true simulating successful
         // update and save
         when(mockInventoryDAO.updateProduct(product)).thenReturn(product);
@@ -152,7 +152,7 @@ public class InventoryControllerTest {
     @Test
     public void testUpdateProductFailed() throws IOException { // updateProduct may throw IOException
         // Setup
-        Product product = new Product(99,"Aging Elyxir");
+        Product product = new Product(99,"Aging Elyxir", 10.99f);
         // when updateProduct is called, return true simulating successful
         // update and save
         when(mockInventoryDAO.updateProduct(product)).thenReturn(null);
@@ -167,7 +167,7 @@ public class InventoryControllerTest {
     @Test
     public void testUpdateProductHandleException() throws IOException { // updateProduct may throw IOException
         // Setup
-        Product product = new Product(99,"Starshade Cloak");
+        Product product = new Product(99,"Starshade Cloak", 9.99f);
         // When updateProduct is called on the Mock Inventory DAO, throw an IOException
         doThrow(new IOException()).when(mockInventoryDAO).updateProduct(product);
 
@@ -182,8 +182,8 @@ public class InventoryControllerTest {
     public void testGetProducts() throws IOException { // getProducts may throw IOException
         // Setup
         Product[] products = new Product[2];
-        products[0] = new Product(99,"Starshade Cloak");
-        products[1] = new Product(100,"Starshadow Cloak");
+        products[0] = new Product(99,"Starshade Cloak", 24.99f);
+        products[1] = new Product(100,"Starshadow Cloak", 19.99f);
         // When getProducts is called return the products created above
         when(mockInventoryDAO.getProducts()).thenReturn(products);
 
@@ -213,8 +213,8 @@ public class InventoryControllerTest {
         // Setup
         String searchString = "ewt";
         Product[] products = new Product[2];
-        products[0] = new Product(99,"Newt Eyes (10 pack)");
-        products[1] = new Product(100,"Newt Lungs (10 pack)");
+        products[0] = new Product(99,"Newt Eyes (10 pack)", 19.99f);
+        products[1] = new Product(100,"Newt Lungs (10 pack)", 9.99f);
         // When findProducts is called with the search string, return the two
         /// products above
         when(mockInventoryDAO.findProducts(searchString)).thenReturn(products);
