@@ -10,7 +10,7 @@ import java.util.HashSet;
 @Tag("Model-tier")
 public class DescriptionTest {
     @Test
-    public void testDescription() {
+    public void testConstructor() {
         // Setup
         String expectedSummary = "A REALLY Fast Broom!";
         HashSet<String> expectedTags = new HashSet<>();

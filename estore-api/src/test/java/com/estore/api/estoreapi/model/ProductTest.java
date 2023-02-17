@@ -13,42 +13,46 @@ import org.junit.jupiter.api.Test;
 @Tag("Model-tier")
 public class ProductTest {
     @Test
-    public void testCtor() {
+    public void testConstructor() {
         // Setup
-        int expected_id = 99;
-        String expected_name = "Binmus 2000 Racing Broom";
+        int expectedSku = 99;
+        String expectedName = "Binmus 2000 Racing Broom";
+        float expectedPrice = 35.00f;
 
         // Invoke
-        Product product = new Product(expected_id,expected_name);
+        Product product = new Product(expectedSku, expectedName, expectedPrice);
 
         // Analyze
-        assertEquals(expected_id,product.getId());
-        assertEquals(expected_name,product.getName());
+        assertEquals(expectedSku, product.getSku());
+        assertEquals(expectedName, product.getName());
+        assertEquals(expectedPrice, product.getPrice());
     }
 
     @Test
     public void testName() {
         // Setup
-        int id = 99;
+        int expectedSku = 99;
         String name = "Binmus 2000 Racing Broom";
-        Product product = new Product(id,name);
-
-        String expected_name = "Starshot v3 Sports Broom";
+        float expectedPrice = 35.00f;
+        String expectedName = "Starshot v3 Sports Broom";
+        Product product = new Product(expectedSku, name, expectedPrice);
 
         // Invoke
-        product.setName(expected_name);
+        product.setName(expectedName);
 
         // Analyze
-        assertEquals(expected_name,product.getName());
+        assertEquals(expectedName, product.getName());
     }
 
     @Test
     public void testToString() {
         // Setup
-        int id = 99;
+        int sku = 99;
         String name = "The Vruum Broom by BroomCorp";
-        String expected_string = String.format(Product.STRING_FORMAT,id,name);
-        Product product = new Product(id,name);
+        float price = 35.00f;
+
+        String expected_string = String.format(Product.STRING_FORMAT, sku, name, price);
+        Product product = new Product(sku, name, price);
 
         // Invoke
         String actual_string = product.toString();
