@@ -31,7 +31,7 @@ public class InventoryFileDAO implements InventoryDAO {
     private ObjectMapper objectMapper;  // Provides conversion between Products
                                         // objects and JSON text format written
                                         // to the file
-    private static int nextId;  // The next Id to assign to a new product
+    private static int nextSku;  // The next Id to assign to a new product
     private String filename;    // Filename to read from and write to
 
     /**
@@ -53,10 +53,10 @@ public class InventoryFileDAO implements InventoryDAO {
      * 
      * @return The next id
      */
-    private synchronized static int nextId() {
-        int id = nextId;
-        ++nextId;
-        return id;
+    private synchronized static int nextSku() {
+        int Sku = nextSku;
+        ++nextSku;
+        return Sku;
     }
 
     /**
@@ -79,7 +79,7 @@ public class InventoryFileDAO implements InventoryDAO {
      */
     private Product[] getProductsArray(String containsText) { // if containsText == null, no filter
         ArrayList<Product> productArrayList = new ArrayList<>();
-
+        /*This for loop goes through each product in the inventory product map */
         for (Product product : products.values()) {
             if (containsText == null || product.getName().contains(containsText)) {
                 productArrayList.add(product);
@@ -119,21 +119,21 @@ public class InventoryFileDAO implements InventoryDAO {
      */
     private boolean load() throws IOException {
         products = new TreeMap<>();
-        nextId = 0;
+        nextSku = 0;
 
         // Deserializes the JSON objects from the file into an array of products
         // readValue will throw an IOException if there's an issue with the file
         // or reading from the file
         Product[] productArray = objectMapper.readValue(new File(filename),Product[].class);
 
-        // Add each product to the tree map and keep track of the greatest id
+        // Add each product to the tree map and keep track of the greatest Sku
         for (Product product : productArray) {
-            products.put(product.getId(),product);
-            if (product.getId() > nextId)
-                nextId = product.getId();
+            products.put(product.getSku(),product);
+            if (product.getSku() > nextSku)
+                nextSku = product.getSku();
         }
         // Make the next id one greater than the maximum from the file
-        ++nextId;
+        ++nextSku;
         return true;
     }
 
@@ -178,8 +178,8 @@ public class InventoryFileDAO implements InventoryDAO {
         synchronized(products) {
             // We create a new product object because the id field is immutable
             // and we need to assign the next unique id
-            Product newProduct = new Product(nextId(),product.getName());
-            products.put(newProduct.getId(),newProduct);
+            Product newProduct = new Product(nextSku(),product.getName(),product.getPrice());
+            products.put(newProduct.getSku(),newProduct);
             save(); // may throw an IOException
             return newProduct;
         }
@@ -191,10 +191,10 @@ public class InventoryFileDAO implements InventoryDAO {
     @Override
     public Product updateProduct(Product product) throws IOException {
         synchronized(products) {
-            if (products.containsKey(product.getId()) == false)
+            if (products.containsKey(product.getSku()) == false)
                 return null;  // product does not exist
 
-            products.put(product.getId(),product);
+            products.put(product.getSku(),product);
             save(); // may throw an IOException
             return product;
         }

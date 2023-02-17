@@ -40,16 +40,16 @@ public class InventoryFileDAOTest {
     public void setupInventoryFileDAO() throws IOException {
         mockObjectMapper = mock(ObjectMapper.class);
         testProducts = new Product[3];
-        testProducts[0] = new Product(99,"Newt Lungs (10 pack)");
-        testProducts[1] = new Product(100,"Frostwing Dragon Egg");
-        testProducts[2] = new Product(101,"Malachite Heartstones (3 pack)");
+        testProducts[0] = new Product(99,"Newt Lungs (10 pack)",14.99f);
+        testProducts[1] = new Product(100,"Frostwing Dragon Egg",20.99f);
+        testProducts[2] = new Product(101,"Malachite Heartstones (3 pack)",50.99f);
 
         // When the object mapper is supposed to read from the file
         // the mock object mapper will return the product array above
         when(mockObjectMapper
-            .readValue(new File("doesnt_matter.txt"),Product[].class))
+            .readValue(new File("Inventory_File.txt"),Product[].class))
                 .thenReturn(testProducts);
-        inventoryFileDAO = new InventoryFileDAO("doesnt_matter.txt",mockObjectMapper);
+        inventoryFileDAO = new InventoryFileDAO("Inventory_File.txt",mockObjectMapper);
     }
 
     @Test
@@ -66,12 +66,11 @@ public class InventoryFileDAOTest {
     @Test
     public void testFindProducts() {
         // Invoke
-        Product[] products = inventoryFileDAO.findProducts("la");
+        Product[] products = inventoryFileDAO.findProducts("Mal");
 
         // Analyze
-        assertEquals(products.length,2);
-        assertEquals(products[0],testProducts[1]);
-        assertEquals(products[1],testProducts[2]);
+        assertEquals(products.length,1);
+        assertEquals(products[0],testProducts[2]);
     }
 
     @Test
@@ -101,7 +100,7 @@ public class InventoryFileDAOTest {
     @Test
     public void testCreateProduct() {
         // Setup
-        Product product = new Product(102,"Nightmare Elyxir");
+        Product product = new Product(102,"Nightmare Elyxir",20.99f);
 
         // Invoke
         Product result = assertDoesNotThrow(() -> inventoryFileDAO.createProduct(product),
@@ -109,15 +108,15 @@ public class InventoryFileDAOTest {
 
         // Analyze
         assertNotNull(result);
-        Product actual = inventoryFileDAO.getProduct(product.getId());
-        assertEquals(actual.getId(),product.getId());
+        Product actual = inventoryFileDAO.getProduct(product.getSku());
+        assertEquals(actual.getSku(),product.getSku());
         assertEquals(actual.getName(),product.getName());
     }
 
     @Test
     public void testUpdateProduct() {
         // Setup
-        Product product = new Product(99,"Shadow Cloak");
+        Product product = new Product(99,"Shadow Cloak",25.99f);
 
         // Invoke
         Product result = assertDoesNotThrow(() -> inventoryFileDAO.updateProduct(product),
@@ -125,7 +124,7 @@ public class InventoryFileDAOTest {
 
         // Analyze
         assertNotNull(result);
-        Product actual = inventoryFileDAO.getProduct(product.getId());
+        Product actual = inventoryFileDAO.getProduct(product.getSku());
         assertEquals(actual,product);
     }
 
@@ -135,7 +134,7 @@ public class InventoryFileDAOTest {
             .when(mockObjectMapper)
                 .writeValue(any(File.class),any(Product[].class));
 
-        Product product = new Product(102,"Frog Legs (100 pack)");
+        Product product = new Product(102,"Frog Legs (100 pack)",5.99f);
 
         assertThrows(IOException.class,
                         () -> inventoryFileDAO.createProduct(product),
@@ -165,7 +164,7 @@ public class InventoryFileDAOTest {
     @Test
     public void testUpdateProductNotFound() {
         // Setup
-        Product product = new Product(98,"Flightstick 9000 Racing Broom");
+        Product product = new Product(98,"Flightstick 9000 Racing Broom",10);
 
         // Invoke
         Product result = assertDoesNotThrow(() -> inventoryFileDAO.updateProduct(product),
