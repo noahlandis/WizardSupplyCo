@@ -54,9 +54,9 @@ public class InventoryFileDAO implements InventoryDAO {
      * @return The next id
      */
     private synchronized static int nextSku() {
-        int Sku = nextSku;
+        int sku = nextSku;
         ++nextSku;
-        return Sku;
+        return sku;
     }
 
     /**
@@ -178,7 +178,7 @@ public class InventoryFileDAO implements InventoryDAO {
         synchronized(products) {
             // We create a new product object because the id field is immutable
             // and we need to assign the next unique id
-            Product newProduct = new Product(nextSku(),product.getName(),product.getPrice());
+            Product newProduct = new Product(nextSku(), product.getName(), product.getPrice());
             products.put(newProduct.getSku(),newProduct);
             save(); // may throw an IOException
             return newProduct;
@@ -189,7 +189,7 @@ public class InventoryFileDAO implements InventoryDAO {
     ** {@inheritDoc}
      */
     @Override
-    public Product updateProduct(Product product) throws IOException {
+    public Product createProduct(Product product) throws IOException {
         synchronized(products) {
             if (products.containsKey(product.getSku()) == false)
                 return null;  // product does not exist

@@ -65,7 +65,7 @@ public interface InventoryDAO {
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
-    Product updateProduct(Product product) throws IOException;
+    Product createProduct(Product product) throws IOException;
 
     /**
      * Deletes a {@linkplain Product product} with the given id

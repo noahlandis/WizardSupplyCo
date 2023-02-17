@@ -134,10 +134,11 @@ public class InventoryController {
         LOG.info("POST /products " + product);
 
         try {
-            Product createdProduct = inventoryDao.updateProduct(product);
+            Product createdProduct = inventoryDao.createProduct(product);
+            
             // Check if Product exists
             if (createdProduct != null)
-                return new ResponseEntity<Product>(inventoryDao.createProduct(product), HttpStatus.CREATED);
+                return new ResponseEntity<Product>(createdProduct, HttpStatus.CREATED);
                 
             // Throw conflict since hero already exists
             return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -162,7 +163,7 @@ public class InventoryController {
         LOG.info("PUT /products " + product);
 
         try {
-            Product updatedProduct = inventoryDao.updateProduct(product);
+            Product updatedProduct = inventoryDao.createProduct(product);
             if (updatedProduct != null)
                 return new ResponseEntity<Product>(updatedProduct,HttpStatus.OK);
             
