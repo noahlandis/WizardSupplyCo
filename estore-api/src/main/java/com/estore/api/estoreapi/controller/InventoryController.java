@@ -134,10 +134,13 @@ public class InventoryController {
         LOG.info("POST /products " + product);
 
         try {
-            if (inventoryDao.getProduct(product.getSku()) != null)
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
-
-            return new ResponseEntity<Product>(inventoryDao.createProduct(product), HttpStatus.CREATED);
+            Product createdProduct = inventoryDao.updateProduct(product);
+            // Check if Product exists
+            if (createdProduct != null)
+                return new ResponseEntity<Product>(inventoryDao.createProduct(product), HttpStatus.CREATED);
+                
+            // Throw conflict since hero already exists
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         catch(IOException e) {
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
