@@ -29,7 +29,7 @@ public class Description {
      * Creates a description
      * @param summary A summary of the product
      */
-    public Description(@JsonProperty("description") String summary) {
+    public Description(@JsonProperty("summary") String summary) {
         this(summary, new HashSet<>());        
     }
 
@@ -38,6 +38,12 @@ public class Description {
      * @return The product's summary
      */
     public String getSummary() { return summary; }
+
+    /**
+     * Sets the summary of the product
+     * @param summary The summary of the product
+     */
+    public void setSummary(String summary) { this.summary = summary; }
 
 
      /**
@@ -55,6 +61,17 @@ public class Description {
         tags.add(tag);
     }
 
+    /**
+     * Removes a tag from the product's tags
+     * @param tag The tag to be removed
+     */
+    public void removeTag(String tag) {
+        tags.remove(tag);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return String.format(STRING_FORMAT, summary, tags);
