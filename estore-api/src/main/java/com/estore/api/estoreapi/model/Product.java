@@ -80,6 +80,16 @@ public class Product {
     public Description getDescription(){return description;}
 
     /**
+     * Checks if the name of the product is the same as the name passed in.
+     * Design Principle: Information Expert
+     * @param name The name to check
+     * @return True if the name of the product is the same as the name passed in
+     */
+    public boolean nameEquals(String name) {
+        return this.name.equals(name);
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

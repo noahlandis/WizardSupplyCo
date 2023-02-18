@@ -48,8 +48,9 @@ public interface InventoryDAO {
      * @param product {@linkplain Product product} object to be created and saved
      * <br>
      * The id of the product object is ignored and a new uniqe id is assigned
+     * Checks if the product already exists by name and if so, returns null
      *
-     * @return new {@link Product product} if successful, false otherwise 
+     * @return new {@link Product product} if successful, null otherwise 
      * 
      * @throws IOException if an issue with underlying storage
      */
