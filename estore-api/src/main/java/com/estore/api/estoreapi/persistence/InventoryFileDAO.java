@@ -176,6 +176,12 @@ public class InventoryFileDAO implements InventoryDAO {
     @Override
     public Product createProduct(Product product) throws IOException {
         synchronized(products) {
+            // check if an item with the same name already exists. If so, return null
+            for (Product p : products.values()) {
+                if (p.nameEquals(product.getName()))
+                    return null;
+            }
+
             // We create a new product object because the id field is immutable
             // and we need to assign the next unique id
             Product newProduct = new Product(nextSku(), product.getName(), product.getPrice());
