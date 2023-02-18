@@ -25,13 +25,13 @@ public class Description {
         this.tags = tags;
     }
 
-    /**
-     * Creates a description
-     * @param summary A summary of the product
-     */
-    public Description(@JsonProperty("summary") String summary) {
-        this(summary, new HashSet<>());        
-    }
+    // /**
+    //  * Creates a description
+    //  * @param summary A summary of the product
+    //  */
+    // public Description(@JsonProperty("summary") String summary) {
+    //     this(summary, new HashSet<>());        
+    // }
 
     /**
      * Retrieves the summary of the product
