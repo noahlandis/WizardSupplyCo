@@ -137,7 +137,7 @@ public class InventoryControllerTest {
         Product product = new Product(99,"Crystal Ball", 9.99f);
         // when updateProduct is called, return true simulating successful
         // update and save
-        when(mockInventoryDAO.createProduct(product)).thenReturn(product);
+        when(mockInventoryDAO.updateProduct(product)).thenReturn(product);
         ResponseEntity<Product> response = inventoryController.updateProduct(product);
         product.setName("Quartz Seeing Stone");
 
@@ -155,7 +155,7 @@ public class InventoryControllerTest {
         Product product = new Product(99,"Aging Elyxir", 10.99f);
         // when updateProduct is called, return true simulating successful
         // update and save
-        when(mockInventoryDAO.createProduct(product)).thenReturn(null);
+        when(mockInventoryDAO.updateProduct(product)).thenReturn(null);
 
         // Invoke
         ResponseEntity<Product> response = inventoryController.updateProduct(product);
@@ -169,7 +169,7 @@ public class InventoryControllerTest {
         // Setup
         Product product = new Product(99,"Starshade Cloak", 9.99f);
         // When updateProduct is called on the Mock Inventory DAO, throw an IOException
-        doThrow(new IOException()).when(mockInventoryDAO).createProduct(product);
+        doThrow(new IOException()).when(mockInventoryDAO).updateProduct(product);
 
         // Invoke
         ResponseEntity<Product> response = inventoryController.updateProduct(product);

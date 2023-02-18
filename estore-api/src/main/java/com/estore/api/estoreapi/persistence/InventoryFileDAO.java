@@ -189,7 +189,7 @@ public class InventoryFileDAO implements InventoryDAO {
     ** {@inheritDoc}
      */
     @Override
-    public Product createProduct(Product product) throws IOException {
+    public Product updateProduct(Product product) throws IOException {
         synchronized(products) {
             if (products.containsKey(product.getSku()) == false)
                 return null;  // product does not exist

@@ -119,7 +119,7 @@ public class InventoryFileDAOTest {
         Product product = new Product(99,"Shadow Cloak",25.99f);
 
         // Invoke
-        Product result = assertDoesNotThrow(() -> inventoryFileDAO.createProduct(product),
+        Product result = assertDoesNotThrow(() -> inventoryFileDAO.updateProduct(product),
                                 "Unexpected exception thrown");
 
         // Analyze
@@ -167,7 +167,7 @@ public class InventoryFileDAOTest {
         Product product = new Product(98,"Flightstick 9000 Racing Broom",10);
 
         // Invoke
-        Product result = assertDoesNotThrow(() -> inventoryFileDAO.createProduct(product),
+        Product result = assertDoesNotThrow(() -> inventoryFileDAO.updateProduct(product),
                                                 "Unexpected exception thrown");
 
         // Analyze
