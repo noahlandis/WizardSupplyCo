@@ -161,10 +161,10 @@ public class InventoryFileDAO implements InventoryDAO {
     ** {@inheritDoc}
      */
     @Override
-    public Product getProduct(int id) {
+    public Product getProduct(int sku) {
         synchronized(products) {
-            if (products.containsKey(id))
-                return products.get(id);
+            if (products.containsKey(sku))
+                return products.get(sku);
             else
                 return null;
         }

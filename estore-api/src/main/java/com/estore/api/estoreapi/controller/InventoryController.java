@@ -49,18 +49,18 @@ public class InventoryController {
     /**
      * Responds to the GET request for a {@linkplain Product product} for the given id
      * 
-     * @param id The id used to locate the {@link Product product}
+     * @param sku The id used to locate the {@link Product product}
      * 
      * @return ResponseEntity with {@link Product product} object and HTTP status of OK if found<br>
      * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable int id) {
-        LOG.info("GET /products/" + id);
+    @GetMapping("/{sku}")
+    public ResponseEntity<Product> getProduct(@PathVariable int sku) {
+        LOG.info("GET /products/" + sku);
 
         try {
-            Product product = inventoryDao.getProduct(id);
+            Product product = inventoryDao.getProduct(sku);
             if (product != null)
                 return new ResponseEntity<Product>(product,HttpStatus.OK);
             else
