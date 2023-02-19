@@ -210,10 +210,10 @@ public class InventoryFileDAO implements InventoryDAO {
     ** {@inheritDoc}
      */
     @Override
-    public boolean deleteProduct(int id) throws IOException {
+    public boolean deleteProduct(int sku) throws IOException {
         synchronized(products) {
-            if (products.containsKey(id)) {
-                products.remove(id);
+            if (products.containsKey(sku)) {
+                products.remove(sku);
                 return save();
             }
             else

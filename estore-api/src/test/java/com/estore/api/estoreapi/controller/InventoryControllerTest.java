@@ -244,26 +244,26 @@ public class InventoryControllerTest {
     @Test
     public void testDeleteProduct() throws IOException { // deleteProduct may throw IOException
         // Setup
-        int productId = 99;
+        int productSku = 99;
         // when deleteProduct is called return true, simulating successful deletion
-        when(mockInventoryDAO.deleteProduct(productId)).thenReturn(true);
+        when(mockInventoryDAO.deleteProduct(productSku)).thenReturn(true);
 
         // Invoke
-        ResponseEntity<Product> response = inventoryController.deleteProduct(productId);
+        ResponseEntity<Product> response = inventoryController.deleteProduct(productSku);
 
         // Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
+        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
 
     @Test
     public void testDeleteProductNotFound() throws IOException { // deleteProduct may throw IOException
         // Setup
-        int productId = 99;
+        int productSku = 99;
         // when deleteProduct is called return false, simulating failed deletion
-        when(mockInventoryDAO.deleteProduct(productId)).thenReturn(false);
+        when(mockInventoryDAO.deleteProduct(productSku)).thenReturn(false);
 
         // Invoke
-        ResponseEntity<Product> response = inventoryController.deleteProduct(productId);
+        ResponseEntity<Product> response = inventoryController.deleteProduct(productSku);
 
         // Analyze
         assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
@@ -272,12 +272,12 @@ public class InventoryControllerTest {
     @Test
     public void testDeleteProductHandleException() throws IOException { // deleteProduct may throw IOException
         // Setup
-        int productId = 99;
+        int productSku = 99;
         // When deleteProduct is called on the Mock Inventory DAO, throw an IOException
-        doThrow(new IOException()).when(mockInventoryDAO).deleteProduct(productId);
+        doThrow(new IOException()).when(mockInventoryDAO).deleteProduct(productSku);
 
         // Invoke
-        ResponseEntity<Product> response = inventoryController.deleteProduct(productId);
+        ResponseEntity<Product> response = inventoryController.deleteProduct(productSku);
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());

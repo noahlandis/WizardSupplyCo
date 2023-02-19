@@ -69,15 +69,15 @@ public interface InventoryDAO {
     Product updateProduct(Product product) throws IOException;
 
     /**
-     * Deletes a {@linkplain Product product} with the given id
+     * Deletes a {@linkplain Product product} with the given sku
      * 
-     * @param id The id of the {@link Product product}
+     * @param sku The sku of the {@link Product product}
      * 
      * @return true if the {@link Product product} was deleted
      * <br>
-     * false if product with the given id does not exist
+     * false if product with the given sku does not exist
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
-    boolean deleteProduct(int id) throws IOException;
+    boolean deleteProduct(int sku) throws IOException;
 }
