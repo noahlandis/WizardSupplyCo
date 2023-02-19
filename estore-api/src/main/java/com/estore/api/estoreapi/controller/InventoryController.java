@@ -30,13 +30,13 @@ import com.estore.api.estoreapi.model.Product;
  */
 
 @RestController
-@RequestMapping("products")
+@RequestMapping("inventory")
 public class InventoryController {
     private static final Logger LOG = Logger.getLogger(InventoryController.class.getName());
     private InventoryDAO inventoryDao;
 
     /**
-     * Creates a REST API controller to reponds to requests
+     * Creates a REST API controller to respond to requests
      * 
      * @param inventoryDao The {@link InventoryDAO Product Data Access Object} to perform CRUD operations
      * <br>
@@ -47,17 +47,20 @@ public class InventoryController {
     }
 
     /**
-     * Responds to the GET request for a {@linkplain Product product} for the given id
+     * Responds to the GET request for a {@linkplain Product product} for the given sku
      * 
-     * @param sku The id used to locate the {@link Product product}
+     * @param sku The sku used to locate the {@link Product product}
      * 
      * @return ResponseEntity with {@link Product product} object and HTTP status of OK if found<br>
      * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * 
+     * Example: Get product with sku 1
+     * GET http://localhost:8080/inventory/1
      */
     @GetMapping("/{sku}")
     public ResponseEntity<Product> getProduct(@PathVariable int sku) {
-        LOG.info("GET /products/" + sku);
+        LOG.info("GET /inventory/" + sku);
 
         try {
             Product product = inventoryDao.getProduct(sku);
@@ -78,10 +81,13 @@ public class InventoryController {
      * @return ResponseEntity with array of {@link Product product} objects (may be empty) and
      * HTTP status of OK<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * 
+     * Example: Get all products
+     * GET http://localhost:8080/inventory/
      */
     @GetMapping("")
     public ResponseEntity<Product[]> getProducts() {
-        LOG.info("GET /products");
+        LOG.info("GET /inventory");
 
         try {
             Product[] products = inventoryDao.getProducts();
@@ -104,11 +110,11 @@ public class InventoryController {
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      * <p>
      * Example: Find all products that contain the text "ma"
-     * GET http://localhost:8080/products/?name=ma
+     * GET http://localhost:8080/inventory/?name=ma
      */
     @GetMapping("/")
     public ResponseEntity<Product[]> searchProducts(@RequestParam String name) {
-        LOG.info("GET /products/?name="+name);
+        LOG.info("GET /inventory/?name="+name);
 
         try {
             Product[] products = inventoryDao.findProducts(name);
@@ -128,10 +134,14 @@ public class InventoryController {
      * @return ResponseEntity with created {@link Product product} object and HTTP status of CREATED<br>
      * ResponseEntity with HTTP status of CONFLICT if {@link Product product} object already exists<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * 
+     * Example: Create a product
+     * POST http://localhost:8080/inventory/
+     * Body: product object to create
      */
     @PostMapping("")
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        LOG.info("POST /products " + product);
+        LOG.info("POST /inventory " + product);
 
         try {
             Product createdProduct = inventoryDao.createProduct(product);
@@ -157,16 +167,22 @@ public class InventoryController {
      * @return ResponseEntity with updated {@link Product product} object and HTTP status of OK if updated<br>
      * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * 
+     * Example: Update a product
+     * PUT http://localhost:8080/inventory/
+     * Body: updated product object
      */
     @PutMapping("")
     public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
-        LOG.info("PUT /products " + product);
+        LOG.info("PUT /inventory " + product);
 
         try {
-            Product updatedProduct = inventoryDao.createProduct(product);
+            Product updatedProduct = inventoryDao.updateProduct(product);
+            // Update the product if it exists
             if (updatedProduct != null)
                 return new ResponseEntity<Product>(updatedProduct,HttpStatus.OK);
             
+            // Throw not found if product does not exist
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         catch(IOException e) {
@@ -183,15 +199,20 @@ public class InventoryController {
      * @return ResponseEntity HTTP status of OK if deleted<br>
      * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * 
+     * Example: Delete a product with sku 1
+     * DELETE http://localhost:8080/inventory/1
      */
     @DeleteMapping("/{sku}")
     public ResponseEntity<Product> deleteProduct(@PathVariable int sku) {
-        LOG.info("DELETE /products/" + sku);
+        LOG.info("DELETE /inventory/" + sku);
 
         try {
+            // Delete the product if it exists
             if (inventoryDao.deleteProduct(sku))
                 return new ResponseEntity<>(HttpStatus.ACCEPTED);
 
+            // Throw not found if product does not exist
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         catch(IOException e) {
