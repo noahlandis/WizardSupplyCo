@@ -114,7 +114,7 @@ public class InventoryController {
      */
     @GetMapping("/")
     public ResponseEntity<Product[]> searchProducts(@RequestParam String name) {
-        LOG.info("GET /products/?name="+name);
+        LOG.info("GET /inventory/?name="+name);
 
         try {
             Product[] products = inventoryDao.findProducts(name);
@@ -174,7 +174,7 @@ public class InventoryController {
      */
     @PutMapping("")
     public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
-        LOG.info("PUT /products " + product);
+        LOG.info("PUT /inventory " + product);
 
         try {
             Product updatedProduct = inventoryDao.updateProduct(product);
@@ -192,9 +192,9 @@ public class InventoryController {
     }
 
     /**
-     * Deletes a {@linkplain Product product} with the given id
+     * Deletes a {@linkplain Product product} with the given sku
      * 
-     * @param id The id of the {@link Product product} to deleted
+     * @param sku The sku of the {@link Product product} to deleted
      * 
      * @return ResponseEntity HTTP status of OK if deleted<br>
      * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
@@ -203,14 +203,14 @@ public class InventoryController {
      * Example: Delete a product with sku 1
      * DELETE http://localhost:8080/inventory/1
      */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Product> deleteProduct(@PathVariable int id) {
-        LOG.info("DELETE /products/" + id);
+    @DeleteMapping("/{sku}")
+    public ResponseEntity<Product> deleteProduct(@PathVariable int sku) {
+        LOG.info("DELETE /inventory/" + sku);
 
         try {
             // Delete the product if it exists
-            if (inventoryDao.deleteProduct(id))
-                return new ResponseEntity<>(HttpStatus.OK);
+            if (inventoryDao.deleteProduct(sku))
+                return new ResponseEntity<>(HttpStatus.ACCEPTED);
 
             // Throw not found if product does not exist
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
