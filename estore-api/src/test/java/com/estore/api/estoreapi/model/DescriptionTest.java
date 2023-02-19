@@ -47,7 +47,7 @@ public class DescriptionTest {
     public void testAddTag() {
         // Setup
         String summary = "A REALLY Fast Broom!";
-        Description description = new Description(summary);
+        Description description = new Description(summary, new HashSet<>());
         int expectedTagCount = 1;
 
         // Invoke
@@ -62,7 +62,7 @@ public class DescriptionTest {
     @Test
     public void removeTag() {
         // Setupv
-        Description description = new Description("A REALLY Fast Broom!");
+        Description description = new Description("A REALLY Fast Broom!", new HashSet<>());
         String tag = "New Tag";
         description.addTag(tag);
         int expectedTagCount = 0;
@@ -84,7 +84,7 @@ public class DescriptionTest {
     public void testToString() {
         // Setup
         String summary = "A REALLY Fast Broom!";
-        Description description = new Description(summary);
+        Description description = new Description(summary, new HashSet<>());
         description.addTag("Wood");
         description.addTag("Broom");
         description.addTag("Flying");
