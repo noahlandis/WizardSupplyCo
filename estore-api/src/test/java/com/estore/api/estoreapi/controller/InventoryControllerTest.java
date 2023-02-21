@@ -40,7 +40,7 @@ public class InventoryControllerTest {
     public void testGetProduct() throws IOException {  // getProduct may throw IOException
         // Setup
         Product product = new Product(99,"Frog legs (100 pack)", 9.99f);
-        // When the same id is passed in, our mock Inventory DAO will return the Product object
+        // When the same sku is passed in, our mock Inventory DAO will return the Product object
         when(mockInventoryDAO.getProduct(product.getSku())).thenReturn(product);
 
         // Invoke
@@ -54,13 +54,13 @@ public class InventoryControllerTest {
     @Test
     public void testGetProductNotFound() throws Exception { // createProduct may throw IOException
         // Setup
-        int productId = 99;
-        // When the same id is passed in, our mock Inventory DAO will return null, simulating
+        int productSku = 99;
+        // When the same sku is passed in, our mock Inventory DAO will return null, simulating
         // no product found
-        when(mockInventoryDAO.getProduct(productId)).thenReturn(null);
+        when(mockInventoryDAO.getProduct(productSku)).thenReturn(null);
 
         // Invoke
-        ResponseEntity<Product> response = inventoryController.getProduct(productId);
+        ResponseEntity<Product> response = inventoryController.getProduct(productSku);
 
         // Analyze
         assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
@@ -69,12 +69,12 @@ public class InventoryControllerTest {
     @Test
     public void testGetProductHandleException() throws Exception { // createProduct may throw IOException
         // Setup
-        int productId = 99;
+        int productSku = 99;
         // When getProduct is called on the Mock Inventory DAO, throw an IOException
-        doThrow(new IOException()).when(mockInventoryDAO).getProduct(productId);
+        doThrow(new IOException()).when(mockInventoryDAO).getProduct(productSku);
 
         // Invoke
-        ResponseEntity<Product> response = inventoryController.getProduct(productId);
+        ResponseEntity<Product> response = inventoryController.getProduct(productSku);
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR,response.getStatusCode());

@@ -31,7 +31,7 @@ public class InventoryFileDAO implements InventoryDAO {
     private ObjectMapper objectMapper;  // Provides conversion between Products
                                         // objects and JSON text format written
                                         // to the file
-    private static int nextSku;  // The next Id to assign to a new product
+    private static int nextSku;  // The next sku to assign to a new product
     private String filename;    // Filename to read from and write to
 
     /**
@@ -49,9 +49,9 @@ public class InventoryFileDAO implements InventoryDAO {
     }
 
     /**
-     * Generates the next id for a new {@linkplain Product product}
+     * Generates the next sku for a new {@linkplain Product product}
      * 
-     * @return The next id
+     * @return The next sku
      */
     private synchronized static int nextSku() {
         int sku = nextSku;
@@ -111,7 +111,7 @@ public class InventoryFileDAO implements InventoryDAO {
     /**
      * Loads {@linkplain Product products} from the JSON file into the map
      * <br>
-     * Also sets next id to one more than the greatest id found in the file
+     * Also sets next sku to one more than the greatest sku found in the file
      * 
      * @return true if the file was read successfully
      * 
@@ -132,7 +132,7 @@ public class InventoryFileDAO implements InventoryDAO {
             if (product.getSku() > nextSku)
                 nextSku = product.getSku();
         }
-        // Make the next id one greater than the maximum from the file
+        // Make the next sku one greater than the maximum from the file
         ++nextSku;
         return true;
     }
@@ -182,8 +182,8 @@ public class InventoryFileDAO implements InventoryDAO {
                     return null;
             }
 
-            // We create a new product object because the id field is immutable
-            // and we need to assign the next unique id
+            // We create a new product object because the sku field is immutable
+            // and we need to assign the next unique sku
             Product newProduct = new Product(nextSku(), product.getName(), product.getPrice());
             products.put(newProduct.getSku(),newProduct);
             save(); // may throw an IOException
