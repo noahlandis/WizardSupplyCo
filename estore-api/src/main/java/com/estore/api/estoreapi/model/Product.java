@@ -15,9 +15,28 @@ public class Product {
     @JsonProperty("sku") private int sku;
     @JsonProperty("name") private String name;
     @JsonProperty("price") private float price;
-    @JsonProperty("stock") private Stock stock;
+    @JsonProperty("quantity") private int quantity;
     @JsonProperty("images") private String[] images;
     @JsonProperty("description") private Description description;
+
+    /**
+     * Create a product with the given SKU, name, price and quantity
+     * @param sku The sku of the product
+     * @param name The name of the product
+     * @param price the price of the product
+     * @param quantity the quantity of the product
+     * 
+     * {@literal @}JsonProperty is used in serialization and deserialization
+     * of the JSON object to the Java object in mapping the fields.  If a field
+     * is not provided in the JSON object, the Java field gets the default Java
+     * value, i.e. 0 for int
+     */
+    public Product(@JsonProperty("sku") int sku, @JsonProperty("name") String name, @JsonProperty("price") float price, @JsonProperty("quantity") int quantity) {
+        this.sku = sku;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+    }
 
     /**
      * Create a product with the given SKU and name
@@ -30,7 +49,7 @@ public class Product {
      * is not provided in the JSON object, the Java field gets the default Java
      * value, i.e. 0 for int
      */
-    public Product(@JsonProperty("sku") int sku, @JsonProperty("name") String name, @JsonProperty("price") float price) {
+    public Product(int sku, String name, float price) {
         this.sku = sku;
         this.name = name;
         this.price = price;
@@ -72,6 +91,14 @@ public class Product {
      * @return the array of strings containing image data
      */
     public String[] getImages() {return images;}
+
+    /**
+     * Retrieves the quantity of the product
+     * @return
+     */
+    public int getQuantity() {
+        return quantity;
+    }
 
     /**
      * Retrieves the description of the product

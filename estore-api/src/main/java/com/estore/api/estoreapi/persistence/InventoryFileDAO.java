@@ -184,7 +184,7 @@ public class InventoryFileDAO implements InventoryDAO {
 
             // We create a new product object because the sku field is immutable
             // and we need to assign the next unique sku
-            Product newProduct = new Product(nextSku(), product.getName(), product.getPrice());
+            Product newProduct = new Product(nextSku(), product.getName(), product.getPrice(), product.getQuantity());
             products.put(newProduct.getSku(),newProduct);
             save(); // may throw an IOException
             return newProduct;
