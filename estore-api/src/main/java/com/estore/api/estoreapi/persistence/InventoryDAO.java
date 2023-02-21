@@ -19,13 +19,13 @@ public interface InventoryDAO {
     Product[] getProducts() throws IOException;
 
      /**
-     * Retrieves a {@linkplain Product product} with the given id
+     * Retrieves a {@linkplain Product product} with the given sku
      * 
-     * @param sku The id of the {@link Product product} to get
+     * @param sku The sku of the {@link Product product} to get
      * 
-     * @return a {@link Product product} object with the matching id
+     * @return a {@link Product product} object with the matching sku
      * <br>
-     * null if no {@link Product product} with a matching id is found
+     * null if no {@link Product product} with a matching sku is found
      * 
      * @throws IOException if an issue with underlying storage
      */
@@ -47,7 +47,7 @@ public interface InventoryDAO {
      * 
      * @param product {@linkplain Product product} object to be created and saved
      * <br>
-     * The id of the product object is ignored and a new uniqe id is assigned
+     * The sku of the product object is ignored and a new uniqe sku is assigned
      * Checks if the product already exists by name and if so, returns null
      *
      * @return new {@link Product product} if successful, null otherwise 
