@@ -15,44 +15,27 @@ public class Product {
     @JsonProperty("sku") private int sku;
     @JsonProperty("name") private String name;
     @JsonProperty("price") private float price;
-    @JsonProperty("quantity") private int quantity;
+    @JsonProperty("stock") private Stock stock;
     @JsonProperty("images") private String[] images;
     @JsonProperty("description") private Description description;
 
     /**
-     * Create a product with the given SKU, name, price and quantity
+     * Create a product with the given SKU, name, price and stock
      * @param sku The sku of the product
      * @param name The name of the product
      * @param price the price of the product
-     * @param quantity the quantity of the product
+     * @param stock the stock of the product
      * 
      * {@literal @}JsonProperty is used in serialization and deserialization
      * of the JSON object to the Java object in mapping the fields.  If a field
      * is not provided in the JSON object, the Java field gets the default Java
      * value, i.e. 0 for int
      */
-    public Product(@JsonProperty("sku") int sku, @JsonProperty("name") String name, @JsonProperty("price") float price, @JsonProperty("quantity") int quantity) {
+    public Product(@JsonProperty("sku") int sku, @JsonProperty("name") String name, @JsonProperty("price") float price, @JsonProperty("stock") Stock stock) {
         this.sku = sku;
         this.name = name;
         this.price = price;
-        this.quantity = quantity;
-    }
-
-    /**
-     * Create a product with the given SKU and name
-     * @param sku The sku of the product
-     * @param name The name of the product
-     * @param price the price of the product
-     * 
-     * {@literal @}JsonProperty is used in serialization and deserialization
-     * of the JSON object to the Java object in mapping the fields.  If a field
-     * is not provided in the JSON object, the Java field gets the default Java
-     * value, i.e. 0 for int
-     */
-    public Product(int sku, String name, float price) {
-        this.sku = sku;
-        this.name = name;
-        this.price = price;
+        this.stock = stock;
     }
 
     /**
@@ -93,11 +76,11 @@ public class Product {
     public String[] getImages() {return images;}
 
     /**
-     * Retrieves the quantity of the product
-     * @return
+     * Retrieves the product's stock object
+     * @return The stock object of the product
      */
-    public int getQuantity() {
-        return quantity;
+    public Stock getStock() {
+        return stock;
     }
 
     /**

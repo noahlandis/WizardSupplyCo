@@ -176,7 +176,7 @@ public class InventoryFileDAO implements InventoryDAO {
     @Override
     public Product createProduct(Product product) throws IOException {
         synchronized(products) {
-            // check if an item with the same name already exists. If so, return null
+            // check if an product with the same name already exists. If so, return null
             for (Product p : products.values()) {
                 if (p.nameEquals(product.getName()))
                     return null;
@@ -184,7 +184,7 @@ public class InventoryFileDAO implements InventoryDAO {
 
             // We create a new product object because the sku field is immutable
             // and we need to assign the next unique sku
-            Product newProduct = new Product(nextSku(), product.getName(), product.getPrice(), product.getQuantity());
+            Product newProduct = new Product(nextSku(), product.getName(), product.getPrice(), product.getStock());
             products.put(newProduct.getSku(),newProduct);
             save(); // may throw an IOException
             return newProduct;

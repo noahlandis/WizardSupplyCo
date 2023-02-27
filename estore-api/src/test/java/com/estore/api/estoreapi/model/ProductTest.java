@@ -18,14 +18,16 @@ public class ProductTest {
         int expectedSku = 99;
         String expectedName = "Binmus 2000 Racing Broom";
         float expectedPrice = 35.00f;
+        Stock expectedStock = new Stock(0);
 
         // Invoke
-        Product product = new Product(expectedSku, expectedName, expectedPrice);
+        Product product = new Product(expectedSku, expectedName, expectedPrice, expectedStock);
 
         // Analyze
         assertEquals(expectedSku, product.getSku());
         assertEquals(expectedName, product.getName());
         assertEquals(expectedPrice, product.getPrice());
+        assertEquals(expectedStock, product.getStock());
     }
 
     @Test
@@ -35,7 +37,9 @@ public class ProductTest {
         String name = "Binmus 2000 Racing Broom";
         float expectedPrice = 35.00f;
         String expectedName = "Starshot v3 Sports Broom";
-        Product product = new Product(expectedSku, name, expectedPrice);
+        Stock expectedStock = new Stock(0);
+
+        Product product = new Product(expectedSku, name, expectedPrice, expectedStock);
 
         // Invoke
         product.setName(expectedName);
@@ -50,9 +54,10 @@ public class ProductTest {
         int sku = 99;
         String name = "The Vruum Broom by BroomCorp";
         float price = 35.00f;
+        Stock stock = new Stock(0);
 
         String expected_string = String.format(Product.STRING_FORMAT, sku, name, price);
-        Product product = new Product(sku, name, price);
+        Product product = new Product(sku, name, price, stock);
 
         // Invoke
         String actual_string = product.toString();
