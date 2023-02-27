@@ -2,6 +2,8 @@ package com.estore.api.estoreapi.model;
 
 import java.util.HashSet;
 import java.util.logging.Logger;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -21,6 +23,7 @@ public class Description {
      * @param summary A summary of the product
      * @param tags The tags associated with the product
      */
+    @JsonCreator
     public Description(@JsonProperty("summary") String summary, @JsonProperty("tags") HashSet<String> tags) {
         this.summary = summary;
         this.tags = tags;

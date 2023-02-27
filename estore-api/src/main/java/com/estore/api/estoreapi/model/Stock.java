@@ -1,4 +1,5 @@
 package com.estore.api.estoreapi.model;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
@@ -23,7 +24,7 @@ public class Stock {
     static final int QUANTITY_OUT_OF_STOCK = 0; 
 
     @JsonProperty("quantity") private int quantity;
-    @JsonProperty("status") private Status status;
+    private Status status;
 
     /**
      * Create a product with the given id and name
@@ -35,6 +36,7 @@ public class Stock {
      * is not provided in the JSON object, the Java field gets the default Java
      * value, i.e. 0 for int
      */
+    @JsonCreator
     public Stock(@JsonProperty("quantity") int quantity) {
         this.quantity = quantity;
 

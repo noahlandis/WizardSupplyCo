@@ -2,6 +2,7 @@ package com.estore.api.estoreapi.model;
 
 import java.util.logging.Logger;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Represents a Product entity
@@ -31,6 +32,7 @@ public class Product {
      * is not provided in the JSON object, the Java field gets the default Java
      * value, i.e. 0 for int
      */
+    @JsonCreator
     public Product(@JsonProperty("sku") int sku, @JsonProperty("name") String name, @JsonProperty("price") float price, @JsonProperty("stock") Stock stock) {
         this.sku = sku;
         this.name = name;
