@@ -1,0 +1,206 @@
+package com.estore.api.estoreapi.persistence;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import com.estore.api.estoreapi.model.Cart;
+
+/**
+ * Implements the functionality for JSON file-based persistence for Carts
+ * 
+ * {@literal @}Component Spring annotation instantiates a single instance of this
+ * class and injects the instance into other classes as needed
+ * 
+ * @author Ryan Webb
+ */
+@Component
+public class CartsFileDAO implements CartsDAO {
+
+    private static final Logger LOG = Logger.getLogger(CartsFileDAO.class.getName());
+
+    Map<Integer,Cart> carts;   // Provides a local cache of the cart objects
+                                    // so that we don't need to read from the file
+                                   // each time
+    private ObjectMapper objectMapper;  // Provides conversion between Cart
+                                       // objects and JSON text format written
+                                      // to the file
+    private String filename;    // Filename to read from and write to
+
+    public CartsFileDAO(@Value("${carts.file}") String filename, ObjectMapper objectMapper, InventoryDAO inventoryDao) throws IOException {
+        this.filename = filename;
+        this.objectMapper = objectMapper;
+        carts = new HashMap<>();
+        load(inventoryDao);
+    }
+
+    /**
+     * Saves the carts to the file
+     * 
+     * @return true if the carts were written successfully
+     * 
+     * @throws IOException when file cannot be accessed or written to
+     */
+    private boolean save() throws IOException {
+        Cart[] cartsArray = getCarts();
+
+        // Serializes the Java Objects to JSON objects into the file
+        // writeValue will thrown an IOException if there is an issue
+        // with the file or reading from the file
+        objectMapper.writeValue(new File(filename), cartsArray);
+
+        return true;
+    }
+
+    /**
+     * Loads the carts from the file
+     * 
+     * @return true if the carts were read successfully
+     * 
+     * @throws IOException when file cannot be accessed or read from
+     */
+    private boolean load(InventoryDAO inventoryDao) throws IOException {
+        // reset the carts map
+        carts = new HashMap<>();
+
+        // readValue will thrown an IOException if there is an issue
+        // with the file or reading from the file
+        Cart[] cartsArray = objectMapper.readValue(new File(filename), Cart[].class);
+
+        // Load the carts into the local cache
+        for (Cart cart : cartsArray) {
+            carts.put(cart.getUserId(), cart);
+        }
+
+        return true;
+    }
+
+        /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Cart[] getCarts() {
+        synchronized (carts) {
+            return carts.values().toArray(new Cart[0]);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Cart getCart(int userId) {
+        synchronized (carts) {
+            return carts.get(userId);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Cart createCart(int userId) {
+        synchronized (carts) {
+            Cart cart = new Cart(userId);
+            carts.put(cart.getUserId(), cart);
+            try {
+                save();
+            } catch (IOException e) {
+                LOG.warning("Failed to save cart");
+            }
+
+            return cart;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Cart addProductToCart(int userId, int sku, int quantity) {
+        synchronized (carts) {
+            Cart cart = carts.get(userId);
+            if (cart != null) {
+                cart.addProduct(sku, quantity);
+                try {
+                    save();
+                } catch (IOException e) {
+                    LOG.warning("Failed to save cart");
+                }
+            }
+
+            return cart;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Cart removeProductFromCart(int userId, int sku) {
+        int quantity = 1;
+
+        synchronized (carts) {
+            Cart cart = carts.get(userId);
+            if (cart != null) {
+                cart.removeProduct(sku, quantity);
+                try {
+                    save();
+                } catch (IOException e) {
+                    LOG.warning("Failed to save cart");
+                }
+            }
+
+            return cart;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Cart clearCart(int userId) {
+        synchronized (carts) {
+            Cart cart = carts.get(userId);
+            if (cart != null) {
+                cart.clear();
+                try {
+                    save();
+                } catch (IOException e) {
+                    LOG.warning("Failed to save cart");
+                }
+            }
+
+            return cart;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean deleteCart(int userId) {
+        synchronized (carts) {
+            for (Cart cart : carts.values()) {
+                if (cart.getUserId() == userId) {
+                    carts.remove(cart.getUserId());
+                    try {
+                        save();
+                    } catch (IOException e) {
+                        LOG.warning("Failed to save cart");
+                    }
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+}
