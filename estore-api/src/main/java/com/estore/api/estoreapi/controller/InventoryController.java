@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.estore.api.estoreapi.persistence.ProductDAO;
+import com.estore.api.estoreapi.persistence.InventoryDAO;
 import com.estore.api.estoreapi.model.Product;
 
 /**
@@ -30,37 +30,40 @@ import com.estore.api.estoreapi.model.Product;
  */
 
 @RestController
-@RequestMapping("products")
-public class ProductController {
-    private static final Logger LOG = Logger.getLogger(ProductController.class.getName());
-    private ProductDAO productDao;
+@RequestMapping("inventory")
+public class InventoryController {
+    private static final Logger LOG = Logger.getLogger(InventoryController.class.getName());
+    private InventoryDAO inventoryDao;
 
     /**
-     * Creates a REST API controller to reponds to requests
+     * Creates a REST API controller to respond to requests
      * 
-     * @param productDao The {@link ProductDAO Product Data Access Object} to perform CRUD operations
+     * @param inventoryDao The {@link InventoryDAO Product Data Access Object} to perform CRUD operations
      * <br>
      * This dependency is injected by the Spring Framework
      */
-    public ProductController(ProductDAO productDao) {
-        this.productDao = productDao;
+    public InventoryController(InventoryDAO inventoryDao) {
+        this.inventoryDao = inventoryDao;
     }
 
     /**
-     * Responds to the GET request for a {@linkplain Product product} for the given id
+     * Responds to the GET request for a {@linkplain Product product} for the given sku
      * 
-     * @param id The id used to locate the {@link Product product}
+     * @param sku The sku used to locate the {@link Product product}
      * 
      * @return ResponseEntity with {@link Product product} object and HTTP status of OK if found<br>
      * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * 
+     * Example: Get product with sku 1
+     * GET http://localhost:8080/inventory/1
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable int id) {
-        LOG.info("GET /products/" + id);
+    @GetMapping("/{sku}")
+    public ResponseEntity<Product> getProduct(@PathVariable int sku) {
+        LOG.info("GET /inventory/" + sku);
 
         try {
-            Product product = productDao.getProduct(id);
+            Product product = inventoryDao.getProduct(sku);
             if (product != null)
                 return new ResponseEntity<Product>(product,HttpStatus.OK);
             else
@@ -78,13 +81,16 @@ public class ProductController {
      * @return ResponseEntity with array of {@link Product product} objects (may be empty) and
      * HTTP status of OK<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * 
+     * Example: Get all products
+     * GET http://localhost:8080/inventory/
      */
     @GetMapping("")
     public ResponseEntity<Product[]> getProducts() {
-        LOG.info("GET /products");
+        LOG.info("GET /inventory");
 
         try {
-            Product[] products = productDao.getProducts();
+            Product[] products = inventoryDao.getProducts();
             return new ResponseEntity<Product[]>(products,HttpStatus.OK);
         }
         catch(IOException e) {
@@ -104,14 +110,14 @@ public class ProductController {
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      * <p>
      * Example: Find all products that contain the text "ma"
-     * GET http://localhost:8080/products/?name=ma
+     * GET http://localhost:8080/inventory/?name=ma
      */
     @GetMapping("/")
     public ResponseEntity<Product[]> searchProducts(@RequestParam String name) {
-        LOG.info("GET /products/?name="+name);
+        LOG.info("GET /inventory/?name="+name);
 
         try {
-            Product[] products = productDao.findProducts(name);
+            Product[] products = inventoryDao.findProducts(name);
             return new ResponseEntity<Product[]>(products,HttpStatus.OK);
         }
         catch(IOException e) {
@@ -128,16 +134,24 @@ public class ProductController {
      * @return ResponseEntity with created {@link Product product} object and HTTP status of CREATED<br>
      * ResponseEntity with HTTP status of CONFLICT if {@link Product product} object already exists<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * 
+     * Example: Create a product
+     * POST http://localhost:8080/inventory/
+     * Body: product object to create
      */
     @PostMapping("")
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        LOG.info("POST /products " + product);
+        LOG.info("POST /inventory " + product);
 
         try {
-            if (productDao.getProduct(product.getId()) != null)
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
-
-            return new ResponseEntity<Product>(productDao.createProduct(product), HttpStatus.CREATED);
+            Product createdProduct = inventoryDao.createProduct(product);
+            
+            // Check if Product exists
+            if (createdProduct != null)
+                return new ResponseEntity<Product>(createdProduct, HttpStatus.CREATED);
+                
+            // Throw conflict since hero already exists
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         catch(IOException e) {
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
@@ -153,16 +167,22 @@ public class ProductController {
      * @return ResponseEntity with updated {@link Product product} object and HTTP status of OK if updated<br>
      * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * 
+     * Example: Update a product
+     * PUT http://localhost:8080/inventory/
+     * Body: updated product object
      */
     @PutMapping("")
     public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
-        LOG.info("PUT /products " + product);
+        LOG.info("PUT /inventory " + product);
 
         try {
-            Product updatedProduct = productDao.updateProduct(product);
+            Product updatedProduct = inventoryDao.updateProduct(product);
+            // Update the product if it exists
             if (updatedProduct != null)
                 return new ResponseEntity<Product>(updatedProduct,HttpStatus.OK);
             
+            // Throw not found if product does not exist
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         catch(IOException e) {
@@ -172,22 +192,27 @@ public class ProductController {
     }
 
     /**
-     * Deletes a {@linkplain Product product} with the given id
+     * Deletes a {@linkplain Product product} with the given sku
      * 
-     * @param id The id of the {@link Product product} to deleted
+     * @param sku The sku of the {@link Product product} to deleted
      * 
      * @return ResponseEntity HTTP status of OK if deleted<br>
      * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * 
+     * Example: Delete a product with sku 1
+     * DELETE http://localhost:8080/inventory/1
      */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Product> deleteProduct(@PathVariable int id) {
-        LOG.info("DELETE /products/" + id);
+    @DeleteMapping("/{sku}")
+    public ResponseEntity<Product> deleteProduct(@PathVariable int sku) {
+        LOG.info("DELETE /inventory/" + sku);
 
         try {
-            if (productDao.deleteProduct(id))
-                return new ResponseEntity<>(HttpStatus.OK);
+            // Delete the product if it exists
+            if (inventoryDao.deleteProduct(sku))
+                return new ResponseEntity<>(HttpStatus.ACCEPTED);
 
+            // Throw not found if product does not exist
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         catch(IOException e) {

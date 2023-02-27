@@ -4,11 +4,11 @@ import java.io.IOException;
 import com.estore.api.estoreapi.model.Product;
 
 /**
- * Defines the interface for Product object persistence
+ * Defines the Inventory interface for Product object persistence
  * 
  * @author SWEN Faculty
  */
-public interface ProductDAO {
+public interface InventoryDAO {
     /**
      * Retrieves all {@linkplain Product products}
      * 
@@ -17,6 +17,19 @@ public interface ProductDAO {
      * @throws IOException if an issue with underlying storage
      */
     Product[] getProducts() throws IOException;
+
+     /**
+     * Retrieves a {@linkplain Product product} with the given sku
+     * 
+     * @param sku The sku of the {@link Product product} to get
+     * 
+     * @return a {@link Product product} object with the matching sku
+     * <br>
+     * null if no {@link Product product} with a matching sku is found
+     * 
+     * @throws IOException if an issue with underlying storage
+     */
+    Product getProduct(int sku) throws IOException;
 
     /**
      * Finds all {@linkplain Product products} whose name contains the given text
@@ -30,26 +43,14 @@ public interface ProductDAO {
     Product[] findProducts(String containsText) throws IOException;
 
     /**
-     * Retrieves a {@linkplain Product product} with the given id
-     * 
-     * @param id The id of the {@link Product product} to get
-     * 
-     * @return a {@link Product product} object with the matching id
-     * <br>
-     * null if no {@link Product product} with a matching id is found
-     * 
-     * @throws IOException if an issue with underlying storage
-     */
-    Product getProduct(int id) throws IOException;
-
-    /**
      * Creates and saves a {@linkplain Product product}
      * 
      * @param product {@linkplain Product product} object to be created and saved
      * <br>
-     * The id of the product object is ignored and a new uniqe id is assigned
+     * The sku of the product object is ignored and a new uniqe sku is assigned
+     * Checks if the product already exists by name and if so, returns null
      *
-     * @return new {@link Product product} if successful, false otherwise 
+     * @return new {@link Product product} if successful, null otherwise 
      * 
      * @throws IOException if an issue with underlying storage
      */
@@ -68,15 +69,15 @@ public interface ProductDAO {
     Product updateProduct(Product product) throws IOException;
 
     /**
-     * Deletes a {@linkplain Product product} with the given id
+     * Deletes a {@linkplain Product product} with the given sku
      * 
-     * @param id The id of the {@link Product product}
+     * @param sku The sku of the {@link Product product}
      * 
      * @return true if the {@link Product product} was deleted
      * <br>
-     * false if product with the given id does not exist
+     * false if product with the given sku does not exist
      * 
      * @throws IOException if underlying storage cannot be accessed
      */
-    boolean deleteProduct(int id) throws IOException;
+    boolean deleteProduct(int sku) throws IOException;
 }
