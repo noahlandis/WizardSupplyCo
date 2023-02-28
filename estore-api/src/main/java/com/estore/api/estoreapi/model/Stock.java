@@ -66,11 +66,7 @@ public class Stock {
      * @return a boolean value 
      */
     public boolean isOutOfStock() {
-        if (quantity == QUANTITY_OUT_OF_STOCK) {
-            return true;
-        }
-
-        return false;
+        return status == Status.OUT_OF_STOCK;
     }
 
      /**
@@ -78,9 +74,7 @@ public class Stock {
      * @return a boolean value 
      */
     public boolean isLowStock() {
-        if (quantity <= QUANTITY_LOW_STOCK ) 
-            return true;
-        return false;
+        return status == Status.LOW_STOCK;
     }
 
     /**
