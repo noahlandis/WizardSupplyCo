@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.estore.api.estoreapi.model.Cart;
 
@@ -21,7 +21,7 @@ import com.estore.api.estoreapi.model.Cart;
  * 
  * @author Ryan Webb
  */
-@Component
+@Repository
 public class CartsFileDAO implements CartsDAO {
 
     private static final Logger LOG = Logger.getLogger(CartsFileDAO.class.getName());
@@ -38,7 +38,7 @@ public class CartsFileDAO implements CartsDAO {
         this.filename = filename;
         this.objectMapper = objectMapper;
         carts = new HashMap<>();
-        load(inventoryDao);
+        load(inventoryDao); // load the carts from the file
     }
 
     /**
@@ -76,6 +76,7 @@ public class CartsFileDAO implements CartsDAO {
 
         // Load the carts into the local cache
         for (Cart cart : cartsArray) {
+            cart.setInventoryDao(inventoryDao);
             carts.put(cart.getUserId(), cart);
         }
 
