@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Cart {
     private static final Logger LOG = Logger.getLogger(Cart.class.getName());
-    private Map<Integer, Integer> itemsMap;
+    private Map<Integer, Integer> productsMap;
     private int userId;
 
     private InventoryDAO inventoryDao;
@@ -21,7 +21,7 @@ public class Cart {
      * @param userId The id of the user who owns the cart
      */
     public Cart(int userId) {
-        itemsMap = new HashMap<>();
+        productsMap = new HashMap<>();
         this.userId = userId;
     }
 
@@ -35,7 +35,7 @@ public class Cart {
 
     /**
      * Creates a cart with the given products
-     * @param itemsMap The products in the cart
+     * @param productsMap The products in the cart
      * 
      * {@literal @}JsonProperty is used in serialization and deserialization
      * of the JSON object to the Java object in mapping the fields.  If a field
@@ -44,8 +44,8 @@ public class Cart {
      */
     @JsonCreator // @JsonCreator specifies this constructor to be used to 
                  // create the Java object from the JSON object
-    public Cart(@JsonProperty("itemsMap") Map<Integer, Integer> itemsMap) {
-        this.itemsMap = itemsMap;
+    public Cart(@JsonProperty("productsMap") Map<Integer, Integer> productsMap) {
+        this.productsMap = productsMap;
     }
 
     /**
@@ -58,7 +58,7 @@ public class Cart {
      * Retrieves the number of products in the cart
      * @return The number of products in the cart
      */
-    public int getCount() { return itemsMap.size(); }
+    public int getCount() { return productsMap.size(); }
 
     /**
      * Adds a product to the cart
@@ -69,13 +69,13 @@ public class Cart {
      */
     public boolean addProduct(int sku, int quantity) {
         LOG.info("Adding product with sku " + sku + " and quantity " + quantity + " to cart for user " + userId);
-        int currentQuantity = itemsMap.getOrDefault(sku, 0);
+        int currentQuantity = productsMap.getOrDefault(sku, 0);
         int newQuantity = currentQuantity + quantity;
 
         // check the inventory to see if the product is available at the new quantity
         try {
             if (inventoryDao.getProduct(sku).hasEnoughStockFor(newQuantity)) {
-                itemsMap.put(sku, newQuantity);
+                productsMap.put(sku, newQuantity);
                 LOG.info("Product with sku " + sku + " added to cart for user " + userId);
                 return true;
             }
@@ -98,21 +98,21 @@ public class Cart {
         LOG.info("Removing product with sku " + sku + " and quantity " + quantity + " from cart for user " + userId);
 
         // If the product is not in the cart, return false
-        if (!itemsMap.containsKey(sku)) {
+        if (!productsMap.containsKey(sku)) {
             LOG.warning("Product with sku " + sku + " is not in the cart for user " + userId);
             return false;
         }
 
-        int currentQuantity = itemsMap.get(sku);
+        int currentQuantity = productsMap.get(sku);
 
         // If the quantity to remove is greater than the quantity in the cart,
         // remove the product from the cart
         int newQuantity = currentQuantity - quantity;
         if (newQuantity <= 0) {
-            itemsMap.remove(sku);
+            productsMap.remove(sku);
             LOG.info("Product with sku " + sku + " removed from cart for user " + userId);
         } else {
-            itemsMap.put(sku, newQuantity);
+            productsMap.put(sku, newQuantity);
             LOG.info("Product with sku " + sku + " quantity reduced to " + newQuantity + " in cart for user " + userId);
         }
 
@@ -125,7 +125,7 @@ public class Cart {
      * @param quantity The quantity of the product to remove
      */
     public void clear() { 
-        itemsMap.clear();
+        productsMap.clear();
         LOG.info("Cart for user " + userId + " cleared");
     }
 
@@ -138,7 +138,7 @@ public class Cart {
         float total = 0;
 
         // Iterate through the products in the cart and calculate the total
-        for (Map.Entry<Integer, Integer> entry : itemsMap.entrySet()) {
+        for (Map.Entry<Integer, Integer> entry : productsMap.entrySet()) {
             int sku = entry.getKey();
             int quantity = entry.getValue();
             Product product = inventoryDao.getProduct(sku);

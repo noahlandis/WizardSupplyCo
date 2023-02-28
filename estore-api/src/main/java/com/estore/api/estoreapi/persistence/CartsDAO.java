@@ -1,6 +1,7 @@
 package com.estore.api.estoreapi.persistence;
 
 import java.io.IOException;
+import java.util.Map;
 
 import com.estore.api.estoreapi.model.Cart;
 
@@ -10,7 +11,7 @@ import com.estore.api.estoreapi.model.Cart;
  * @author Ryan Webb
  */
 public interface CartsDAO {
-    
+
     /**
      * Retrieves all {@linkplain Cart carts}
      * 
@@ -68,6 +69,7 @@ public interface CartsDAO {
      * 
      * @param userId The user ID associated with the {@link Cart} object to update
      * @param sku The SKU of the product to remove
+     * @param quantity The quantity of the product to remove
      * 
      * @return The updated {@link Cart} object
      * <br>
@@ -75,7 +77,7 @@ public interface CartsDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    Cart removeProductFromCart(int userId, int sku) throws IOException;
+    Cart removeProductFromCart(int userId, int sku, int quantity) throws IOException;
 
     /**
      * Clears the {@link Cart} object for the given user ID
@@ -100,4 +102,17 @@ public interface CartsDAO {
      * @throws IOException if an issue with underlying storage
      */
     boolean deleteCart(int userId) throws IOException;
+
+    /**
+     * Retrieves the total for the {@link Cart} object for the given user ID
+     * 
+     * @param userId The user ID associated with the {@link Cart} object to retrieve the total for
+     * 
+     * @return The total for the {@link Cart} object for the given user ID
+     * <br>
+     * 0 if no {@link Cart} object exists for the given user ID
+     * 
+     * @throws IOException if an issue with underlying storage
+     */
+    double getCartTotal(int userId) throws IOException;
 }

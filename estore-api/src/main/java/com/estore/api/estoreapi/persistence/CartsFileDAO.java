@@ -114,7 +114,7 @@ public class CartsFileDAO implements CartsDAO {
             try {
                 save();
             } catch (IOException e) {
-                LOG.warning("Failed to save cart");
+                LOG.warning("Failed to save cart for user " + userId + ". " + e.getMessage());
             }
 
             return cart;
@@ -129,11 +129,15 @@ public class CartsFileDAO implements CartsDAO {
         synchronized (carts) {
             Cart cart = carts.get(userId);
             if (cart != null) {
-                cart.addProduct(sku, quantity);
+                boolean success = cart.addProduct(sku, quantity);
+                // If the product could not be added to the cart, return null
+                if (!success) 
+                    return null;
+
                 try {
                     save();
                 } catch (IOException e) {
-                    LOG.warning("Failed to save cart");
+                    LOG.warning("Failed to save cart for user " + userId + ". " + e.getMessage());
                 }
             }
 
@@ -145,17 +149,19 @@ public class CartsFileDAO implements CartsDAO {
      * {@inheritDoc}
      */
     @Override
-    public Cart removeProductFromCart(int userId, int sku) {
-        int quantity = 1;
-
+    public Cart removeProductFromCart(int userId, int sku, int quantity) {
         synchronized (carts) {
             Cart cart = carts.get(userId);
             if (cart != null) {
-                cart.removeProduct(sku, quantity);
+                boolean success = cart.removeProduct(sku, quantity);
+                // If the product could not be removed from the cart, return null
+                if (!success) 
+                    return null;
+
                 try {
                     save();
                 } catch (IOException e) {
-                    LOG.warning("Failed to save cart");
+                    LOG.warning("Failed to save cart for user " + userId + ". " + e.getMessage());
                 }
             }
 
@@ -175,7 +181,7 @@ public class CartsFileDAO implements CartsDAO {
                 try {
                     save();
                 } catch (IOException e) {
-                    LOG.warning("Failed to save cart");
+                    LOG.warning("Failed to save cart for user " + userId + ". " + e.getMessage());
                 }
             }
 
@@ -190,18 +196,38 @@ public class CartsFileDAO implements CartsDAO {
     public boolean deleteCart(int userId) {
         synchronized (carts) {
             for (Cart cart : carts.values()) {
-                if (cart.getUserId() == userId) {
-                    carts.remove(cart.getUserId());
-                    try {
-                        save();
-                    } catch (IOException e) {
-                        LOG.warning("Failed to save cart");
-                    }
-                    return true;
+                if (!(cart.getUserId() == userId))
+                    continue;
+
+                carts.remove(cart.getUserId());
+                try {
+                    save();
+                } catch (IOException e) {
+                    LOG.warning("Failed to save cart for user " + userId + ". " + e.getMessage());
                 }
+                return true;
             }
         }
 
         return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public double getCartTotal(int userId) {
+        synchronized (carts) {
+            Cart cart = carts.get(userId);
+            if (cart != null) {
+                try {
+                    return cart.getTotalPrice();
+                } catch (IOException e) {
+                    LOG.warning("Failed to get cart total for user " + userId + ". " + e.getMessage());
+                }
+            }
+        }
+
+        return 0;
     }
 }
