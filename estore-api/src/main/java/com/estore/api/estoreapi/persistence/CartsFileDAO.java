@@ -130,15 +130,15 @@ public class CartsFileDAO implements CartsDAO {
             Cart cart = carts.get(userId);
             if (cart != null) {
                 boolean success = cart.addProduct(sku, quantity);
-                // If the product could not be added to the cart, return null
-                if (!success) 
-                    return null;
-
                 try {
                     save();
                 } catch (IOException e) {
                     LOG.warning("Failed to save cart for user " + userId + ". " + e.getMessage());
                 }
+
+                // If the product could not be added to the cart, return null
+                if (!success) 
+                    return null;
             }
 
             return cart;
@@ -154,15 +154,15 @@ public class CartsFileDAO implements CartsDAO {
             Cart cart = carts.get(userId);
             if (cart != null) {
                 boolean success = cart.removeProduct(sku, quantity);
-                // If the product could not be removed from the cart, return null
-                if (!success) 
-                    return null;
-
                 try {
                     save();
                 } catch (IOException e) {
                     LOG.warning("Failed to save cart for user " + userId + ". " + e.getMessage());
                 }
+                
+                // If the product could not be removed from the cart, return null
+                if (!success) 
+                    return null;
             }
 
             return cart;

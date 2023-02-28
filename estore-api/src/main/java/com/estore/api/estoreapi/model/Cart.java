@@ -11,8 +11,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Cart {
     private static final Logger LOG = Logger.getLogger(Cart.class.getName());
-    private Map<Integer, Integer> productsMap;
-    private int userId;
+    @JsonProperty private int userId;
+    @JsonProperty private Map<Integer, Integer> productsMap;
 
     private InventoryDAO inventoryDao;
 
@@ -44,7 +44,7 @@ public class Cart {
      */
     @JsonCreator // @JsonCreator specifies this constructor to be used to 
                  // create the Java object from the JSON object
-    public Cart(@JsonProperty("productsMap") Map<Integer, Integer> productsMap) {
+    public Cart(@JsonProperty("userId") int userId, @JsonProperty("productsMap") Map<Integer, Integer> productsMap) {
         this.productsMap = productsMap;
     }
 
