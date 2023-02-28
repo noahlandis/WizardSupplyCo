@@ -7,12 +7,13 @@ import java.util.logging.Logger;
 
 import com.estore.api.estoreapi.persistence.InventoryDAO;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Cart {
     private static final Logger LOG = Logger.getLogger(Cart.class.getName());
-    @JsonProperty private int userId;
-    @JsonProperty private Map<Integer, Integer> productsMap;
+    @JsonProperty("userId") private int userId;
+    @JsonProperty("productsMap") private Map<Integer, Integer> productsMap;
 
     private InventoryDAO inventoryDao;
 
@@ -46,18 +47,21 @@ public class Cart {
                  // create the Java object from the JSON object
     public Cart(@JsonProperty("userId") int userId, @JsonProperty("productsMap") Map<Integer, Integer> productsMap) {
         this.productsMap = productsMap;
+        this.userId = userId;
     }
 
     /**
      * Returns the id of the user who owns the cart
      * @return The id of the user who owns the cart
      */
+    @JsonIgnore // @JsonIgnore specifies that this field should not be serialized
     public int getUserId() { return userId; }
 
     /**
      * Retrieves the number of products in the cart
      * @return The number of products in the cart
      */
+    @JsonProperty("count")
     public int getCount() { return productsMap.size(); }
 
     /**
@@ -134,6 +138,7 @@ public class Cart {
      * @return The total price of the cart
      * @throws IOException If there is an error reading from the inventory
      */
+    @JsonProperty("totalPrice")
     public float getTotalPrice() throws IOException {
         float total = 0;
 

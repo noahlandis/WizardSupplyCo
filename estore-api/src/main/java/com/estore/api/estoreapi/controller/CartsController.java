@@ -150,6 +150,7 @@ public class CartsController {
 
         try {
             Cart cart = cartsDao.addProductToCart(userId, sku, quantity);
+            // TODO: this shouldn't return a 404 if the product couldn't be added due to stock quantity
             if (cart == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -183,6 +184,7 @@ public class CartsController {
 
         try {
             Cart cart = cartsDao.removeProductFromCart(userId, sku, quantity);
+            // TODO: This shouldn't return a 404 if the product is not in the cart
             if (cart == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -240,34 +242,34 @@ public class CartsController {
         }
     }
 
-    /**
-     * Responds to the GET request for the total of the {@linkplain Cart cart} for the user with
-     * the given userId
-     * 
-     * @param userId The id of the {@link User user} who owns the cart
-     * 
-     * @return ResponseEntity with the price of the {@link Cart cart} and HTTP status of OK<br>
-     * ResponseEntity with HTTP status of NOT_FOUND if the cart does not exist<br>
-     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-     * 
-     * Example: Get the total of the cart for user with id 1
-     * GET http://localhost:8080/carts/{userId}/total
-     */
-    @GetMapping("/{userId}/total")
-    public ResponseEntity<Double> getCartTotal(@PathVariable int userId) {
-        LOG.info("GET /carts/" + userId + "/total");
+    // /**
+    //  * Responds to the GET request for the total of the {@linkplain Cart cart} for the user with
+    //  * the given userId
+    //  * 
+    //  * @param userId The id of the {@link User user} who owns the cart
+    //  * 
+    //  * @return ResponseEntity with the price of the {@link Cart cart} and HTTP status of OK<br>
+    //  * ResponseEntity with HTTP status of NOT_FOUND if the cart does not exist<br>
+    //  * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+    //  * 
+    //  * Example: Get the total of the cart for user with id 1
+    //  * GET http://localhost:8080/carts/{userId}/total
+    //  */
+    // @GetMapping("/{userId}/total")
+    // public ResponseEntity<Double> getCartTotal(@PathVariable int userId) {
+    //     LOG.info("GET /carts/" + userId + "/total");
 
-        try {
-            Double total = cartsDao.getCartTotal(userId);
-            if (total == 0) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
+    //     try {
+    //         Double total = cartsDao.getCartTotal(userId);
+    //         if (total == 0) {
+    //             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    //         }
 
-            return new ResponseEntity<Double>(total, HttpStatus.OK);
-        }
-        catch(IOException e) {
-            LOG.log(Level.SEVERE, e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    //         return new ResponseEntity<Double>(total, HttpStatus.OK);
+    //     }
+    //     catch(IOException e) {
+    //         LOG.log(Level.SEVERE, e.getLocalizedMessage());
+    //         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    //     }
+    // }
 }

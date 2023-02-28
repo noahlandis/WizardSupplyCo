@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,9 +38,10 @@ public class CartsFileDAO implements CartsDAO {
     private InventoryDAO inventoryDao;
 
     public CartsFileDAO(@Value("${carts.file}") String filename, ObjectMapper objectMapper, InventoryDAO inventoryDao) throws IOException {
+        LOG.info("CartsFileDAO created");
         this.filename = filename;
         this.objectMapper = objectMapper;
-        carts = new HashMap<>();
+
         this.inventoryDao = inventoryDao;
         load(); // load the carts from the file
     }
@@ -52,6 +54,7 @@ public class CartsFileDAO implements CartsDAO {
      * @throws IOException when file cannot be accessed or written to
      */
     private boolean save() throws IOException {
+        LOG.info("Saving carts to file: " + filename);
         Cart[] cartsArray = getCarts();
 
         // Serializes the Java Objects to JSON objects into the file
@@ -70,19 +73,16 @@ public class CartsFileDAO implements CartsDAO {
      * @throws IOException when file cannot be accessed or read from
      */
     private boolean load() throws IOException {
-        // reset the carts map
-        carts = new HashMap<>();
+        LOG.info("Loading carts from file: " + filename);
+        carts = new TreeMap<>();
 
         // readValue will thrown an IOException if there is an issue
         // with the file or reading from the file
         Cart[] cartsArray = objectMapper.readValue(new File(filename), Cart[].class);
-        // print out the carts
-        for (Cart cart : cartsArray) {
-            LOG.info(cart.toString());
-        }
 
         // Load the carts into the local cache
         for (Cart cart : cartsArray) {
+            LOG.info("Loaded cart for user: " + cart.getUserId());
             cart.setInventoryDao(inventoryDao);
             carts.put(cart.getUserId(), cart);
         }
@@ -90,7 +90,7 @@ public class CartsFileDAO implements CartsDAO {
         return true;
     }
 
-        /**
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -225,23 +225,23 @@ public class CartsFileDAO implements CartsDAO {
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public double getCartTotal(int userId) {
-        synchronized (carts) {
-            Cart cart = carts.get(userId);
-            if (cart != null) {
-                try {
-                    // round to 2 decimal places
-                    return Math.round(cart.getTotalPrice() * 100.0) / 100.0;
-                } catch (IOException e) {
-                    LOG.warning("Failed to get cart total for user " + userId + ". " + e.getMessage());
-                }
-            }
-        }
+    // /**
+    //  * {@inheritDoc}
+    //  */
+    // @Override
+    // public double getCartTotal(int userId) {
+    //     synchronized (carts) {
+    //         Cart cart = carts.get(userId);
+    //         if (cart != null) {
+    //             try {
+    //                 // round to 2 decimal places
+    //                 return Math.round(cart.getTotalPrice() * 100.0) / 100.0;
+    //             } catch (IOException e) {
+    //                 LOG.warning("Failed to get cart total for user " + userId + ". " + e.getMessage());
+    //             }
+    //         }
+    //     }
 
-        return 0;
-    }
+    //     return 0;
+    // }
 }

@@ -11,7 +11,7 @@
       "sku": 12,
       "name": "The Vruum Broom TM",
       "price": 199.99,
-      "stockQuantity": 1,
+      "stockQuantity": 10,
       "images": null,
       "description": null
     },
@@ -19,7 +19,7 @@
       "sku": 13,
       "name": "Nightmare Elyxir Flask",
       "price": 14.99,
-      "stockQuantity": 1,
+      "stockQuantity": 10,
       "images": null,
       "description": null
     },
@@ -27,7 +27,7 @@
       "sku": 14,
       "name": "Binmus 2000 Racing Broom",
       "price": 999.99,
-      "stockQuantity": 1,
+      "stockQuantity": 10,
       "images": null,
       "description": null
     },
@@ -35,7 +35,7 @@
       "sku": 15,
       "name": "Frostwing Dragon Egg",
       "price": 2499.99,
-      "stockQuantity": 1,
+      "stockQuantity": 10,
       "images": null,
       "description": null
     },
@@ -43,7 +43,7 @@
       "sku": 16,
       "name": "Newt Lungs (10 pack)",
       "price": 3.99,
-      "stockQuantity": 1,
+      "stockQuantity": 10,
       "images": null,
       "description": null
     },
@@ -51,7 +51,7 @@
       "sku": 17,
       "name": "Starshot v3 Sports Broom",
       "price": 1199.99,
-      "stockQuantity": 1,
+      "stockQuantity": 10,
       "images": null,
       "description": null
     },
@@ -59,7 +59,7 @@
       "sku": 18,
       "name": "Deathwart Stalks (10 pack)",
       "price": 4.99,
-      "stockQuantity": 1,
+      "stockQuantity": 10,
       "images": null,
       "description": null
     },
@@ -67,7 +67,7 @@
       "sku": 19,
       "name": "Frog Legs (100 Pack)",
       "price": 1.99,
-      "stockQuantity": 2,
+      "stockQuantity": 20,
       "images": null,
       "description": null
     },
@@ -75,7 +75,7 @@
       "sku": 20,
       "name": "Starshade Cloak",
       "price": 49.99,
-      "stockQuantity": 3,
+      "stockQuantity": 30,
       "images": null,
       "description": null
     },
@@ -83,7 +83,7 @@
       "sku": 22,
       "name": "Centipede Hearts (1000 Pack)",
       "price": 1.99,
-      "stockQuantity": 4,
+      "stockQuantity": 40,
       "images": null,
       "description": null
     },
@@ -91,7 +91,7 @@
       "sku": 23,
       "name": "Truth Serum Vial",
       "price": 79.99,
-      "stockQuantity": 5,
+      "stockQuantity": 50,
       "images": null,
       "description": null
     }

@@ -1,5 +1,14 @@
 [
     {
+        "userId": 0,
+        "productsMap": { 
+            "13": 1,
+            "14": 1
+        },
+        "count": 2,
+        "totalPrice": 1014.98
+    },
+    {
         "userId": 1,
         "productsMap": { },
         "count": 0,
