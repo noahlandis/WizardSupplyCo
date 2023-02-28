@@ -144,7 +144,7 @@ public class CartsController {
      * Example: Add 2 items with sku 3 to the cart for user with id 1
      * PUT http://localhost:8080/carts/1/items/3?quantity=2
      */
-    @PutMapping("/{userId}/items/{sku}?quantity={quantity}")
+    @PutMapping("/{userId}/items/{sku}")
     public ResponseEntity<Cart> addProductToCart(@PathVariable int userId, @PathVariable int sku, @RequestParam int quantity) {
         LOG.info("PUT /carts/" + userId + "/items/" + sku + "?quantity=" + quantity);
 
@@ -177,7 +177,7 @@ public class CartsController {
      * Example: Remove 2 items with sku 3 from the cart for user with id 1
      * DELETE http://localhost:8080/carts/1/items/3?quantity=2
      */
-    @DeleteMapping("/{userId}/items/{sku}?quantity={quantity}")
+    @DeleteMapping("/{userId}/items/{sku}")
     public ResponseEntity<Cart> removeProductFromCart(@PathVariable int userId, @PathVariable int sku, @RequestParam int quantity) {
         LOG.info("DELETE /carts/" + userId + "/items/" + sku + "?quantity=" + quantity);
 

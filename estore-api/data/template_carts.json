@@ -1,14 +1,20 @@
 [
     {
         "userId": 1,
-        "productsMap": { }
+        "productsMap": { },
+        "count": 0,
+        "totalPrice": 0.0
     },
     {
         "userId": 2,
-        "productsMap": { }
+        "productsMap": { },
+        "count": 0,
+        "totalPrice": 0.0
     },
     {
         "userId": 3,
-        "productsMap": { }
+        "productsMap": { },
+        "count": 0,
+        "totalPrice": 0.0
     }
 ]

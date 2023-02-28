@@ -34,11 +34,14 @@ public class CartsFileDAO implements CartsDAO {
                                       // to the file
     private String filename;    // Filename to read from and write to
 
+    private InventoryDAO inventoryDao;
+
     public CartsFileDAO(@Value("${carts.file}") String filename, ObjectMapper objectMapper, InventoryDAO inventoryDao) throws IOException {
         this.filename = filename;
         this.objectMapper = objectMapper;
         carts = new HashMap<>();
-        load(inventoryDao); // load the carts from the file
+        this.inventoryDao = inventoryDao;
+        load(); // load the carts from the file
     }
 
     /**
@@ -66,13 +69,17 @@ public class CartsFileDAO implements CartsDAO {
      * 
      * @throws IOException when file cannot be accessed or read from
      */
-    private boolean load(InventoryDAO inventoryDao) throws IOException {
+    private boolean load() throws IOException {
         // reset the carts map
         carts = new HashMap<>();
 
         // readValue will thrown an IOException if there is an issue
         // with the file or reading from the file
         Cart[] cartsArray = objectMapper.readValue(new File(filename), Cart[].class);
+        // print out the carts
+        for (Cart cart : cartsArray) {
+            LOG.info(cart.toString());
+        }
 
         // Load the carts into the local cache
         for (Cart cart : cartsArray) {
@@ -108,8 +115,14 @@ public class CartsFileDAO implements CartsDAO {
      */
     @Override
     public Cart createCart(int userId) {
+        // If the cart already exists, return null
+        if (carts.containsKey(userId)) {
+            return null;
+        }
+
         synchronized (carts) {
             Cart cart = new Cart(userId);
+            cart.setInventoryDao(inventoryDao);
             carts.put(cart.getUserId(), cart);
             try {
                 save();
@@ -221,7 +234,8 @@ public class CartsFileDAO implements CartsDAO {
             Cart cart = carts.get(userId);
             if (cart != null) {
                 try {
-                    return cart.getTotalPrice();
+                    // round to 2 decimal places
+                    return Math.round(cart.getTotalPrice() * 100.0) / 100.0;
                 } catch (IOException e) {
                     LOG.warning("Failed to get cart total for user " + userId + ". " + e.getMessage());
                 }

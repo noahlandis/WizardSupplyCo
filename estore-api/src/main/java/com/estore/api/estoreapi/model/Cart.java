@@ -149,6 +149,9 @@ public class Cart {
             }
         }
 
+        // Round the total to 2 decimal places
+        total = (float) Math.round(total * 100) / 100;
+
         LOG.info("Total price for cart for user " + userId + " is " + total);
         return total;
     }
