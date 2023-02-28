@@ -65,23 +65,13 @@ public class Stock {
      * Retrives if the product is out of stock 
      * @return a boolean value 
      */
-    public boolean isOutOfStock() {
-        if (quantity == QUANTITY_OUT_OF_STOCK) {
-            return true;
-        }
-
-        return false;
-    }
+    public boolean isOutOfStock() { return status == Status.OUT_OF_STOCK; }
 
      /**
      * Retrives if the product is low in stock 
      * @return a boolean value 
      */
-    public boolean isLowStock() {
-        if (quantity <= QUANTITY_LOW_STOCK ) 
-            return true;
-        return false;
-    }
+    public boolean isLowStock() { return status == Status.LOW_STOCK; }
 
     /**
      * Sets the status of the product after some stocks are added
