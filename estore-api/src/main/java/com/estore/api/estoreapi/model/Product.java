@@ -3,6 +3,7 @@ package com.estore.api.estoreapi.model;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * Represents a Product entity
@@ -16,16 +17,16 @@ public class Product {
     @JsonProperty("sku") private int sku;
     @JsonProperty("name") private String name;
     @JsonProperty("price") private float price;
-    @JsonProperty("stock") private Stock stock;
     @JsonProperty("images") private String[] images;
     @JsonProperty("description") private Description description;
+    private Stock stock;
 
     /**
-     * Create a product with the given SKU, name, price and stock
+     * JSON contructor to create a product with the given SKU, name, price and stock quantity
      * @param sku The sku of the product
      * @param name The name of the product
      * @param price the price of the product
-     * @param stock the stock of the product
+     * @param stock the stock quantity of the product
      * 
      * {@literal @}JsonProperty is used in serialization and deserialization
      * of the JSON object to the Java object in mapping the fields.  If a field
@@ -33,11 +34,24 @@ public class Product {
      * value, i.e. 0 for int
      */
     @JsonCreator
-    public Product(@JsonProperty("sku") int sku, @JsonProperty("name") String name, @JsonProperty("price") float price, @JsonProperty("stock") Stock stock) {
+    public Product(@JsonProperty("sku") int sku, @JsonProperty("name") String name, @JsonProperty("price") float price, @JsonProperty("stockQuantity") int stockQuantity) {
         this.sku = sku;
         this.name = name;
         this.price = price;
-        this.stock = stock;
+        this.stock = new Stock(stockQuantity);
+    }
+
+    /**
+     * Creates a product with the given SKU, name, price and stock object
+     * @param sku The sku of the product
+     * @param name The name of the product
+     * @param price the price of the product
+     * @param stock the stock object of the product
+     */
+    public Product(int sku, String name, float price, Stock stock) {
+        this.sku = sku;
+        this.name = name;
+        this.price = price;
     }
 
     /**
@@ -80,9 +94,24 @@ public class Product {
     /**
      * Retrieves the product's stock object
      * @return The stock object of the product
+     * 
+     * @JsonIgnore is used to ignore the stock object when serializing the product to JSON
      */
+    @JsonIgnore
     public Stock getStock() {
         return stock;
+    }
+
+    /**
+     * Gets the stock quantity of the product.
+     * 
+     * This method is used to serialize the stock quantity to JSON
+     * 
+     * @return The stock quantity of the product
+     */
+    @JsonProperty("stockQuantity")
+    public int getStockQuantity() {
+        return stock.getQuantity();
     }
 
     /**
