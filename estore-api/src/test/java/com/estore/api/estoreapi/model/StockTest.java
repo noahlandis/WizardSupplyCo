@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import com.estore.api.estoreapi.model.Stock.Status;
+
 /**
  * The unit test suite for the Stock class
  * 
@@ -27,49 +29,108 @@ public class StockTest {
     @Test
     public void testStatusInStock() {
         // Setup
-        boolean expectedIsLowStock = false;
-        boolean expectedIsOutOfStock = false;
         int quantity = 11;
-
-        // Invoke
         Stock stock = new Stock(quantity);
 
+        // Invoke
+        boolean actualIsLowStock = stock.isLowStock();
+        boolean actualIsOutOfStock = stock.isOutOfStock();
+
         // Analyze
-        assertEquals(expectedIsLowStock, stock.isLowStock());
-        assertEquals(expectedIsOutOfStock, stock.isOutOfStock());
+        assertEquals(false, actualIsLowStock);
+        assertEquals(false, actualIsOutOfStock);
     }
 
     @Test
     public void testStatusLowStock() {
         // Setup
-        boolean expectedIsLowStock = true;
-        boolean expectedIsOutOfStock = false;
         int quantity = 10;
-
-        // Invoke
         Stock stock = new Stock(quantity);
 
+        // Invoke
+        boolean actualIsLowStock = stock.isLowStock();
+        boolean actualIsOutOfStock = stock.isOutOfStock();
+
         // Analyze
-        assertEquals(expectedIsLowStock, stock.isLowStock());
-        assertEquals(expectedIsOutOfStock, stock.isOutOfStock());
+        assertEquals(true, actualIsLowStock);
+        assertEquals(false, actualIsOutOfStock);
     }
 
     @Test
     public void testStatusOutOfStock() {
         // Setup
-        boolean expectedIsLowStock = true;
-        boolean expectedIsOutOfStock = false;
-        int quantity = 10;
-
-        // Invoke
+        int quantity = 0;
         Stock stock = new Stock(quantity);
 
+        // Invoke
+        boolean actualIsLowStock = stock.isLowStock();
+        boolean actualIsOutOfStock = stock.isOutOfStock();
+
         // Analyze
-        assertEquals(expectedIsLowStock, stock.isLowStock());
-        assertEquals(expectedIsOutOfStock, stock.isOutOfStock());
+        assertEquals(false, actualIsLowStock);
+        assertEquals(true, actualIsOutOfStock);
     }
 
+    @Test
+    public void testAddStock() {
+        // Setup
+        Stock stock = new Stock(0);
+        int stockToAdd = 11;
+        int expectedNewQuantity = 11;
+     
+        // Invoke
+        stock.addStock(stockToAdd);
 
-  
-    
+        // Analyze
+        assertEquals(expectedNewQuantity, stock.getQuantity());
+        assertEquals(false, stock.isLowStock());
+        assertEquals(false, stock.isOutOfStock());
+    }
+
+    @Test
+    public void testRemoveStockValid() {
+        // Setup
+        Stock stock = new Stock(11);
+        int stockToRemove = 1;
+        int expectedNewQuantity = 10;
+
+        // Invoke
+        stock.removeStock(stockToRemove);
+
+        // Analyze
+        assertEquals(expectedNewQuantity, stock.getQuantity());
+        assertEquals(true, stock.isLowStock());
+        assertEquals(false, stock.isOutOfStock());
+    }
+
+    @Test
+    public void testRemoveStockMoreThanAvailable() {
+        // Setup
+        Stock stock = new Stock(11);
+        int stockToRemove = 100;
+        int expectedNewQuantity = 0;
+
+        // Invoke
+        stock.removeStock(stockToRemove);
+
+        // Analyze
+        assertEquals(expectedNewQuantity, stock.getQuantity());
+        assertEquals(false, stock.isLowStock());
+        assertEquals(true, stock.isOutOfStock());
+    }
+
+    @Test
+    public void testToString() {
+        // Setup
+        int quantity = 0;
+        Stock stock = new Stock(quantity);
+
+        String expectedString = String.format(Stock.STRING_FORMAT, quantity, Status.OUT_OF_STOCK);
+
+        // Invoke
+        String actualString = stock.toString();
+
+        // Analyze
+        assertEquals(expectedString, actualString);
+    }
 }
