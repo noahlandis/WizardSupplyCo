@@ -86,6 +86,15 @@ public class Product {
     }
 
     /**
+     * Checks if there is enough stock for the quantity passed in
+     * @param quantity The quantity to check
+     * @return True if there is enough stock for the quantity passed in
+     */
+    public boolean hasEnoughStockFor(int quantity) {
+        return stock.getQuantity() >= quantity;
+    }
+
+    /**
      * Retrieves the description of the product
      * @return Description object
      */
