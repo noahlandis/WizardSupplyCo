@@ -65,4 +65,39 @@ public class ProductTest {
         // Analyze
         assertEquals(expected_string,actual_string);
     }
+
+    // @Test
+    // public void testEquals() {
+    //     // Setup
+    //     int sku = 99;
+    //     String name = "The Vruum Broom by BroomCorp";
+    //     float price = 35.00f;
+    //     Stock stock = new Stock(0);
+
+    //     Product product1 = new Product(sku, name, price, stock);
+    //     Product product2 = new Product(sku, name, price, stock);
+
+    //     // Invoke
+    //     boolean actual = product1.equals(product2);
+
+    //     // Analyze
+    //     assertEquals(true, actual);
+    // }
+
+    @Test
+    public void testHasEnoughStockFor() {
+        // Setup
+        int sku = 99;
+        String name = "The Vruum Broom by BroomCorp";
+        float price = 35.00f;
+        Stock stock = new Stock(10);
+
+        Product product = new Product(sku, name, price, stock);
+
+        // Invoke
+        boolean actual = product.hasEnoughStockFor(5);
+
+        // Analyze
+        assertEquals(true, actual);
+    }
 }
