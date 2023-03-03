@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.estore.api.estoreapi.model.Product;
 
@@ -22,7 +22,7 @@ import com.estore.api.estoreapi.model.Product;
  * 
  * @author SWEN Faculty
  */
-@Component
+@Repository
 public class InventoryFileDAO implements InventoryDAO {
     private static final Logger LOG = Logger.getLogger(InventoryFileDAO.class.getName());
     Map<Integer,Product> products;   // Provides a local cache of the product objects
