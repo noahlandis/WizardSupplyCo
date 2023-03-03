@@ -52,6 +52,7 @@ public class Product {
         this.sku = sku;
         this.name = name;
         this.price = price;
+        this.stock = stock;
     }
 
     /**
