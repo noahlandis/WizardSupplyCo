@@ -65,6 +65,23 @@ public class Cart {
     public int getCount() { return productsMap.size(); }
 
     /**
+     * Retrieves the products in the cart
+     * @return The products in the cart
+     */
+    @JsonIgnore
+    public Map<Integer, Integer> getProducts() { return productsMap; }
+    
+    /**
+     * Retrieves the count of a product in the cart
+     * 
+     * @param sku The sku of the product to retrieve
+     * @return The count of the product in the cart
+     */
+    public int getProductCount(int sku) {
+        return productsMap.getOrDefault(sku, 0);
+    }
+
+    /**
      * Adds a product to the cart
      * @param sku The sku of the product to add
      * @param quantity The quantity of the product to add
