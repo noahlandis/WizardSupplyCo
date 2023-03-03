@@ -99,35 +99,35 @@ public class CartsController {
         }
     }
 
-    /**
-     * Creates a {@linkplain Cart cart} for the user with the given userId
-     * 
-     * @param cart - The {@link Cart cart} to create
-     * 
-     * @return ResponseEntity with created {@link Cart cart} object and HTTP status of CREATED<br>
-     * ResponseEntity with HTTP status of CONFLICT if the cart already exists<br>
-     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-     * 
-     * Example: Create a cart for user with id 1
-     * POST http://localhost:8080/carts/1
-     */
-    @PostMapping("/{userId}")
-    public ResponseEntity<Cart> createCart(@PathVariable int userId) {
-        LOG.info("POST /carts/" + userId);
+    // /**
+    //  * Creates a {@linkplain Cart cart} for the user with the given userId
+    //  * 
+    //  * @param cart - The {@link Cart cart} to create
+    //  * 
+    //  * @return ResponseEntity with created {@link Cart cart} object and HTTP status of CREATED<br>
+    //  * ResponseEntity with HTTP status of CONFLICT if the cart already exists<br>
+    //  * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+    //  * 
+    //  * Example: Create a cart for user with id 1
+    //  * POST http://localhost:8080/carts/1
+    //  */
+    // @PostMapping("/{userId}")
+    // public ResponseEntity<Cart> createCart(@PathVariable int userId) {
+    //     LOG.info("POST /carts/" + userId);
 
-        try {
-            Cart cart = cartsDao.createCart(userId);
-            if (cart == null) {
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
-            }
+    //     try {
+    //         Cart cart = cartsDao.createCart(userId);
+    //         if (cart == null) {
+    //             return new ResponseEntity<>(HttpStatus.CONFLICT);
+    //         }
 
-            return new ResponseEntity<Cart>(cart, HttpStatus.CREATED);
-        }
-        catch(IOException e) {
-            LOG.log(Level.SEVERE, e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    //         return new ResponseEntity<Cart>(cart, HttpStatus.CREATED);
+    //     }
+    //     catch(IOException e) {
+    //         LOG.log(Level.SEVERE, e.getLocalizedMessage());
+    //         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    //     }
+    // }
 
     /**
      * Adds the given quantity of the {@linkplain Product product} with the given sku to the
@@ -224,23 +224,23 @@ public class CartsController {
      * Example: Delete the cart for user with id 1
      * DELETE http://localhost:8080/carts/1
      */
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Cart> deleteCart(@PathVariable int userId) {
-        LOG.info("DELETE /carts/" + userId);
+    // @DeleteMapping("/{userId}")
+    // public ResponseEntity<Cart> deleteCart(@PathVariable int userId) {
+    //     LOG.info("DELETE /carts/" + userId);
 
-        try {
-            boolean deleted = cartsDao.deleteCart(userId);
-            if (!deleted) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
+    //     try {
+    //         boolean deleted = cartsDao.deleteCart(userId);
+    //         if (!deleted) {
+    //             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    //         }
 
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        catch(IOException e) {
-            LOG.log(Level.SEVERE, e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    //         return new ResponseEntity<>(HttpStatus.OK);
+    //     }
+    //     catch(IOException e) {
+    //         LOG.log(Level.SEVERE, e.getLocalizedMessage());
+    //         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    //     }
+    // }
 
     // /**
     //  * Responds to the GET request for the total of the {@linkplain Cart cart} for the user with
