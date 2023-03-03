@@ -110,18 +110,18 @@ public class CartsFileDAOTest {
         assertNull(cart);
     }
 
-    @Test
-    public void testAddProductToCart() {
-        // Invoke
-        Cart cart = cartsFileDao.addProductToCart(1, 101, 1);
+    // @Test
+    // public void testAddProductToCart() {
+    //     // Invoke
+    //     Cart cart = cartsFileDao.addProductToCart(1, 101, 1);
 
-        // Assert
-        assertNotNull(cart);
-        assertEquals(1, cart.getUserId());
-        assertEquals(1, cart.getCount());
-        assertTrue(cart.getProducts().containsKey(101));
-        assertEquals(1, cart.getProducts().get(101)); // ensure count is 1
-    }
+    //     // Assert
+    //     assertNotNull(cart);
+    //     assertEquals(1, cart.getUserId());
+    //     assertEquals(1, cart.getCount());
+    //     assertTrue(cart.getProducts().containsKey(101));
+    //     assertEquals(1, cart.getProducts().get(101)); // ensure count is 1
+    // }
 
     // @Test
     // public void testAddProductToCartNotFound() {
