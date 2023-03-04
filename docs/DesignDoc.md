@@ -97,7 +97,7 @@ with the e-store application.
 
 > _You must also provide sequence diagrams as is relevant to a particular aspects 
 > of the design that you are describing.  For example, in e-store you might create a 
-> sequence diagram of a customer searching for an item and adding to their cart. 
+> sequence diagram of a customer searching for a product and adding to their cart. 
 > Be sure to include an relevant HTTP reuqests from the client-side to the server-side 
 > to help illustrate the end-to-end flow._
 
