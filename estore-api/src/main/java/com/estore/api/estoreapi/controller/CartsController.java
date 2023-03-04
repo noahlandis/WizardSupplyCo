@@ -209,67 +209,56 @@ public class CartsController {
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      * 
      * Example: Remove all items with sku 3 from the cart for user with id 1
-     * DELETE http://localhost:8080/carts/1/items/3
+     * DELETE http://localhost:8080/carts/1/products/3
      */
+    @DeleteMapping("/{userId}/products/{sku}")
+    public ResponseEntity<Cart> removeAllProductFromCart(@PathVariable int userId, @PathVariable int sku) {
+        LOG.info("DELETE /carts/" + userId + "/products/" + sku);
+
+        try {
+            Cart cart = cartsDao.removeProductFromCart(userId, sku);
+
+            if (cart == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            return new ResponseEntity<Cart>(cart, HttpStatus.OK);
+        }
+        catch(IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     /**
-     * Deletes the {@linkplain Cart cart} for the user with the given userId
+     * Removes all of the {@linkplain Product products} from the {@linkplain Cart cart} for the user with the given userId
      * 
      * @param userId The id of the {@link User user} who owns the cart
      * 
-     * @return ResponseEntity with HTTP status of OK<br>
+     * @return ResponseEntity with updated {@link Cart cart} object and HTTP status of OK<br>
      * ResponseEntity with HTTP status of NOT_FOUND if the cart does not exist<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      * 
-     * Example: Delete the cart for user with id 1
-     * DELETE http://localhost:8080/carts/1
+     * Example: Remove all items from the cart for user with id 1
+     * DELETE http://localhost:8080/carts/1/products
      */
-    // @DeleteMapping("/{userId}")
-    // public ResponseEntity<Cart> deleteCart(@PathVariable int userId) {
-    //     LOG.info("DELETE /carts/" + userId);
+    @DeleteMapping("/{userId}/products")
+    public ResponseEntity<Cart> removeAllProductsFromCart(@PathVariable int userId) {
+        LOG.info("DELETE /carts/" + userId + "/products");
 
-    //     try {
-    //         boolean deleted = cartsDao.deleteCart(userId);
-    //         if (!deleted) {
-    //             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    //         }
+        try {
+            Cart cart = cartsDao.clearCart(userId);
 
-    //         return new ResponseEntity<>(HttpStatus.OK);
-    //     }
-    //     catch(IOException e) {
-    //         LOG.log(Level.SEVERE, e.getLocalizedMessage());
-    //         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    //     }
-    // }
+            if (cart == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
 
-    // /**
-    //  * Responds to the GET request for the total of the {@linkplain Cart cart} for the user with
-    //  * the given userId
-    //  * 
-    //  * @param userId The id of the {@link User user} who owns the cart
-    //  * 
-    //  * @return ResponseEntity with the price of the {@link Cart cart} and HTTP status of OK<br>
-    //  * ResponseEntity with HTTP status of NOT_FOUND if the cart does not exist<br>
-    //  * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-    //  * 
-    //  * Example: Get the total of the cart for user with id 1
-    //  * GET http://localhost:8080/carts/{userId}/total
-    //  */
-    // @GetMapping("/{userId}/total")
-    // public ResponseEntity<Double> getCartTotal(@PathVariable int userId) {
-    //     LOG.info("GET /carts/" + userId + "/total");
+            return new ResponseEntity<Cart>(cart, HttpStatus.OK);
+        }
+        catch(IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-    //     try {
-    //         Double total = cartsDao.getCartTotal(userId);
-    //         if (total == 0) {
-    //             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    //         }
-
-    //         return new ResponseEntity<Double>(total, HttpStatus.OK);
-    //     }
-    //     catch(IOException e) {
-    //         LOG.log(Level.SEVERE, e.getLocalizedMessage());
-    //         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    //     }
-    // }
 }

@@ -141,6 +141,18 @@ public class Cart {
     }
 
     /**
+     * Removes all of a product from the cart
+     * @param sku The sku of the product to remove
+     * 
+     * @return true if the product was removed from the cart, false otherwise
+     */
+    public boolean removeProduct(int sku) {
+        LOG.info("Removing all of product with sku " + sku + " from cart for user " + userId);
+
+        return removeProduct(sku, getProductCount(sku));
+    }
+
+    /**
      * Clears the cart
      * @param sku The sku of the product to remove
      * @param quantity The quantity of the product to remove

@@ -185,6 +185,30 @@ public class CartsFileDAO implements CartsDAO {
      * {@inheritDoc}
      */
     @Override
+    public Cart removeProductFromCart(int userId, int sku) {
+        synchronized (carts) {
+            Cart cart = carts.get(userId);
+            if (cart != null) {
+                boolean success = cart.removeProduct(sku);
+                try {
+                    save();
+                } catch (IOException e) {
+                    LOG.warning("Failed to save cart for user " + userId + ". " + e.getMessage());
+                }
+                
+                // If the product could not be removed from the cart, return null
+                if (!success) 
+                    return null;
+            }
+
+            return cart;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Cart clearCart(int userId) {
         synchronized (carts) {
             Cart cart = carts.get(userId);
@@ -223,24 +247,4 @@ public class CartsFileDAO implements CartsDAO {
 
         return false;
     }
-
-    // /**
-    //  * {@inheritDoc}
-    //  */
-    // @Override
-    // public double getCartTotal(int userId) {
-    //     synchronized (carts) {
-    //         Cart cart = carts.get(userId);
-    //         if (cart != null) {
-    //             try {
-    //                 // round to 2 decimal places
-    //                 return Math.round(cart.getTotalPrice() * 100.0) / 100.0;
-    //             } catch (IOException e) {
-    //                 LOG.warning("Failed to get cart total for user " + userId + ". " + e.getMessage());
-    //             }
-    //         }
-    //     }
-
-    //     return 0;
-    // }
 }
