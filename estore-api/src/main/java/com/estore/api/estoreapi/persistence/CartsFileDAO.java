@@ -26,7 +26,7 @@ public class CartsFileDAO implements CartsDAO {
 
     private static final Logger LOG = Logger.getLogger(CartsFileDAO.class.getName());
 
-    Map<Integer,Cart> carts;   // Provides a local cache of the cart objects
+    private Map<Integer,Cart> carts;   // Provides a local cache of the cart objects
                                     // so that we don't need to read from the file
                                    // each time
     private ObjectMapper objectMapper;  // Provides conversion between Cart
