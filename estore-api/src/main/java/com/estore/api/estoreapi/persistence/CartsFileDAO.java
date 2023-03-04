@@ -232,7 +232,7 @@ public class CartsFileDAO implements CartsDAO {
     public boolean deleteCart(int userId) {
         synchronized (carts) {
             for (Cart cart : carts.values()) {
-                if (!(cart.getUserId() == userId))
+                if (cart.getUserId() != userId)
                     continue;
 
                 carts.remove(cart.getUserId());
