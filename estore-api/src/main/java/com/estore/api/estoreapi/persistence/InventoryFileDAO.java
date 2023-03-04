@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.estore.api.estoreapi.model.Product;
 
@@ -22,7 +22,7 @@ import com.estore.api.estoreapi.model.Product;
  * 
  * @author SWEN Faculty
  */
-@Component
+@Repository
 public class InventoryFileDAO implements InventoryDAO {
     private static final Logger LOG = Logger.getLogger(InventoryFileDAO.class.getName());
     Map<Integer,Product> products;   // Provides a local cache of the product objects
@@ -43,6 +43,7 @@ public class InventoryFileDAO implements InventoryDAO {
      * @throws IOException when file cannot be accessed or read from
      */
     public InventoryFileDAO(@Value("${products.file}") String filename,ObjectMapper objectMapper) throws IOException {
+        LOG.info("InventoryFileDAO created");
         this.filename = filename;
         this.objectMapper = objectMapper;
         load();  // load the products from the file
@@ -99,6 +100,7 @@ public class InventoryFileDAO implements InventoryDAO {
      * @throws IOException when file cannot be accessed or written to
      */
     private boolean save() throws IOException {
+        LOG.info("Saving products to file: " + filename);
         Product[] productArray = getProductsArray();
 
         // Serializes the Java Objects to JSON objects into the file
@@ -118,6 +120,7 @@ public class InventoryFileDAO implements InventoryDAO {
      * @throws IOException when file cannot be accessed or read from
      */
     private boolean load() throws IOException {
+        LOG.info("Loading products from file: " + filename);
         products = new TreeMap<>();
         nextSku = 0;
 
