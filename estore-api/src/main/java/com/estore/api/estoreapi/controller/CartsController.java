@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -99,36 +98,6 @@ public class CartsController {
         }
     }
 
-    // /**
-    //  * Creates a {@linkplain Cart cart} for the user with the given userId
-    //  * 
-    //  * @param cart - The {@link Cart cart} to create
-    //  * 
-    //  * @return ResponseEntity with created {@link Cart cart} object and HTTP status of CREATED<br>
-    //  * ResponseEntity with HTTP status of CONFLICT if the cart already exists<br>
-    //  * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-    //  * 
-    //  * Example: Create a cart for user with id 1
-    //  * POST http://localhost:8080/carts/1
-    //  */
-    // @PostMapping("/{userId}")
-    // public ResponseEntity<Cart> createCart(@PathVariable int userId) {
-    //     LOG.info("POST /carts/" + userId);
-
-    //     try {
-    //         Cart cart = cartsDao.createCart(userId);
-    //         if (cart == null) {
-    //             return new ResponseEntity<>(HttpStatus.CONFLICT);
-    //         }
-
-    //         return new ResponseEntity<Cart>(cart, HttpStatus.CREATED);
-    //     }
-    //     catch(IOException e) {
-    //         LOG.log(Level.SEVERE, e.getLocalizedMessage());
-    //         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    //     }
-    // }
-
     /**
      * Adds the given quantity of the {@linkplain Product product} with the given sku to the
      * {@linkplain Cart cart} for the user with the given userId
@@ -141,12 +110,12 @@ public class CartsController {
      * ResponseEntity with HTTP status of NOT_FOUND if the cart or product does not exist<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      * 
-     * Example: Add 2 items with sku 3 to the cart for user with id 1
-     * PUT http://localhost:8080/carts/1/items/3?quantity=2
+     * Example: Add 2 products with sku 3 to the cart for user with id 1
+     * PUT http://localhost:8080/carts/1/products/3?quantity=2
      */
-    @PutMapping("/{userId}/items/{sku}")
+    @PutMapping("/{userId}/products/{sku}")
     public ResponseEntity<Cart> addProductToCart(@PathVariable int userId, @PathVariable int sku, @RequestParam int quantity) {
-        LOG.info("PUT /carts/" + userId + "/items/" + sku + "?quantity=" + quantity);
+        LOG.info("PUT /carts/" + userId + "/products/" + sku + "?quantity=" + quantity);
 
         try {
             Cart cart = cartsDao.addProductToCart(userId, sku, quantity);
@@ -175,12 +144,12 @@ public class CartsController {
      * ResponseEntity with HTTP status of NOT_FOUND if the cart or product does not exist<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      * 
-     * Example: Remove 2 items with sku 3 from the cart for user with id 1
-     * DELETE http://localhost:8080/carts/1/items/3?quantity=2
+     * Example: Remove 2 products with sku 3 from the cart for user with id 1
+     * DELETE http://localhost:8080/carts/1/products/3?quantity=2
      */
-    @DeleteMapping("/{userId}/items/{sku}")
+    @DeleteMapping("/{userId}/products/{sku}")
     public ResponseEntity<Cart> removeProductFromCart(@PathVariable int userId, @PathVariable int sku, @RequestParam int quantity) {
-        LOG.info("DELETE /carts/" + userId + "/items/" + sku + "?quantity=" + quantity);
+        LOG.info("DELETE /carts/" + userId + "/products/" + sku + "?quantity=" + quantity);
 
         try {
             Cart cart = cartsDao.removeProductFromCart(userId, sku, quantity);
@@ -208,7 +177,7 @@ public class CartsController {
      * ResponseEntity with HTTP status of NOT_FOUND if the cart or product does not exist<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      * 
-     * Example: Remove all items with sku 3 from the cart for user with id 1
+     * Example: Remove all products with sku 3 from the cart for user with id 1
      * DELETE http://localhost:8080/carts/1/products/3
      */
     @DeleteMapping("/{userId}/products/{sku}")
@@ -239,7 +208,7 @@ public class CartsController {
      * ResponseEntity with HTTP status of NOT_FOUND if the cart does not exist<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      * 
-     * Example: Remove all items from the cart for user with id 1
+     * Example: Remove all products from the cart for user with id 1
      * DELETE http://localhost:8080/carts/1/products
      */
     @DeleteMapping("/{userId}/products")
