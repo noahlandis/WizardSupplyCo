@@ -65,12 +65,14 @@ public class Cart {
     public int getCount() { return productsMap.size(); }
 
     /**
-     * Retrieves the products in the cart
-     * @return The products in the cart
+     * Checks if the product with the given sku is in the cart
+     * @param sku
+     * @return true if the product is in the cart, false otherwise
      */
-    @JsonIgnore
-    public Map<Integer, Integer> getProducts() { return productsMap; }
-    
+    public boolean containsProduct(int sku) {
+        return productsMap.containsKey(sku);
+    }
+
     /**
      * Retrieves the count of a product in the cart
      * 
