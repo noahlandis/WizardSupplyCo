@@ -14,9 +14,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Customer extends User{
     @JsonIgnore() private Cart cart;
 
+    /**
+     * This creates a user with the given userName and userId
+     * 
+     * @param userName - userName for the customer
+     * @param userId - userId of the 
+     */
     public Customer(String userName, int userId){
         super(userId,userName);
-        //cart = new Cart(userId);
+        cart = new Cart(userId);
     }
 
     public Cart getCart(){

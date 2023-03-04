@@ -36,25 +36,19 @@ public abstract class User {
      * Changes the state of the boolean to represent 
      * the user is logged out
      */
-    public void logIn(){
-        this.loggedIn = true;
-    }
+    public void logIn() {this.loggedIn = true;}
 
     /**
      * Changes the state of the boolean to represent 
      * the user is logged in
      */
-    public void logOut(){
-        this.loggedIn = false;
-    }
+    public void logOut() {this.loggedIn = false;}
 
     /**
      * Returns the username of the user
      * @return userName
      */
-    public String getUserName(){
-        return userName;
-    }
+    public String getUserName() {return userName;}
 
     /**
      * Checks if the userName of the user is the same as the name of the
@@ -70,9 +64,7 @@ public abstract class User {
      * Returns the value of isAdmin
      * @return isAdmin
      */
-    public boolean isAdmin(){
-        return isAdmin;
-    }
+        public boolean isAdmin() {return isAdmin;}
 
     /**
      * {@inheritDoc}
