@@ -12,14 +12,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Priyank Patel
  */
 public class Customer extends User{
-    //@JsonIgnore("cart") private Cart cart;
+    @JsonIgnore() private Cart cart;
 
     public Customer(String userName, int userId){
         super(userId,userName);
         //cart = new Cart(userId);
     }
 
-    // public Cart getCart(){
-    //     return this.cart;
-    // }
+    public Cart getCart(){
+        return this.cart;
+    }
 }
