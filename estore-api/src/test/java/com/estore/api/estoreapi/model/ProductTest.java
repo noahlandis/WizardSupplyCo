@@ -1,6 +1,7 @@
 package com.estore.api.estoreapi.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -81,7 +82,7 @@ public class ProductTest {
     //     boolean actual = product1.equals(product2);
 
     //     // Analyze
-    //     assertEquals(true, actual);
+    //     assertTrue(actual);
     // }
 
     @Test
@@ -98,6 +99,6 @@ public class ProductTest {
         boolean actual = product.hasEnoughStockFor(5);
 
         // Analyze
-        assertEquals(true, actual);
+        assertTrue(actual);
     }
 }
