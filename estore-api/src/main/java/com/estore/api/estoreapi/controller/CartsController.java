@@ -181,7 +181,7 @@ public class CartsController {
      * DELETE http://localhost:8080/carts/1/products/3
      */
     @DeleteMapping("/{userId}/products/{sku}")
-    public ResponseEntity<Cart> removeAllProductFromCart(@PathVariable int userId, @PathVariable int sku) {
+    public ResponseEntity<Cart> removeProductFromCart(@PathVariable int userId, @PathVariable int sku) {
         LOG.info("DELETE /carts/" + userId + "/products/" + sku);
 
         try {
