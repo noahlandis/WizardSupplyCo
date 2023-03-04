@@ -95,19 +95,20 @@ public class Cart {
         int currentQuantity = productsMap.getOrDefault(sku, 0);
         int newQuantity = currentQuantity + quantity;
 
+        boolean result = false;
         // check the inventory to see if the product is available at the new quantity
         try {
             if (inventoryDao.getProduct(sku).hasEnoughStockFor(newQuantity)) {
                 productsMap.put(sku, newQuantity);
                 LOG.info("Product with sku " + sku + " added to cart for user " + userId);
-                return true;
+                result = true;
             }
         } catch (IOException e) {
             LOG.severe("Error getting inventory for sku " + sku);
-            return false;
+            result = false;
         }
 
-        return false;
+        return result;
     }
 
     /**
