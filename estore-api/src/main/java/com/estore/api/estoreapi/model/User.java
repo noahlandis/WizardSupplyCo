@@ -18,6 +18,7 @@ public abstract class User {
     @JsonProperty("userId") private int userId;
     @JsonProperty("userName") private String userName;
     @JsonProperty("loggedIn") private boolean loggedIn;
+    @JsonProperty("isAdmin") private boolean isAdmin;
 
     /**
      * Create a User with the given userID, userName and the default
@@ -63,6 +64,14 @@ public abstract class User {
      */
     public boolean userNameEquals(String userNameToCheck){
         return this.userName.equals(userNameToCheck);
+    }
+
+    /**
+     * Returns the value of isAdmin
+     * @return isAdmin
+     */
+    public boolean isAdmin(){
+        return isAdmin;
     }
 
     /**
