@@ -180,24 +180,24 @@ public class CartsController {
      * Example: Remove all products with sku 3 from the cart for user with id 1
      * DELETE http://localhost:8080/carts/1/products/3
      */
-    @DeleteMapping("/{userId}/products/{sku}")
-    public ResponseEntity<Cart> removeProductFromCart(@PathVariable int userId, @PathVariable int sku) {
-        LOG.info("DELETE /carts/" + userId + "/products/" + sku);
+    // @DeleteMapping("/{userId}/products/{sku}")
+    // public ResponseEntity<Cart> removeProductFromCart(@PathVariable int userId, @PathVariable int sku) {
+    //     LOG.info("DELETE /carts/" + userId + "/products/" + sku);
 
-        try {
-            Cart cart = cartsDao.removeProductFromCart(userId, sku);
+    //     try {
+    //         Cart cart = cartsDao.removeProductFromCart(userId, sku);
 
-            if (cart == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
+    //         if (cart == null) {
+    //             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    //         }
 
-            return new ResponseEntity<Cart>(cart, HttpStatus.OK);
-        }
-        catch(IOException e) {
-            LOG.log(Level.SEVERE, e.getLocalizedMessage());
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    //         return new ResponseEntity<Cart>(cart, HttpStatus.OK);
+    //     }
+    //     catch(IOException e) {
+    //         LOG.log(Level.SEVERE, e.getLocalizedMessage());
+    //         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    //     }
+    // }
 
     /**
      * Removes all of the {@linkplain Product products} from the {@linkplain Cart cart} for the user with the given userId

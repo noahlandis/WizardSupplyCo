@@ -26,10 +26,11 @@ public abstract class User {
      * @param userId The User ID of the user
      * @param userName The Username of the user
      */
-    public User(@JsonProperty("userId") int userId,@JsonProperty("userName") String userName){
+    public User(@JsonProperty("userId") int userId, @JsonProperty("userName") String userName){
         this.userId = userId;
         this.userName = userName;
         this.loggedIn = true;
+        if(userId == 0){isAdmin = true;}    else isAdmin = false;
     }
     
     /**
@@ -43,6 +44,12 @@ public abstract class User {
      * the user is logged in
      */
     public void logOut() {this.loggedIn = false;}
+
+    /**
+     * Returns the logged in state of the user
+     * @return loggedIn
+     */
+    public boolean isLoggedIn(){return loggedIn;}
 
     /**
      * Returns the username of the user
@@ -71,6 +78,6 @@ public abstract class User {
      */
     @Override
     public String toString(){
-        return String.format(STRING_FORMAT,userId,userName);
+        return String.format(STRING_FORMAT, userId, userName);
     }
 }
