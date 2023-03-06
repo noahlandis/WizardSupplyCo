@@ -1,6 +1,8 @@
 package com.estore.api.estoreapi.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -37,8 +39,8 @@ public class StockTest {
         boolean actualIsOutOfStock = stock.isOutOfStock();
 
         // Analyze
-        assertEquals(false, actualIsLowStock);
-        assertEquals(false, actualIsOutOfStock);
+        assertFalse(actualIsLowStock);
+        assertFalse(actualIsOutOfStock);
     }
 
     @Test
@@ -52,8 +54,8 @@ public class StockTest {
         boolean actualIsOutOfStock = stock.isOutOfStock();
 
         // Analyze
-        assertEquals(true, actualIsLowStock);
-        assertEquals(false, actualIsOutOfStock);
+        assertTrue(actualIsLowStock);
+        assertFalse(actualIsOutOfStock);
     }
 
     @Test
@@ -67,8 +69,8 @@ public class StockTest {
         boolean actualIsOutOfStock = stock.isOutOfStock();
 
         // Analyze
-        assertEquals(false, actualIsLowStock);
-        assertEquals(true, actualIsOutOfStock);
+        assertFalse(actualIsLowStock);
+        assertTrue(actualIsOutOfStock);
     }
 
     @Test
@@ -83,8 +85,8 @@ public class StockTest {
 
         // Analyze
         assertEquals(expectedNewQuantity, stock.getQuantity());
-        assertEquals(false, stock.isLowStock());
-        assertEquals(false, stock.isOutOfStock());
+        assertFalse(stock.isLowStock());
+        assertFalse(stock.isOutOfStock());
     }
 
     @Test
@@ -99,8 +101,8 @@ public class StockTest {
 
         // Analyze
         assertEquals(expectedNewQuantity, stock.getQuantity());
-        assertEquals(true, stock.isLowStock());
-        assertEquals(false, stock.isOutOfStock());
+        assertTrue(stock.isLowStock());
+        assertFalse(stock.isOutOfStock());
     }
 
     @Test
@@ -115,8 +117,8 @@ public class StockTest {
 
         // Analyze
         assertEquals(expectedNewQuantity, stock.getQuantity());
-        assertEquals(false, stock.isLowStock());
-        assertEquals(true, stock.isOutOfStock());
+        assertFalse(stock.isLowStock());
+        assertTrue(stock.isOutOfStock());
     }
 
     @Test
