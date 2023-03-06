@@ -5,6 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests for the User class and its Child classes
+ * @author Priyank Patel
+ */
+
 @Tag("Model-tier")
 public class UserTest {
     @Test
