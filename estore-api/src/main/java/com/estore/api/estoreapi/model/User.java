@@ -58,6 +58,12 @@ public abstract class User {
     public String getUserName() {return userName;}
 
     /**
+     * Returns the userId of the user
+     * @return userId
+     */
+    public int getUserId() {return userId;}
+
+    /**
      * Checks if the userName of the user is the same as the name of the
      * user passed in.
      * @param userNameToCheck The name to check
