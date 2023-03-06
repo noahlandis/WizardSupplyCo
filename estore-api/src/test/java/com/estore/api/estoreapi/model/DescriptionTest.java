@@ -1,5 +1,8 @@
 package com.estore.api.estoreapi.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import java.util.HashSet;
@@ -10,7 +13,7 @@ import java.util.HashSet;
 @Tag("Model-tier")
 public class DescriptionTest {
     @Test
-    public void testConstructor() {
+    public void testConstructorSummaryAndTags() {
         // Setup
         String expectedSummary = "A REALLY Fast Broom!";
         HashSet<String> expectedTags = new HashSet<>();
@@ -24,6 +27,21 @@ public class DescriptionTest {
         // Analyze
         assertEquals(expectedSummary, description.getSummary());
         assertEquals(expectedTags, description.getTags());
+    }
+
+
+    @Test
+    public void testConstructorSummaryOnly() {
+        // Setup
+        String expectedSummary = "A REALLY Fast Broom!";
+
+        // Invoke
+        Description description = new Description(expectedSummary);
+
+        // Analyze
+        assertEquals(expectedSummary, description.getSummary());
+        assertNotNull(description.getTags());
+        assertTrue(description.getTags().isEmpty());
     }
 
     @Test
