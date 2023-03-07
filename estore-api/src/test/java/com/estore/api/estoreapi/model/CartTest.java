@@ -27,6 +27,7 @@ import com.estore.api.estoreapi.persistence.InventoryFileDAO;
 public class CartTest {
     private static final Logger LOG = Logger.getLogger(Cart.class.getName());
     private Cart testCart;
+    
 
      /**
      * Before each test, we will create and inject an InventoryFileDAO to
@@ -34,7 +35,7 @@ public class CartTest {
      * @throws IOException
      */
     @BeforeEach
-    public void setupCartsFileDAO() throws IOException {
+    public void setupInventoryFileDAO() throws IOException {
         // set up mock inventory dao with mock products
         InventoryFileDAO inventoryDao = mock(InventoryFileDAO.class);
         Product[] mockProducts = new Product[3];
