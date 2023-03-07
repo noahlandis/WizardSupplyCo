@@ -1,6 +1,7 @@
 package com.estore.api.estoreapi.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -163,4 +164,66 @@ public class CartsFileDAOTest {
         assertTrue(cart.containsProduct(101));
         assertEquals(9, cart.getProductCount(101)); // ensure count is 9
     }
+
+    // remove product from cart no quantity
+    @Test
+    public void testRemoveProductFromCartNoQuantity() {
+        // Setup
+        cartsFileDao.addProductToCart(1, 101, 10);
+
+        // Invoke
+        Cart cart = cartsFileDao.removeProductFromCart(1, 101);
+
+        // Assert
+        assertNotNull(cart);
+        assertEquals(1, cart.getUserId());
+        assertEquals(0, cart.getCount());
+        assertTrue(!cart.containsProduct(101));
+    }
+
+    @Test
+    public void testRemoveProductFromCartNotFound() {
+        // Invoke
+        Cart cart = cartsFileDao.removeProductFromCart(1, 104, 1);
+
+        // Assert
+        assertNull(cart);
+    }
+
+    @Test
+    public void testClearCart() {
+        // Setup
+        cartsFileDao.addProductToCart(1, 101, 10);
+
+        // Invoke
+        Cart cart = cartsFileDao.clearCart(1);
+
+        // Assert
+        assertNotNull(cart);
+        assertEquals(1, cart.getUserId());
+        assertEquals(0, cart.getCount());
+        assertTrue(!cart.containsProduct(101));
+    }
+
+    // delete cart
+    @Test
+    public void testDeleteCart() {
+        // Invoke
+        boolean result = cartsFileDao.deleteCart(2);
+
+        // Assert
+        assertTrue(result);
+        assertNull(cartsFileDao.getCart(2));
+    }
+
+    @Test
+    public void testDeleteCartNotFound() {
+        // Invoke
+        boolean result = cartsFileDao.deleteCart(4);
+
+        // Assert
+        assertFalse(result);
+
+    }
+
 }
