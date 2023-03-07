@@ -43,13 +43,19 @@ public class CartsFileDAOTest {
         testCarts[1] = new Cart(2);
         testCarts[2] = new Cart(3);
 
-        // set up mock inventory dao with mock products
+        // Set up mock inventory dao with mock products
         InventoryFileDAO inventoryDao = mock(InventoryFileDAO.class);
         Product[] mockProducts = new Product[3];
-        mockProducts[0] = new Product(101,"Newt Lungs (10 pack)",14.99f, new Stock(100));
-        mockProducts[1] = new Product(102,"Frostwing Dragon Egg",20.99f, new Stock(100));
-        mockProducts[2] = new Product(103,"Malachite Heartstones (3 pack)",50.99f, new Stock(100));
+        mockProducts[0] = new Product(101, "Newt Lungs (10 pack)", 14.99f, new Stock(100));
+        mockProducts[1] = new Product(102, "Frostwing Dragon Egg", 20.99f, new Stock(100));
+        mockProducts[2] = new Product(103, "Malachite Heartstones (3 pack)", 50.99f, new Stock(100));
+
+        // Mock the inventory dao methods
         when(inventoryDao.getProducts()).thenReturn(mockProducts);
+        when(inventoryDao.getProduct(101)).thenReturn(mockProducts[0]);
+        when(inventoryDao.getProduct(102)).thenReturn(mockProducts[1]);
+        when(inventoryDao.getProduct(103)).thenReturn(mockProducts[2]);
+        when(inventoryDao.getProduct(104)).thenReturn(null);
 
         // When the object mapper is supposed to read from the file
         // the mock object mapper will return the product array above
@@ -110,50 +116,51 @@ public class CartsFileDAOTest {
         assertNull(cart);
     }
 
-    // @Test
-    // public void testAddProductToCart() {
-    //     // Invoke
-    //     Cart cart = cartsFileDao.addProductToCart(1, 101, 1);
+    @Test
+    public void testAddProductToCart() {
+        // Invoke
+        Cart cart = cartsFileDao.addProductToCart(1, 101, 1);
 
-    //     // Assert
-    //     assertNotNull(cart);
-    //     assertEquals(1, cart.getUserId());
-    //     assertEquals(1, cart.getCount());
-    //     assertTrue(cart.getProducts().containsKey(101));
-    //     assertEquals(1, cart.getProducts().get(101)); // ensure count is 1
-    // }
+        // Assert
+        assertNotNull(cart);
+        assertEquals(1, cart.getUserId());
+        assertEquals(1, cart.getCount());
+        assertTrue(cart.containsProduct(101));
+        assertEquals(1, cart.getProductCount(101)); // ensure count is 1
+    }
 
-    // @Test
-    // public void testAddProductToCartNotFound() {
-    //     // Invoke
-    //     Cart cart = cartsFileDao.addProductToCart(1, 104, 1);
+    @Test
+    public void testAddProductToCartNotFound() {
+        // Invoke
+        Cart cart = cartsFileDao.addProductToCart(1, 104, 1);
 
-    //     // Assert
-    //     assertNull(cart);
-    // }
+        // Assert
+        assertNull(cart);
+    }
 
-    // @Test
-    // public void testAddProductToCartNotEnoughStock() {
-    //     // Invoke
-    //     Cart cart = cartsFileDao.addProductToCart(1, 101, 101);
+    @Test
+    public void testAddProductToCartNotEnoughStock() {
+        // Invoke
+        Cart cart = cartsFileDao.addProductToCart(1, 101, 101);
 
-    //     // Assert
-    //     assertNull(cart);
-    // }
+        // Assert
+        assertNull(cart);
+        assertEquals(0, cartsFileDao.getCart(1).getCount());
+    }
 
-    // @Test
-    // public void testRemoveProductFromCart() {
-    //     // Setup
-    //     cartsFileDao.addProductToCart(1, 101, 10);
+    @Test
+    public void testRemoveProductFromCart() {
+        // Setup
+        cartsFileDao.addProductToCart(1, 101, 10);
 
-    //     // Invoke
-    //     Cart cart = cartsFileDao.removeProductFromCart(1, 101, 1);
+        // Invoke
+        Cart cart = cartsFileDao.removeProductFromCart(1, 101, 1);
 
-    //     // Assert
-    //     assertNotNull(cart);
-    //     assertEquals(1, cart.getUserId());
-    //     assertEquals(9, cart.getCount());
-    //     assertEquals(true, cart.getProducts().containsKey(101));
-    //     assertEquals(9, cart.getProducts().get(0)); // ensure count is 9
-    // }
+        // Assert
+        assertNotNull(cart);
+        assertEquals(1, cart.getUserId());
+        assertEquals(1, cart.getCount());
+        assertTrue(cart.containsProduct(101));
+        assertEquals(9, cart.getProductCount(101)); // ensure count is 9
+    }
 }
