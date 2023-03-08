@@ -71,7 +71,7 @@ public class CartsFileDAOTest {
         // Invoke
         Cart[] carts = cartsFileDao.getCarts();
 
-        // Assert
+        // Analyze
         assertTrue(carts instanceof Cart[]);
         assertEquals(3, carts.length);
         assertEquals(1, carts[0].getUserId());
@@ -84,7 +84,7 @@ public class CartsFileDAOTest {
         // Invoke
         Cart cart = cartsFileDao.getCart(2);
 
-        // Assert
+        // Analyze
         assertTrue(cart instanceof Cart);
         assertEquals(2, cart.getUserId());
     }
@@ -94,7 +94,7 @@ public class CartsFileDAOTest {
         // Invoke
         Cart cart = cartsFileDao.getCart(4);
 
-        // Assert
+        // Analyze
         assertNull(cart);
     }
 
@@ -103,7 +103,7 @@ public class CartsFileDAOTest {
         // Invoke
         Cart cart = cartsFileDao.createCart(4);
 
-        // Assert
+        // Analyze
         assertTrue(cart instanceof Cart);
         assertEquals(4, cart.getUserId());
     }
@@ -113,7 +113,7 @@ public class CartsFileDAOTest {
         // Invoke
         Cart cart = cartsFileDao.createCart(2);
 
-        // Assert
+        // Analyze
         assertNull(cart);
     }
 
@@ -122,7 +122,7 @@ public class CartsFileDAOTest {
         // Invoke
         Cart cart = cartsFileDao.addProductToCart(1, 101, 1);
 
-        // Assert
+        // Analyze
         assertTrue(cart instanceof Cart);
         assertEquals(1, cart.getUserId());
         assertEquals(1, cart.getCount());
@@ -135,7 +135,7 @@ public class CartsFileDAOTest {
         // Invoke
         Cart cart = cartsFileDao.addProductToCart(1, 104, 1);
 
-        // Assert
+        // Analyze
         assertNull(cart);
     }
 
@@ -144,7 +144,7 @@ public class CartsFileDAOTest {
         // Invoke
         Cart cart = cartsFileDao.addProductToCart(1, 101, 101);
 
-        // Assert
+        // Analyze
         assertNull(cart);
         assertEquals(0, cartsFileDao.getCart(1).getCount());
     }
@@ -157,7 +157,7 @@ public class CartsFileDAOTest {
         // Invoke
         Cart cart = cartsFileDao.removeProductFromCart(1, 101, 1);
 
-        // Assert
+        // Analyze
         assertTrue(cart instanceof Cart);
         assertEquals(1, cart.getUserId());
         assertEquals(1, cart.getCount());
@@ -173,7 +173,7 @@ public class CartsFileDAOTest {
         // Invoke
         Cart cart = cartsFileDao.removeProductFromCart(1, 101);
 
-        // Assert
+        // Analyze
         assertTrue(cart instanceof Cart);
         assertEquals(1, cart.getUserId());
         assertEquals(0, cart.getCount());
@@ -185,7 +185,7 @@ public class CartsFileDAOTest {
         // Invoke
         Cart cart = cartsFileDao.removeProductFromCart(1, 104, 1);
 
-        // Assert
+        // Analyze
         assertNull(cart);
     }
 
@@ -197,7 +197,7 @@ public class CartsFileDAOTest {
         // Invoke
         Cart cart = cartsFileDao.clearCart(1);
 
-        // Assert
+        // Analyze
         assertTrue(cart instanceof Cart);
         assertEquals(1, cart.getUserId());
         assertEquals(0, cart.getCount());
@@ -210,7 +210,7 @@ public class CartsFileDAOTest {
         // Invoke
         boolean result = cartsFileDao.deleteCart(2);
 
-        // Assert
+        // Analyze
         assertTrue(result);
         assertNull(cartsFileDao.getCart(2));
     }
@@ -220,7 +220,7 @@ public class CartsFileDAOTest {
         // Invoke
         boolean result = cartsFileDao.deleteCart(4);
 
-        // Assert
+        // Analyze
         assertFalse(result);
 
     }
