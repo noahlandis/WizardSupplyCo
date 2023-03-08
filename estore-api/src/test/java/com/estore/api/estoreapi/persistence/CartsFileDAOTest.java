@@ -2,7 +2,6 @@ package com.estore.api.estoreapi.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -177,7 +176,7 @@ public class CartsFileDAOTest {
         assertTrue(cart instanceof Cart);
         assertEquals(1, cart.getUserId());
         assertEquals(0, cart.getCount());
-        assertTrue(!cart.containsProduct(101));
+        assertFalse(cart.containsProduct(101));
     }
 
     @Test
@@ -201,7 +200,7 @@ public class CartsFileDAOTest {
         assertTrue(cart instanceof Cart);
         assertEquals(1, cart.getUserId());
         assertEquals(0, cart.getCount());
-        assertTrue(!cart.containsProduct(101));
+        assertFalse(cart.containsProduct(101));
     }
 
     // delete cart
