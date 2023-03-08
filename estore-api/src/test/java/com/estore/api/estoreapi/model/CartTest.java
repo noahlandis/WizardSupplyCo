@@ -149,10 +149,13 @@ public class CartTest {
         // Analyze
         assertTrue(testCart.containsProduct(101));
         assertEquals(2, testCart.getProductCount(101));
+    }
 
+    @Test
+    public void testRemoveExactProductQuantity() {
         // Invoke
-        testCart.removeProduct(101, 2);
-
+        testCart.removeProduct(101, 5);
+        
         // Analyze
         assertFalse(testCart.containsProduct(101));
     }
