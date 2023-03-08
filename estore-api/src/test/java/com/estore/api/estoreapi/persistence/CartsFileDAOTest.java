@@ -72,7 +72,7 @@ public class CartsFileDAOTest {
         Cart[] carts = cartsFileDao.getCarts();
 
         // Assert
-        assertNotNull(carts);
+        assertTrue(carts instanceof Cart[]);
         assertEquals(3, carts.length);
         assertEquals(1, carts[0].getUserId());
         assertEquals(2, carts[1].getUserId());
@@ -85,7 +85,7 @@ public class CartsFileDAOTest {
         Cart cart = cartsFileDao.getCart(2);
 
         // Assert
-        assertNotNull(cart);
+        assertTrue(cart instanceof Cart);
         assertEquals(2, cart.getUserId());
     }
 
@@ -104,7 +104,7 @@ public class CartsFileDAOTest {
         Cart cart = cartsFileDao.createCart(4);
 
         // Assert
-        assertNotNull(cart);
+        assertTrue(cart instanceof Cart);
         assertEquals(4, cart.getUserId());
     }
 
@@ -123,7 +123,7 @@ public class CartsFileDAOTest {
         Cart cart = cartsFileDao.addProductToCart(1, 101, 1);
 
         // Assert
-        assertNotNull(cart);
+        assertTrue(cart instanceof Cart);
         assertEquals(1, cart.getUserId());
         assertEquals(1, cart.getCount());
         assertTrue(cart.containsProduct(101));
@@ -158,14 +158,13 @@ public class CartsFileDAOTest {
         Cart cart = cartsFileDao.removeProductFromCart(1, 101, 1);
 
         // Assert
-        assertNotNull(cart);
+        assertTrue(cart instanceof Cart);
         assertEquals(1, cart.getUserId());
         assertEquals(1, cart.getCount());
         assertTrue(cart.containsProduct(101));
         assertEquals(9, cart.getProductCount(101)); // ensure count is 9
     }
 
-    // remove product from cart no quantity
     @Test
     public void testRemoveProductFromCartNoQuantity() {
         // Setup
@@ -175,7 +174,7 @@ public class CartsFileDAOTest {
         Cart cart = cartsFileDao.removeProductFromCart(1, 101);
 
         // Assert
-        assertNotNull(cart);
+        assertTrue(cart instanceof Cart);
         assertEquals(1, cart.getUserId());
         assertEquals(0, cart.getCount());
         assertTrue(!cart.containsProduct(101));
@@ -199,7 +198,7 @@ public class CartsFileDAOTest {
         Cart cart = cartsFileDao.clearCart(1);
 
         // Assert
-        assertNotNull(cart);
+        assertTrue(cart instanceof Cart);
         assertEquals(1, cart.getUserId());
         assertEquals(0, cart.getCount());
         assertTrue(!cart.containsProduct(101));
