@@ -98,7 +98,8 @@ public class Cart {
         boolean result = false;
         // check the inventory to see if the product is available at the new quantity
         try {
-            if (inventoryDao.getProduct(sku).hasEnoughStockFor(newQuantity)) {
+            Product product = inventoryDao.getProduct(sku);
+            if (product != null && product.hasEnoughStockFor(newQuantity)) {
                 productsMap.put(sku, newQuantity);
                 LOG.info("Product with sku " + sku + " added to cart for user " + userId);
                 result = true;
@@ -119,7 +120,7 @@ public class Cart {
      * @return true if the product was removed from the cart, false otherwise
      */
     public boolean removeProduct(int sku, int quantity) {
-        LOG.info("Removing product with sku " + sku + " and quantity " + quantity + " from cart for user " + userId);
+        LOG.info("Removing " + quantity + " of product with sku " + sku + " from cart for user " + userId);
 
         // If the product is not in the cart, return false
         if (!productsMap.containsKey(sku)) {
