@@ -164,7 +164,10 @@ public class CartsFileDAO implements CartsDAO {
     public Cart removeProductFromCart(int userId, int sku, int quantity) {
         synchronized (carts) {
             Cart cart = carts.get(userId);
-            if (cart != null) {
+            if (cart == null) {
+                throw new NullPointerException();
+            }
+            else {
                 boolean success = cart.removeProduct(sku, quantity);
                 try {
                     save();
@@ -176,7 +179,6 @@ public class CartsFileDAO implements CartsDAO {
                 if (!success) 
                     return null;
             }
-
             return cart;
         }
     }

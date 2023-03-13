@@ -19,6 +19,8 @@ import org.springframework.http.ResponseEntity;
 import com.estore.api.estoreapi.persistence.CartsDAO;
 import com.estore.api.estoreapi.model.Cart;
 import com.estore.api.estoreapi.model.Customer;
+import com.estore.api.estoreapi.model.Product;
+import com.estore.api.estoreapi.model.Stock;
 
 
 /**
@@ -88,5 +90,31 @@ public class CartsControllerTest {
 
         //Analyze
         assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void testRemoveProductFromCart() throws IOException {
+        // Setup
+        int userId = 11;
+        Product[] products = new Product[3];
+        products[0] = new Product(41,"Glitter Powder",24.99f, new Stock(50));
+        products[1] = new Product(42,"Sand Powder", 20.99f, new Stock(25));
+        products[2] = new Product(43,"Bone Powder",19.99f, new Stock(20));
+        Cart cart = new Cart(userId);
+        
+
+        for(Product product: products){
+            cartsController.addProductToCart(userId, product.getSku(),1);
+        }
+        when(mockCartsDAO.removeProductFromCart(userId, products[1].getSku())).thenReturn(cart);
+
+        //Invoke
+        ResponseEntity<Cart> response = cartsController.removeProductFromCart(userId, 42,1);
+         
+        //Analyze
+        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
+
+
+
     }
 }
