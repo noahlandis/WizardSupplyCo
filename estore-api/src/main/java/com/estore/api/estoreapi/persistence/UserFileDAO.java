@@ -26,6 +26,7 @@ import com.estore.api.estoreapi.model.User;
 public class UserFileDAO implements UserDAO{
     private static final Logger LOG = Logger.getLogger(UserFileDAO.class.getName()); 
     Map<Integer,User> users;   // Provides a local cache of the product objects
+    //Map<Integer,String> users;   // Provi
     // so that we don't need to read from the file
     // each time
     private ObjectMapper objectMapper;  // Provides conversion between Products
@@ -34,14 +35,7 @@ public class UserFileDAO implements UserDAO{
     private static int nextUserId;  // The next sku to assign to a new product
     private String filename;    // Filename to read from and write to
 
-       /**
-     * Creates an Inventory File Data Access Object
-     * 
-     * @param filename Filename to read from and write to
-     * @param objectMapper Provides JSON Object to/from Java Object serialization and deserialization
-     * 
-     * @throws IOException when file cannot be accessed or read from
-     */
+
     public UserFileDAO(@Value("${users.file}") String filename,ObjectMapper objectMapper) throws IOException {
         LOG.info("userFileDAO created");
         this.filename = filename;
