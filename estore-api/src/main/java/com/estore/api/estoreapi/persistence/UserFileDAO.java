@@ -1,5 +1,6 @@
 package com.estore.api.estoreapi.persistence;
 
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,28 +28,34 @@ import com.estore.api.estoreapi.model.User;
 @Repository
 public class UserFileDAO implements UserDAO{
     private static final Logger LOG = Logger.getLogger(UserFileDAO.class.getName()); 
-    Map<Integer,User> users;   // Provides a local cache of the product objects
-    //Map<Integer,String> users;   // Provi
-    // so that we don't need to read from the file
-    // each time
-    private ObjectMapper objectMapper;  // Provides conversion between Products
-            // objects and JSON text format written
-            // to the file
-    private static int nextUserId;  // The next sku to assign to a new product
+    Map<Integer,User> users;   // Provides a local cache of the users objects
+                               // so that we don't need to read from the file
+                               // each time
+    private ObjectMapper objectMapper;  // Provides conversion between PUsers
+                                        // objects and JSON text format written
+                                        // to the file
+    private static int nextUserId;  // The next Id to assign to a new user
     private String filename;    // Filename to read from and write to
 
-
+    /**
+     * Creates an User File Data Access Object
+     * 
+     * @param filename Filename to read from and write to
+     * @param objectMapper Provides JSON Object to/from Java Object serialization and deserialization
+     * 
+     * @throws IOException when file cannot be accessed or read from
+     */
     public UserFileDAO(@Value("${users.file}") String filename,ObjectMapper objectMapper) throws IOException {
         LOG.info("userFileDAO created");
         this.filename = filename;
         this.objectMapper = objectMapper;
-        load();  // load the products from the file
+        load();  // load the users from the file
     }
 
     /**
-     * Generates the next sku for a new {@linkplain Product product}
+     * Generates the next Id for a new {@linkplain User user}
      * 
-     * @return The next sku
+     * @return The next Id
      */
     private synchronized static int nextUserId() {
         int userId = nextUserId;
@@ -56,11 +63,11 @@ public class UserFileDAO implements UserDAO{
         return userId;
     }
 
-     /**
-     * Generates an array of {@linkplain Product products} from the tree map
-     * 
-     * @return  The array of {@link Product products}, may be empty
-     */
+    //  /**
+    //  * Generates an array of {@linkplain Product products} from the tree map
+    //  * 
+    //  * @return  The array of {@link Product products}, may be empty
+    //  */
     // private User[] getUsersArray() {
     //     return getUsersArray(null);
     // }
@@ -79,6 +86,13 @@ public class UserFileDAO implements UserDAO{
     //     return userArray;
     // }
 
+    /**
+     * Saves the {@linkplain User users} from the map into the file as an array of JSON objects
+     * 
+     * @return true if the {@link User users} were written successfully
+     * 
+     * @throws IOException when file cannot be accessed or written to
+     */    
     private boolean save() throws IOException {
         LOG.info("Saving users to file: " + filename);
         // User[] userArray = getUsersArray();
@@ -90,6 +104,15 @@ public class UserFileDAO implements UserDAO{
         return true;
     }
 
+    /**
+     * Loads {@linkplain User users} from the JSON file into the map
+     * <br>
+     * Also sets next Id to one more than the greatest if found in the file
+     * 
+     * @return true if the file was read successfully
+     * 
+     * @throws IOException when file cannot be accessed or read from
+     */
     private boolean load() throws IOException {
         LOG.info("Loading products from file: " + filename);
         users = new TreeMap<>();
@@ -100,7 +123,7 @@ public class UserFileDAO implements UserDAO{
         // or reading from the file
         User[] userArray = objectMapper.readValue(new File(filename),User[].class);
 
-        // Add each product to the tree map and keep track of the greatest Sku
+        // Add each user to the tree map and keep track of the greatest Id
         for (User user : userArray) {
             users.put(user.getUserId(),user);
             if (user.getUserId() > nextUserId)
@@ -118,6 +141,10 @@ public class UserFileDAO implements UserDAO{
     //     }
     // }
 
+    
+    /**
+    ** {@inheritDoc}
+     */
     @Override
     public User getUser(int userId) {
         synchronized(users) {
@@ -128,6 +155,10 @@ public class UserFileDAO implements UserDAO{
         }
     }
 
+    
+    /**
+    ** {@inheritDoc}
+     */
     @Override
     public User createUser(User user) throws IOException {
         synchronized(users) {
@@ -149,7 +180,38 @@ public class UserFileDAO implements UserDAO{
         }
     }
 
+    @Override
+    public User LoginUser(int userId) throws IOException {
+        synchronized(users) {
+            if (users.containsKey(userId)){
+                if(users.get(userId).isLoggedIn() == false){
+                    users.get(userId).logIn();
+                    return users.get(userId);
+                }
+                
+            }
+            else {
+                return null;
+            }
+           
+        }
+    }
+
+    @Override
+    public User LogOutUser(int userId) throws IOException {
+        synchronized(users) {
+            if (users.containsKey(userId)){
+                if(users.get(userId).isLoggedIn() == true){
+                    users.get(userId).logOut();
+                    users.get(userId);
+                }
+                
+            }
+            else {
+                return null;
+            }
+        }
+    }
+
 
 }
-
-

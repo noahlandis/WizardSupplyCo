@@ -46,5 +46,8 @@ public interface UserDAO {
      */
     User createUser(User user) throws IOException;
 
+    User LogOutUser(int userId) throws IOException;
+    User LoginUser(int userId) throws IOException;
+
 }
     
