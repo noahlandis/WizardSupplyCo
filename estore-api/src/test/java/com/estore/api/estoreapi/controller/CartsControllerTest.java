@@ -100,20 +100,20 @@ public class CartsControllerTest {
         products[0] = new Product(41,"Glitter Powder",24.99f, new Stock(50));
         products[1] = new Product(42,"Sand Powder", 20.99f, new Stock(25));
         products[2] = new Product(43,"Bone Powder",19.99f, new Stock(20));
+        
         Cart cart = new Cart(userId);
         
-
         for(Product product: products){
             cartsController.addProductToCart(userId, product.getSku(),1);
         }
-        when(mockCartsDAO.removeProductFromCart(userId, products[1].getSku())).thenReturn(cart);
+        when(mockCartsDAO.removeProductFromCart(userId, products[1].getSku(), products[1].getStockQuantity())).thenReturn(cart);
 
         //Invoke
         ResponseEntity<Cart> response = cartsController.removeProductFromCart(userId, 42,1);
          
         //Analyze
-        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
-
+        assertEquals(HttpStatus.OK,response.getStatusCode());
+        
 
 
     }
