@@ -9,14 +9,14 @@ import com.estore.api.estoreapi.model.User;
  * @author Kanisha Agrawal
  */
 public interface UserDAO {
-   /**
-     * Retrieves all {@linkplain User users}
-     * 
-     * @return An array of {@link User user} objects, may be empty
-     * 
-     * @throws IOException if an issue with underlying storage
-     */
-    User[] getUsers() throws IOException;
+//    /**
+//      * Retrieves all {@linkplain User users}
+//      * 
+//      * @return An array of {@link User user} objects, may be empty
+//      * 
+//      * @throws IOException if an issue with underlying storage
+//      */
+//     User[] getUsers() throws IOException;
 
      /**
      * Retrieves a {@linkplain User user} with the given userId
