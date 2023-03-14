@@ -12,6 +12,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import com.estore.api.estoreapi.model.Customer;
+import com.estore.api.estoreapi.model.Cart;
 import com.estore.api.estoreapi.model.User;
 
 /**
@@ -59,32 +61,32 @@ public class UserFileDAO implements UserDAO{
      * 
      * @return  The array of {@link Product products}, may be empty
      */
-    private User[] getUsersArray() {
-        return getUsersArray(null);
-    }
+    // private User[] getUsersArray() {
+    //     return getUsersArray(null);
+    // }
 
-    private User[] getUsersArray(String containsText) { // if containsText == null, no filter
-        ArrayList<User> userArrayList = new ArrayList<>();
-        /*This for loop goes through each product in the inventory product map */
-        for (User user : users.values()) {
-            if (containsText == null || user.getUserName().contains(containsText)) {
-                userArrayList.add(user);
-            }
-        }
+    // private User[] getUsersArray(String containsText) { // if containsText == null, no filter
+    //     ArrayList<User> userArrayList = new ArrayList<>();
+    //     /*This for loop goes through each product in the inventory product map */
+    //     for (User user : users.values()) {
+    //         if (containsText == null || user.getUserName().contains(containsText)) {
+    //             userArrayList.add(user);
+    //         }
+    //     }
 
-        User[] userArray = new User[userArrayList.size()];
-        userArrayList.toArray(userArray);
-        return userArray;
-    }
+    //     User[] userArray = new User[userArrayList.size()];
+    //     userArrayList.toArray(userArray);
+    //     return userArray;
+    // }
 
     private boolean save() throws IOException {
         LOG.info("Saving users to file: " + filename);
-        User[] userArray = getUsersArray();
+        // User[] userArray = getUsersArray();
 
         // Serializes the Java Objects to JSON objects into the file
         // writeValue will thrown an IOException if there is an issue
         // with the file or reading from the file
-        objectMapper.writeValue(new File(filename),userArray);
+        objectMapper.writeValue(new File(filename), User[].class);
         return true;
     }
 
@@ -109,12 +111,12 @@ public class UserFileDAO implements UserDAO{
         return true;
     }
 
-    @Override
-    public User[] getUsers() {
-        synchronized(users) {
-            return getUsersArray();
-        }
-    }
+    // @Override
+    // public User[] getUsers() {
+    //     synchronized(users) {
+    //         return getUsersArray();
+    //     }
+    // }
 
     @Override
     public User getUser(int userId) {
@@ -137,10 +139,13 @@ public class UserFileDAO implements UserDAO{
 
             // We create a new product object because the sku field is immutable
             // and we need to assign the next unique sku
-            User newUser = new User(nextUserId(), user.getUserName());
-            users.put(newUser.getUserId(),newUser);
+            Customer customer = new Customer(nextUserId(),user.getUserName());
+            users.put(customer.getUserId(), customer);
+            
+            Cart cart = new Cart(customer.getUserId());
+            
             save(); // may throw an IOException
-            return newUser;
+            return customer;
         }
     }
 
