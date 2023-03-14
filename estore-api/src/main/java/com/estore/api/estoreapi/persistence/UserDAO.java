@@ -9,14 +9,14 @@ import com.estore.api.estoreapi.model.User;
  * @author Kanisha Agrawal
  */
 public interface UserDAO {
-//    /**
-//      * Retrieves all {@linkplain User users}
-//      * 
-//      * @return An array of {@link User user} objects, may be empty
-//      * 
-//      * @throws IOException if an issue with underlying storage
-//      */
-//     User[] getUsers() throws IOException;
+   /**
+     * Retrieves all {@linkplain User users}
+     * 
+     * @return An array of {@link User user} objects, may be empty
+     * 
+     * @throws IOException if an issue with underlying storage
+     */
+    User[] getUsers() throws IOException;
 
      /**
      * Retrieves a {@linkplain User user} with the given userId
@@ -35,19 +35,42 @@ public interface UserDAO {
     /**
      * Creates and saves a {@linkplain User user}
      * 
-     * @param userId {@linkplain User user} object to be created and saved
+     * @param userName {@linkplain User user} object to be created and saved
      * <br>
-     * The userId of the user object is ignored and a new uniqe userId is assigned
+     * The userId of the user object is ignored and a new unique userId is assigned
      * Checks if the user already exists by name and if so, returns null
      *
      * @return new {@link User user} if successful, null otherwise 
      * 
      * @throws IOException if an issue with underlying storage
      */
-    User createUser(User user) throws IOException;
+    User createUser(String userName) throws IOException;
 
-    User LogOutUser(int userId) throws IOException;
-    User LoginUser(int userId) throws IOException;
+    /**
+     * Log a user out {@linkplain User user}
+     * 
+     * @param userName {@linkplain User user} object to be logged out
+     * <br>
+     * Checks if the user already exists by name and if so, returns null
+     *
+     * @return user {@link User user} if successful, null otherwise 
+     * 
+     * @throws IOException if an issue with underlying storage
+     */
+    User LogOutUser(String userName) throws IOException;
+
+      /**
+     * Log a user in the website {@linkplain User user}
+     * 
+     * @param userName {@linkplain User user} object to be logged in
+     * <br>
+     * Checks if the user already exists by name and if so, returns null
+     *
+     * @return user {@link User user} if successful, null otherwise 
+     * 
+     * @throws IOException if an issue with underlying storage
+     */
+    User LoginUser(String userName) throws IOException;
 
 }
     

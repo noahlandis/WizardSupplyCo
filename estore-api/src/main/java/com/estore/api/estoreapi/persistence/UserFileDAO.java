@@ -14,11 +14,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.estore.api.estoreapi.model.Customer;
-import com.estore.api.estoreapi.model.Cart;
+import com.estore.api.estoreapi.persistence.CartsFileDAO;
+import com.estore.api.estoreapi.persistence.CartsDAO;
 import com.estore.api.estoreapi.model.User;
 
 /**
- * Implements the functionality for JSON file-based peristance for Products
+ * Implements the functionality for JSON file-based peristance for Users
  * 
  * {@literal @}Component Spring annotation instantiates a single instance of this
  * class and injects the instance into other classes as needed
@@ -28,7 +29,7 @@ import com.estore.api.estoreapi.model.User;
 @Repository
 public class UserFileDAO implements UserDAO{
     private static final Logger LOG = Logger.getLogger(UserFileDAO.class.getName()); 
-    Map<Integer,User> users;   // Provides a local cache of the users objects
+    private Map<Integer,User> users;   // Provides a local cache of the users objects
                                // so that we don't need to read from the file
                                // each time
     private ObjectMapper objectMapper;  // Provides conversion between PUsers
@@ -36,7 +37,7 @@ public class UserFileDAO implements UserDAO{
                                         // to the file
     private static int nextUserId;  // The next Id to assign to a new user
     private String filename;    // Filename to read from and write to
-
+    private CartsDAO cartsDAO;
     /**
      * Creates an User File Data Access Object
      * 
@@ -45,10 +46,11 @@ public class UserFileDAO implements UserDAO{
      * 
      * @throws IOException when file cannot be accessed or read from
      */
-    public UserFileDAO(@Value("${users.file}") String filename,ObjectMapper objectMapper) throws IOException {
+    public UserFileDAO(@Value("${users.file}") String filename, ObjectMapper objectMapper, CartsDAO cartsDAO) throws IOException {
         LOG.info("userFileDAO created");
         this.filename = filename;
         this.objectMapper = objectMapper;
+        this.cartsDAO = cartsDAO;
         load();  // load the users from the file
     }
 
@@ -63,28 +65,39 @@ public class UserFileDAO implements UserDAO{
         return userId;
     }
 
-    //  /**
-    //  * Generates an array of {@linkplain Product products} from the tree map
-    //  * 
-    //  * @return  The array of {@link Product products}, may be empty
-    //  */
-    // private User[] getUsersArray() {
-    //     return getUsersArray(null);
-    // }
+    
+    /**
+     * Generates an array of {@linkplain User users} from the tree map
+     * 
+     * @return  The array of {@link User users}, may be empty
+     */
+    private User[] getUsersArray() {
+        return getUsersArray(null);
+    }
 
-    // private User[] getUsersArray(String containsText) { // if containsText == null, no filter
-    //     ArrayList<User> userArrayList = new ArrayList<>();
-    //     /*This for loop goes through each product in the inventory product map */
-    //     for (User user : users.values()) {
-    //         if (containsText == null || user.getUserName().contains(containsText)) {
-    //             userArrayList.add(user);
-    //         }
-    //     }
+    /**
+     * Generates an array of {@linkplain User users} from the tree map for any
+     * {@linkplain User users} that contains the text specified by containsText
+     * <br>
+     * If containsText is null, the array contains all of the {@linkplain User users}
+     * in the tree map
+     * 
+     * @return  The array of {@link User users}, may be empty
+     */
+    private User[] getUsersArray(String containsText) { // if containsText == null, no filter
+        ArrayList<User> userArrayList = new ArrayList<>();
+        /*This for loop goes through each product in the inventory product map */
+        for (User user : users.values()) {
+            if (containsText == null || user.getUserName().contains(containsText)) {
+                userArrayList.add(user);
+            }
+        }
 
-    //     User[] userArray = new User[userArrayList.size()];
-    //     userArrayList.toArray(userArray);
-    //     return userArray;
-    // }
+        User[] userArray = new User[userArrayList.size()];
+        userArrayList.toArray(userArray);
+        return userArray;
+    }
+
 
     /**
      * Saves the {@linkplain User users} from the map into the file as an array of JSON objects
@@ -95,12 +108,12 @@ public class UserFileDAO implements UserDAO{
      */    
     private boolean save() throws IOException {
         LOG.info("Saving users to file: " + filename);
-        // User[] userArray = getUsersArray();
+        User[] userArray = getUsersArray();
 
         // Serializes the Java Objects to JSON objects into the file
         // writeValue will thrown an IOException if there is an issue
         // with the file or reading from the file
-        objectMapper.writeValue(new File(filename), User[].class);
+        objectMapper.writeValue(new File(filename), userArray);
         return true;
     }
 
@@ -129,17 +142,20 @@ public class UserFileDAO implements UserDAO{
             if (user.getUserId() > nextUserId)
                 nextUserId = user.getUserId();
         }
-        // Make the next sku one greater than the maximum from the file
+        // Make the next id one greater than the maximum from the file
         ++nextUserId;
         return true;
     }
 
-    // @Override
-    // public User[] getUsers() {
-    //     synchronized(users) {
-    //         return getUsersArray();
-    //     }
-    // }
+   /**
+    ** {@inheritDoc}
+    */
+    @Override
+    public User[] getUsers() {
+        synchronized(users) {
+            return getUsersArray();
+        }
+    }
 
     
     /**
@@ -160,58 +176,69 @@ public class UserFileDAO implements UserDAO{
     ** {@inheritDoc}
      */
     @Override
-    public User createUser(User user) throws IOException {
+    public User createUser(String username) throws IOException {
         synchronized(users) {
-            // // check if an product with the same name already exists. If so, return null
-            // for (User u : users.values()) {
-            //     if (u.userId(user.getUserName()))
-            //         return null;
-            // }
+            // // check if an user with the same name already exists. If so, return null
+            for (User user : users.values()) {
+                 if (user.userNameEquals(username))
+                     return null;
+             }
 
-            // We create a new product object because the sku field is immutable
-            // and we need to assign the next unique sku
-            Customer customer = new Customer(nextUserId(),user.getUserName());
+            // We create a new customer object because the id field is immutable
+            // and we need to assign the next unique id
+            //and we assign a cart to the customer
+            Customer customer = new Customer(nextUserId(), username);
             users.put(customer.getUserId(), customer);
-            
-            Cart cart = new Cart(customer.getUserId());
-            
+            cartsDAO.createCart(customer.getUserId());
+
             save(); // may throw an IOException
             return customer;
         }
     }
 
+  /**
+  ** {@inheritDoc}
+   */
     @Override
-    public User LoginUser(int userId) throws IOException {
+    public User LoginUser(String username) throws IOException {
         synchronized(users) {
-            if (users.containsKey(userId)){
-                if(users.get(userId).isLoggedIn() == false){
-                    users.get(userId).logIn();
-                    return users.get(userId);
+            //check if user with given username exists
+            //if it does then log the user in
+            for (User user : users.values()) {
+                if (user.userNameEquals(username)){
+                    if(user.isLoggedIn() == false){
+                        user.logIn();
+                        return user; 
+                    }
+                    break;       
                 }
-                
-            }
-            else {
-                return null;
-            }
-           
-        }
-    }
-
-    @Override
-    public User LogOutUser(int userId) throws IOException {
-        synchronized(users) {
-            if (users.containsKey(userId)){
-                if(users.get(userId).isLoggedIn() == true){
-                    users.get(userId).logOut();
-                    users.get(userId);
-                }
-                
-            }
-            else {
-                return null;
             }
         }
+
+        return null;
     }
 
+  /**
+  ** {@inheritDoc}
+   */
+    @Override
+    public User LogOutUser(String username) throws IOException {
+        synchronized(users) {
+
+            //check if user with given username exists
+            //if it does then log the user out
+            for (User user : users.values()) {
+                if (user.userNameEquals(username)){
+                    if(user.isLoggedIn() == true){
+                        user.logOut();
+                        return user; 
+                    }
+                    break;                
+                }
+            }  
+        }
+
+        return null;
+    }
 
 }

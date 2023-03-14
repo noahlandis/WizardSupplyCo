@@ -2,14 +2,12 @@ package com.estore.api.estoreapi.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -38,7 +36,7 @@ import com.estore.api.estoreapi.model.User;
      /**
       * Creates a REST API controller to respond to requests
       * 
-      * @param inventoryDao The {@link InventoryDAO Product Data Access Object} to perform CRUD operations
+      * @param userDao The {@link userDao User Data Access Object} to perform CRUD operations
       * <br>
       * This dependency is injected by the Spring Framework
       */
@@ -47,18 +45,18 @@ import com.estore.api.estoreapi.model.User;
      }
  
      /**
-      * Responds to the GET request for a {@linkplain Product product} for the given sku
+      * Responds to the GET request for a {@linkplain User user} for the given userId
       * 
-      * @param sku The sku used to locate the {@link Product product}
+      * @param userId The userId used to locate the {@link User user}
       * 
-      * @return ResponseEntity with {@link Product product} object and HTTP status of OK if found<br>
+      * @return ResponseEntity with {@link User user} object and HTTP status of OK if found<br>
       * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
       * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
       * 
-      * Example: Get product with sku 1
-      * GET http://localhost:8080/inventory/1
+      * Example: Get customer with userId 1
+      * GET http://localhost:8080/user/1
       */
-     @GetMapping("/{sku}")
+     @GetMapping("/{userId}")
      public ResponseEntity<User> getUser(@PathVariable int userId) {
          LOG.info("GET /user/" + userId);
  
@@ -77,24 +75,24 @@ import com.estore.api.estoreapi.model.User;
  
  
      /**
-      * Creates a {@linkplain Product product} with the provided product object
+      * Creates a {@linkplain User user} with the provided user object
       * 
-      * @param product - The {@link Product product} to create
+      * @param user - The {@link User user} to create
       * 
-      * @return ResponseEntity with created {@link Product product} object and HTTP status of CREATED<br>
-      * ResponseEntity with HTTP status of CONFLICT if {@link Product product} object already exists<br>
+      * @return ResponseEntity with created {@link User user} object and HTTP status of CREATED<br>
+      * ResponseEntity with HTTP status of CONFLICT if {@link User user} object already exists<br>
       * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
       * 
-      * Example: Create a product
-      * POST http://localhost:8080/inventory/
-      * Body: product object to create
+      * Example: Create a user
+      * POST http://localhost:8080/user/
+      * Body: user object to create
       */
      @PostMapping("")
-     public ResponseEntity<User> createUser(@RequestBody User user) {
-         LOG.info("POST /user " + user);
+     public ResponseEntity<User> createUser(@PathVariable String username) {
+         LOG.info("POST /user " + username);
  
          try {
-             User createdCustomer = userDao.createUser(user);
+             User createdCustomer = userDao.createUser(username);
              
              // Check if Product exists
              if (createdCustomer != null)
@@ -109,30 +107,29 @@ import com.estore.api.estoreapi.model.User;
          }
      }
  
-     /**
-      * Updates the {@linkplain Product product} with the provided {@linkplain Product product} object, if it exists
+    /**
+      * Responds to the PUT for a {@linkplain User user} for the given userId
       * 
-      * @param product The {@link Product product} to update
+      * @param userId The userId used to locate the {@link User user}
       * 
-      * @return ResponseEntity with updated {@link Product product} object and HTTP status of OK if updated<br>
+      * @return ResponseEntity with {@link User user} object and HTTP status of OK if found<br>
       * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
       * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
       * 
-      * Example: Update a product
-      * PUT http://localhost:8080/inventory/
-      * Body: updated product object
+      * Example: Put to log out user
+      * PUT http://localhost:8080/user/username
       */
      @PutMapping("")
-     public ResponseEntity<User> LogOutUser(@PathVariable int userId) {
-         LOG.info("PUT /user " + userId);
+     public ResponseEntity<User> LogOutUser(@PathVariable String username) {
+         LOG.info("PUT /user " + username);
  
          try {
-             User updateUser = userDao.LogOutUser(userId);
-             // Update the product if it exists
+             User updateUser = userDao.LogOutUser(username);
+             // Update the user by logging it out if it exists
              if (updateUser != null)
                  return new ResponseEntity<User>(updateUser,HttpStatus.OK);
              
-             // Throw not found if product does not exist
+             // Throw not found if user does not exist
              return new ResponseEntity<>(HttpStatus.NOT_FOUND);
          }
          catch(IOException e) {
@@ -140,13 +137,26 @@ import com.estore.api.estoreapi.model.User;
              return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
          }
      }
+
+    /**
+      * Responds to the PUT for a {@linkplain User user} for the given userId
+      * 
+      * @param userId The userId used to locate the {@link User user}
+      * 
+      * @return ResponseEntity with {@link User user} object and HTTP status of OK if found<br>
+      * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+      * 
+      * Example: Put to log in user
+      * PUT http://localhost:8080/user/username
+      */
  
      @PutMapping("")
-     public ResponseEntity<User> LoginUser(@PathVariable int userId) {
-         LOG.info("PUT /user " + userId);
+     public ResponseEntity<User> LoginUser(@PathVariable String username) {
+         LOG.info("PUT /user " + username);
  
          try {
-             User updateUser = userDao.LoginUser(userId);
+             User updateUser = userDao.LoginUser(username);
              // Update the product if it exists
              if (updateUser != null)
                  return new ResponseEntity<User>(updateUser,HttpStatus.OK);
@@ -160,34 +170,5 @@ import com.estore.api.estoreapi.model.User;
          }
      }
  
-    //  /**
-    //   * Deletes a {@linkplain Product product} with the given sku
-    //   * 
-    //   * @param sku The sku of the {@link Product product} to deleted
-    //   * 
-    //   * @return ResponseEntity HTTP status of OK if deleted<br>
-    //   * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
-    //   * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
-    //   * 
-    //   * Example: Delete a product with sku 1
-    //   * DELETE http://localhost:8080/inventory/1
-    //   */
-    //  @DeleteMapping("/{sku}")
-    //  public ResponseEntity<Product> deleteProduct(@PathVariable int sku) {
-    //      LOG.info("DELETE /inventory/" + sku);
- 
-    //      try {
-    //          // Delete the product if it exists
-    //          if (inventoryDao.deleteProduct(sku))
-    //              return new ResponseEntity<>(HttpStatus.ACCEPTED);
- 
-    //          // Throw not found if product does not exist
-    //          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    //      }
-    //      catch(IOException e) {
-    //          LOG.log(Level.SEVERE,e.getLocalizedMessage());
-    //          return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    //      }
-    //  }
  }
  
