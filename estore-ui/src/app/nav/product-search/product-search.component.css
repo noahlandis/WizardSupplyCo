@@ -61,14 +61,11 @@ ul.search-result {
   width: 100%;
 } */
 
-/* .form-field {
-  display: flex;
-  flex-direction: row;
-  width: 50%;
-  align-self: center;
+.form-field {
+  min-width: 500px;
 }
 
-.search-bar {
+/* .search-bar {
   background-color: #435A60;
 }
 
