@@ -18,7 +18,7 @@ public class Customer extends User{
      * @param userName - userName for the customer
      * @param userId - userId of the 
      */
-    public Customer(String userName, int userId){
+    public Customer(int userId, String userName){
         super(userId, userName);
     }
 }
