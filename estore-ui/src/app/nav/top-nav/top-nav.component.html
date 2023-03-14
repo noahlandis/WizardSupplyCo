@@ -1,0 +1,33 @@
+<mat-toolbar class="header" color="primary">
+    <div class="left-section">
+        <button mat-icon-button (click)="onToggleSidenav()" class="mobile-menu">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <a [routerLink]="['/']">
+            <div class="logo-container">
+                <div class="logo"></div>
+            </div>
+        </a>
+    </div>
+    <div class="middle-section">
+        <app-product-search class="search" />
+      </div>
+    <div class="right-section">
+        <div>
+            <a [routerLink]="['/catalog']" mat-button>Catalog</a>
+            <a [routerLink]="['/admin']" mat-button>Admin</a>
+            <a [routerLink]="['/cart']" mat-button>Cart</a>
+            <a [routerLink]="['/login']" mat-button>Login</a>
+        </div>
+    </div>
+</mat-toolbar>
+
+<!-- <div class="search-bar-container">
+    <mat-form-field appearance="fill">
+        <mat-label>Search</mat-label>
+        <input matInput type="text" placeholder="Search" class="search-bar">
+        <button mat-button matSuffix>
+            <mat-icon>search</mat-icon>
+    </button>
+    </mat-form-field>
+</div> -->
