@@ -109,6 +109,8 @@ public class CartsController {
      * 
      * @return ResponseEntity with updated {@link Cart cart} object and HTTP status of OK<br>
      * ResponseEntity with HTTP status of NOT_FOUND if the cart or product does not exist<br>
+     * ResponseEntity with HTTP status of BAD_REQUEST if the quantity is less than or equal to 0<br>
+     * ResponseEntity with HTTP status of BAD_REQUEST if the quantity requested is greater than the quantity in stock<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      * 
      * Example: Add 2 products with sku 3 to the cart for user with id 1
@@ -150,6 +152,7 @@ public class CartsController {
      * 
      * @return ResponseEntity with updated {@link Cart cart} object and HTTP status of OK<br>
      * ResponseEntity with HTTP status of NOT_FOUND if the cart or product does not exist<br>
+     * ResponseEntity with HTTP status of BAD_REQUEST if the quantity is less than or equal to 0<br>
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      * 
      * Example: Remove 2 products with sku 3 from the cart for user with id 1

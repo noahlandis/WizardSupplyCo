@@ -54,13 +54,14 @@ public interface CartsDAO {
      * 
      * @param userId The user ID associated with the {@link Cart} object to update
      * @param sku The SKU of the product to add
-     * @param quantity The quantity of the product to add
+     * @param quantity The quantity of the product to add, assumed to be greater than 0
      * 
      * @return The updated {@link Cart} object
      * <br>
-     * null if no {@link Cart} object exists for the given user ID
+     * null if no {@link Cart} object exists for the given user ID or if the given sku is invalid
      * 
      * @throws IOException if an issue with underlying storage
+     * @throws InsufficientStockException if there is insufficient stock of the product
      */
     Cart addProductToCart(int userId, int sku, int quantity) throws IOException, InsufficientStockException;
 
@@ -69,11 +70,11 @@ public interface CartsDAO {
      * 
      * @param userId The user ID associated with the {@link Cart} object to update
      * @param sku The SKU of the product to remove
-     * @param quantity The quantity of the product to remove
+     * @param quantity The quantity of the product to remove, assumed to be greater than 0
      * 
      * @return The updated {@link Cart} object
      * <br>
-     * null if no {@link Cart} object exists for the given user ID
+     * null if no {@link Cart} object exists for the given user ID or if the given sku is invalid
      * 
      * @throws IOException if an issue with underlying storage
      */
@@ -87,7 +88,7 @@ public interface CartsDAO {
      * 
      * @return The updated {@link Cart} object
      * <br>
-     * null if no {@link Cart} object exists for the given user ID
+     * null if no {@link Cart} object exists for the given user ID or if the given sku is invalid
      * 
      * @throws IOException if an issue with underlying storage
      */
@@ -116,17 +117,4 @@ public interface CartsDAO {
      * @throws IOException if an issue with underlying storage
      */
     boolean deleteCart(int userId) throws IOException;
-
-    // /**
-    //  * Retrieves the total for the {@link Cart} object for the given user ID
-    //  * 
-    //  * @param userId The user ID associated with the {@link Cart} object to retrieve the total for
-    //  * 
-    //  * @return The total for the {@link Cart} object for the given user ID
-    //  * <br>
-    //  * 0 if no {@link Cart} object exists for the given user ID
-    //  * 
-    //  * @throws IOException if an issue with underlying storage
-    //  */
-    // double getCartTotal(int userId) throws IOException;
 }

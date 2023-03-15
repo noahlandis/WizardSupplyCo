@@ -93,7 +93,8 @@ public class Cart {
      * @param sku The sku of the product to add
      * @param quantity The quantity of the product to add
      * 
-     * @return true if the product was added to the cart, false otherwise
+     * @return true if the product was added to the cart, false if the sku is not found in the inventory
+     * @throws InsufficientStockException when there is insufficient stock of the product
      */
     public boolean addProduct(int sku, int quantity) throws InsufficientStockException {
         LOG.info("Adding product with sku " + sku + " and quantity " + quantity + " to cart for user " + userId);
@@ -128,7 +129,7 @@ public class Cart {
      * @param sku The sku of the product to remove
      * @param quantity The quantity of the product to remove
      * 
-     * @return true if the product was removed from the cart, false otherwise
+     * @return true if the product was removed from the cart, false if the sku is not found in the inventory
      */
     public boolean removeProduct(int sku, int quantity) {
         LOG.info("Removing " + quantity + " of product with sku " + sku + " from cart for user " + userId);
@@ -159,7 +160,7 @@ public class Cart {
      * Removes all of a product from the cart
      * @param sku The sku of the product to remove
      * 
-     * @return true if the product was removed from the cart, false otherwise
+     * @return true if the product was removed from the cart, false if the sku is not found in the inventory
      */
     public boolean removeProduct(int sku) {
         LOG.info("Removing all of product with sku " + sku + " from cart for user " + userId);
