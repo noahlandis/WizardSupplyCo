@@ -10,6 +10,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * Represents a cart for a user
+ * 
+ * @author Ryan Webb
+ */
 public class Cart {
     private static final Logger LOG = Logger.getLogger(Cart.class.getName());
     @JsonProperty("userId") private int userId;
@@ -90,26 +95,32 @@ public class Cart {
      * 
      * @return true if the product was added to the cart, false otherwise
      */
-    public boolean addProduct(int sku, int quantity) {
+    public boolean addProduct(int sku, int quantity) throws InsufficientStockException {
         LOG.info("Adding product with sku " + sku + " and quantity " + quantity + " to cart for user " + userId);
         int currentQuantity = productsMap.getOrDefault(sku, 0);
         int newQuantity = currentQuantity + quantity;
+        System.out.println("newQuantity: " + newQuantity);
 
-        boolean result = false;
         // check the inventory to see if the product is available at the new quantity
         try {
             Product product = inventoryDao.getProduct(sku);
-            if (product != null && product.hasEnoughStockFor(newQuantity)) {
-                productsMap.put(sku, newQuantity);
-                LOG.info("Product with sku " + sku + " added to cart for user " + userId);
-                result = true;
+            if (product == null) {
+                LOG.warning("Product with sku " + sku + " not found in inventory");
+                return false;
             }
+            if (!product.hasEnoughStockFor(newQuantity)) {
+                LOG.warning("Product with sku " + sku + " does not have enough stock for quantity " + newQuantity);
+                throw new InsufficientStockException(sku, newQuantity);
+            }
+            
+            productsMap.put(sku, newQuantity);
+            LOG.info("Product with sku " + sku + " added to cart for user " + userId);
+            return true;
+
         } catch (IOException e) {
             LOG.severe("Error getting inventory for sku " + sku);
-            result = false;
+            return false;
         }
-
-        return result;
     }
 
     /**

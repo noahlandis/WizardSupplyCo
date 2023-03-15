@@ -3,6 +3,7 @@ package com.estore.api.estoreapi.persistence;
 import java.io.IOException;
 
 import com.estore.api.estoreapi.model.Cart;
+import com.estore.api.estoreapi.model.InsufficientStockException;
 
 /**
  * Defines the interface for Cart object persistence
@@ -61,7 +62,7 @@ public interface CartsDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    Cart addProductToCart(int userId, int sku, int quantity) throws IOException;
+    Cart addProductToCart(int userId, int sku, int quantity) throws IOException, InsufficientStockException;
 
     /**
      * Removes a product from the {@link Cart} object for the given user ID

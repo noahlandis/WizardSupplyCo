@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 
 import com.estore.api.estoreapi.persistence.CartsDAO;
 import com.estore.api.estoreapi.model.Cart;
+import com.estore.api.estoreapi.model.InsufficientStockException;
 
 /**
  * Handles the REST API requests for the Carts resource
@@ -29,7 +30,7 @@ import com.estore.api.estoreapi.model.Cart;
 @RestController
 @RequestMapping("carts")
 public class CartsController {
-    private static final Logger LOG = Logger.getLogger(InventoryController.class.getName());
+    private static final Logger LOG = Logger.getLogger(CartsController.class.getName());
     private CartsDAO cartsDao;
 
     /**
@@ -117,14 +118,21 @@ public class CartsController {
     public ResponseEntity<Cart> addProductToCart(@PathVariable int userId, @PathVariable int sku, @RequestParam int quantity) {
         LOG.info("PUT /carts/" + userId + "/products/" + sku + "?quantity=" + quantity);
 
+        if (quantity <= 0) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         try {
             Cart cart = cartsDao.addProductToCart(userId, sku, quantity);
-            // TODO: this shouldn't return a 404 if the product couldn't be added due to stock quantity
             if (cart == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
             return new ResponseEntity<Cart>(cart, HttpStatus.OK);
+        }
+        catch(InsufficientStockException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         catch(IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
@@ -147,13 +155,16 @@ public class CartsController {
      * Example: Remove 2 products with sku 3 from the cart for user with id 1
      * DELETE http://localhost:8080/carts/1/products/3?quantity=2
      */
-    @DeleteMapping("/{userId}/products/{sku}")
+    @DeleteMapping("/{userId}/products/{sku}/removeQuantity")
     public ResponseEntity<Cart> removeProductFromCart(@PathVariable int userId, @PathVariable int sku, @RequestParam int quantity) {
         LOG.info("DELETE /carts/" + userId + "/products/" + sku + "?quantity=" + quantity);
 
+        if (quantity <= 0) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         try {
             Cart cart = cartsDao.removeProductFromCart(userId, sku, quantity);
-            // TODO: This shouldn't return a 404 if the product is not in the cart
             if (cart == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -163,10 +174,6 @@ public class CartsController {
         catch(IOException e) {
             LOG.log(Level.SEVERE, e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        catch(NullPointerException e) {
-            LOG.log(Level.SEVERE, e.getLocalizedMessage());
-            return new  ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -184,24 +191,24 @@ public class CartsController {
      * Example: Remove all products with sku 3 from the cart for user with id 1
      * DELETE http://localhost:8080/carts/1/products/3
      */
-    // @DeleteMapping("/{userId}/products/{sku}")
-    // public ResponseEntity<Cart> removeProductFromCart(@PathVariable int userId, @PathVariable int sku) {
-    //     LOG.info("DELETE /carts/" + userId + "/products/" + sku);
+    @DeleteMapping("/{userId}/products/{sku}")
+    public ResponseEntity<Cart> removeProductFromCart(@PathVariable int userId, @PathVariable int sku) {
+        LOG.info("DELETE /carts/" + userId + "/products/" + sku);
 
-    //     try {
-    //         Cart cart = cartsDao.removeProductFromCart(userId, sku);
+        try {
+            Cart cart = cartsDao.removeProductFromCart(userId, sku);
 
-    //         if (cart == null) {
-    //             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    //         }
+            if (cart == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
 
-    //         return new ResponseEntity<Cart>(cart, HttpStatus.OK);
-    //     }
-    //     catch(IOException e) {
-    //         LOG.log(Level.SEVERE, e.getLocalizedMessage());
-    //         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    //     }
-    // }
+            return new ResponseEntity<Cart>(cart, HttpStatus.OK);
+        }
+        catch(IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     /**
      * Removes all of the {@linkplain Product products} from the {@linkplain Cart cart} for the user with the given userId
