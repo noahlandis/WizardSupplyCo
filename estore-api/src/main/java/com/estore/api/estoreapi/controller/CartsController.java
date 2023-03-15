@@ -153,7 +153,7 @@ public class CartsController {
      * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
      * 
      * Example: Remove 2 products with sku 3 from the cart for user with id 1
-     * DELETE http://localhost:8080/carts/1/products/3?quantity=2
+     * DELETE http://localhost:8080/carts/1/products/3/removeQuantity?quantity=2
      */
     @DeleteMapping("/{userId}/products/{sku}/removeQuantity")
     public ResponseEntity<Cart> removeProductFromCart(@PathVariable int userId, @PathVariable int sku, @RequestParam int quantity) {
