@@ -7,9 +7,7 @@ import static org.mockito.Mockito.doThrow;
 
 
 import java.io.IOException;
-import java.net.http.HttpTimeoutException;
 
-import org.apache.catalina.connector.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -19,8 +17,7 @@ import org.springframework.http.ResponseEntity;
 import com.estore.api.estoreapi.persistence.CartsDAO;
 import com.estore.api.estoreapi.model.Cart;
 import com.estore.api.estoreapi.model.Customer;
-import com.estore.api.estoreapi.model.Product;
-import com.estore.api.estoreapi.model.Stock;
+import com.estore.api.estoreapi.model.InsufficientStockException;
 
 
 /**
@@ -74,7 +71,7 @@ public class CartsControllerTest {
     }
 
     @Test
-    public void testaddProductToCart() throws IOException {
+    public void testaddProductToCartSuccessful() throws IOException, InsufficientStockException {
         // Setup
         int userId = 10;
         int sku = 45;
@@ -93,28 +90,102 @@ public class CartsControllerTest {
     }
 
     @Test
-    public void testRemoveProductFromCart() throws IOException {
+    public void testaddProductToCartNotFound() throws IOException, InsufficientStockException {
         // Setup
-        int userId = 11;
-        Product[] products = new Product[3];
-        products[0] = new Product(41,"Glitter Powder",24.99f, new Stock(50));
-        products[1] = new Product(42,"Sand Powder", 20.99f, new Stock(25));
-        products[2] = new Product(43,"Bone Powder",19.99f, new Stock(20));
-        
-        Cart cart = new Cart(userId);
-        
-        for(Product product: products){
-            cartsController.addProductToCart(userId, product.getSku(),1);
-        }
-        when(mockCartsDAO.removeProductFromCart(userId, products[1].getSku(), products[1].getStockQuantity())).thenReturn(cart);
+        int userId = 10;
+        int sku = 45;
+        int quantity = 2;
+
+        // when addProductToCart is called, return false simulating unsuccessful
+        // addition
+        when(mockCartsDAO.addProductToCart(userId,sku,quantity)).thenReturn(null);
 
         //Invoke
-        ResponseEntity<Cart> response = cartsController.removeProductFromCart(userId, 42,1);
-         
+        ResponseEntity<Cart> response = cartsController.addProductToCart(userId, sku, quantity);
+
         //Analyze
-        assertEquals(HttpStatus.OK,response.getStatusCode());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    public void testaddProductToCartInvalidQuantity() throws IOException, InsufficientStockException {
+        // Setup
+        int userId = 10;
+        int sku = 45;
+        int quantity = -1;
         
+        //Invoke
+        ResponseEntity<Cart> response = cartsController.addProductToCart(userId, sku, quantity);
 
+        //Analyze
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
 
+    @Test
+    public void testaddProductToCartInsufficientStock() throws IOException, InsufficientStockException {
+        // Setup
+        int userId = 10;
+        int sku = 45;
+        int quantity = 2;
+
+        // when addProductToCart is called, throw InsufficientStockException
+        doThrow(InsufficientStockException.class).when(mockCartsDAO).addProductToCart(userId,sku,quantity);
+
+        //Invoke
+        ResponseEntity<Cart> response = cartsController.addProductToCart(userId, sku, quantity);
+
+        //Analyze
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
+
+    @Test
+    public void testRemoveProductFromCartSuccessful() throws IOException {
+        // Setup
+        int userId = 10;
+        int sku = 45;
+        int quantity = 2;
+
+        Cart cart = new Cart(userId);
+        // when removeProductFromCart is called, return true simulating successful
+        // removal
+        when(mockCartsDAO.removeProductFromCart(userId,sku,quantity)).thenReturn(cart);
+
+        //Invoke
+        ResponseEntity<Cart> response = cartsController.removeProductFromCart(userId, sku, quantity);
+
+        //Analyze
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void testRemoveProductFromCartNotFound() throws IOException {
+        // Setup
+        int userId = 10;
+        int sku = 45;
+        int quantity = 2;
+
+        // when removeProductFromCart is called, return false simulating unsuccessful
+        // removal
+        when(mockCartsDAO.removeProductFromCart(userId,sku,quantity)).thenReturn(null);
+
+        //Invoke
+        ResponseEntity<Cart> response = cartsController.removeProductFromCart(userId, sku, quantity);
+
+        //Analyze
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    public void testRemoveProductFromCartInvalidQuantity() throws IOException {
+        // Setup
+        int userId = 10;
+        int sku = 45;
+        int quantity = -1;
+        
+        //Invoke
+        ResponseEntity<Cart> response = cartsController.removeProductFromCart(userId, sku, quantity);
+
+        //Analyze
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 }
