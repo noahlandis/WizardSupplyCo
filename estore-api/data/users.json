@@ -1,22 +1,27 @@
 [
     {
         "userId": 1,
-        "username": "admin"
+        "username": "admin",
+        "type": "admin"
     },
     {
         "userId": 2,
-        "username": "bob"
+        "username": "bob",
+        "type": "customer"
     },
     {
         "userId": 3,
-        "username": "jane"
+        "username": "jane",
+        "type": "customer"
     },
     {
         "userId": 4,
-        "username": "joe"
+        "username": "joe",
+        "type": "customer"
     },
     {
         "userId": 5,
-        "username": "jill"
+        "username": "jill",
+        "type": "customer"
     }
 ]
