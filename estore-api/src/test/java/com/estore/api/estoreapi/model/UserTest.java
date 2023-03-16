@@ -1,6 +1,8 @@
 package com.estore.api.estoreapi.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -36,7 +38,7 @@ public class UserTest {
         Customer customer = new Customer(userName,userId);
 
         //Analyze
-        assertEquals(customer.isLoggedIn(), true);
+        assertTrue(customer.isLoggedIn());
     }
 
     @Test
@@ -50,7 +52,7 @@ public class UserTest {
         customer.logOut();
 
         //Analyze
-        assertEquals(customer.isLoggedIn(), false);
+        assertFalse(customer.isLoggedIn());
     }
 
     @Test
@@ -64,7 +66,7 @@ public class UserTest {
          Customer customer = new Customer(userName1,userId);
 
          //Analyze
-         assertEquals(customer.userNameEquals(userName2),true);
+         assertTrue(customer.userNameEquals(userName2));
          
     }  
     
@@ -79,7 +81,7 @@ public class UserTest {
         Customer customer = new Customer(userName1,userId);
 
         //Analyze
-        assertEquals(customer.userNameEquals(userName2),false);
+        assertFalse(customer.userNameEquals(userName2));
         
    }  
    
@@ -90,7 +92,7 @@ public class UserTest {
         Admin admin = new Admin();
 
         //Analyze
-        assertEquals(admin.isAdmin(), true);
+        assertTrue(admin.isAdmin());
     }
 
     @Test
@@ -103,7 +105,7 @@ public class UserTest {
         Customer customer = new Customer(userName1,userId);
 
         //Analyze
-        assertEquals(customer.isAdmin(), false);
+        assertFalse(customer.isAdmin());
     }
 
     @Test
