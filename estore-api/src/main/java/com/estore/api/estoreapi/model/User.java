@@ -3,6 +3,8 @@ package com.estore.api.estoreapi.model;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**
  * This abstract class is made to represent a user
@@ -10,6 +12,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * 
  * @author Priyank Patel
  */
+
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.PROPERTY,
+    property = "type"
+)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Customer.class, name = "customer"),
+    @JsonSubTypes.Type(value = Admin.class, name = "admin")
+})
 public abstract class User {
     private static final Logger LOG = Logger.getLogger(User.class.getName());
 
