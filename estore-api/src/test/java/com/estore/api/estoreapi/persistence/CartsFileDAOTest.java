@@ -3,15 +3,20 @@ package com.estore.api.estoreapi.persistence;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
 
+import javax.naming.InsufficientResourcesException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.estore.api.estoreapi.model.Cart;
+import com.estore.api.estoreapi.model.InsufficientStockException;
 import com.estore.api.estoreapi.model.Product;
 import com.estore.api.estoreapi.model.Stock;
 
@@ -118,54 +123,67 @@ public class CartsFileDAOTest {
 
     @Test
     public void testAddProductToCart() {
-        // Invoke
-        Cart cart = cartsFileDao.addProductToCart(1, 101, 1);
+        
+        try{
+            // Invoke
+            Cart cart = cartsFileDao.addProductToCart(1, 101, 1);
 
-        // Analyze
-        assertTrue(cart instanceof Cart);
-        assertEquals(1, cart.getUserId());
-        assertEquals(1, cart.getCount());
-        assertTrue(cart.containsProduct(101));
-        assertEquals(1, cart.getProductCount(101)); // ensure count is 1
+            // Analyze
+            assertTrue(cart instanceof Cart);
+            assertEquals(1, cart.getUserId());
+            assertEquals(1, cart.getCount());
+            assertTrue(cart.containsProduct(101));
+            assertEquals(1, cart.getProductCount(101)); // ensure count is 1
+        }
+        catch (InsufficientStockException e){
+            fail(e.getMessage());
+        }
     }
 
     @Test
     public void testAddProductToCartNotFound() {
-        // Invoke
-        Cart cart = cartsFileDao.addProductToCart(1, 104, 1);
-
-        // Analyze
-        assertNull(cart);
+        try{
+            // Invoke
+            Cart cart = cartsFileDao.addProductToCart(1, 104, 1);
+            
+            // Analyze
+            assertNull(cart);
+        }
+        catch (InsufficientStockException e){
+            fail(e.getMessage());
+        }
     }
 
     @Test
     public void testAddProductToCartNotEnoughStock() {
-        // Invoke
-        Cart cart = cartsFileDao.addProductToCart(1, 101, 101);
-
-        // Analyze
-        assertNull(cart);
-        assertEquals(0, cartsFileDao.getCart(1).getCount());
+        // Invoke and Analyze
+        assertThrows(InsufficientStockException.class, () -> cartsFileDao.addProductToCart(1, 101, 101));
     }
 
     @Test
     public void testRemoveProductFromCart() {
-        // Setup
-        cartsFileDao.addProductToCart(1, 101, 10);
+        try{
+            // Setup
+            cartsFileDao.addProductToCart(1, 101, 10);
 
-        // Invoke
-        Cart cart = cartsFileDao.removeProductFromCart(1, 101, 1);
+            // Invoke
+            Cart cart = cartsFileDao.removeProductFromCart(1, 101, 1);
 
-        // Analyze
-        assertTrue(cart instanceof Cart);
-        assertEquals(1, cart.getUserId());
-        assertEquals(1, cart.getCount());
-        assertTrue(cart.containsProduct(101));
-        assertEquals(9, cart.getProductCount(101)); // ensure count is 9
+            // Analyze
+            assertTrue(cart instanceof Cart);
+            assertEquals(1, cart.getUserId());
+            assertEquals(1, cart.getCount());
+            assertTrue(cart.containsProduct(101));
+            assertEquals(9, cart.getProductCount(101)); // ensure count is 9
+        }
+        catch (InsufficientStockException e){
+            fail(e.getMessage());
+        }
     }
 
     @Test
     public void testRemoveProductFromCartNoQuantity() {
+        try{
         // Setup
         cartsFileDao.addProductToCart(1, 101, 10);
 
@@ -177,6 +195,10 @@ public class CartsFileDAOTest {
         assertEquals(1, cart.getUserId());
         assertEquals(0, cart.getCount());
         assertFalse(cart.containsProduct(101));
+        }
+        catch (InsufficientStockException e){
+            fail(e.getMessage());
+        }
     }
 
     @Test
@@ -190,6 +212,7 @@ public class CartsFileDAOTest {
 
     @Test
     public void testClearCart() {
+        try{
         // Setup
         cartsFileDao.addProductToCart(1, 101, 10);
 
@@ -201,6 +224,10 @@ public class CartsFileDAOTest {
         assertEquals(1, cart.getUserId());
         assertEquals(0, cart.getCount());
         assertFalse(cart.containsProduct(101));
+        }
+        catch (InsufficientStockException e){
+            fail(e.getMessage());
+        }
     }
 
     // delete cart
