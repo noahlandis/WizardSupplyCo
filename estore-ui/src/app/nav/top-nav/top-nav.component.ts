@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-top-nav',
@@ -8,7 +9,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export class TopNavComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    public authService: AuthService
+  ) { }
 
   ngOnInit() {
   }
