@@ -6,7 +6,7 @@ import {
    debounceTime, distinctUntilChanged, switchMap
  } from 'rxjs/operators';
 
-import { Product } from '../../types/product';
+import { Product } from '../../model/product.model';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
