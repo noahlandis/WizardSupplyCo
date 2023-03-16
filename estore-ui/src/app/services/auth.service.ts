@@ -56,6 +56,10 @@ export class AuthService {
         // If response is a User
         if (response && response.userId) {
           this.log(`logged in user w/ userId=${response.userId}`);
+          // Set the current user in the UserService
+          const user = new User(response.userId, response.username);
+          this.userService.setCurrentUser(user);
+          // set auth state
           this.isLoggedIn.next(true);
           this.isAdmin.next(response.username === 'admin');
           return true;
@@ -78,9 +82,9 @@ export class AuthService {
           }
           // Otherwise, log out the user
           this.log(`logged out user w/ userId=${currentUser.userId}`);
+          this.userService.setCurrentUser(null);
           this.isLoggedIn.next(false);
           this.isAdmin.next(false);
-          this.userService.setCurrentUser(null);
           return true;
         })
       );
