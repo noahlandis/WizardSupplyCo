@@ -27,8 +27,8 @@ import com.estore.api.estoreapi.model.User;
  * @author Kanisha Agrawal
  */
 @Repository
-public class UserFileDAO implements UserDAO{
-    private static final Logger LOG = Logger.getLogger(UserFileDAO.class.getName()); 
+public class UsersFileDAO implements UserDAO{
+    private static final Logger LOG = Logger.getLogger(UsersFileDAO.class.getName()); 
     private Map<Integer,User> users;   // Provides a local cache of the users objects
                                // so that we don't need to read from the file
                                // each time
@@ -46,7 +46,7 @@ public class UserFileDAO implements UserDAO{
      * 
      * @throws IOException when file cannot be accessed or read from
      */
-    public UserFileDAO(@Value("${users.file}") String filename, ObjectMapper objectMapper, CartsDAO cartsDAO) throws IOException {
+    public UsersFileDAO(@Value("${users.file}") String filename, ObjectMapper objectMapper, CartsDAO cartsDAO) throws IOException {
         LOG.info("userFileDAO created");
         this.filename = filename;
         this.objectMapper = objectMapper;
@@ -206,7 +206,7 @@ public class UserFileDAO implements UserDAO{
             //if it does then log the user in
             for (User user : users.values()) {
                 if (user.userNameEquals(username)){
-                    if(user.isLoggedIn() == false){
+                    if(!user.isLoggedIn()){
                         user.logIn();
                         return user; 
                     }
