@@ -28,7 +28,7 @@ import com.estore.api.estoreapi.model.User;
  */
 
  @RestController
- @RequestMapping("User")
+ @RequestMapping("users")
  public class UserController {
      private static final Logger LOG = Logger.getLogger(UserController.class.getName());
      private UserDAO userDao;
@@ -54,11 +54,11 @@ import com.estore.api.estoreapi.model.User;
       * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
       * 
       * Example: Get customer with userId 1
-      * GET http://localhost:8080/user/1
+      * GET http://localhost:8080/users/1
       */
      @GetMapping("/{userId}")
      public ResponseEntity<User> getUser(@PathVariable int userId) {
-         LOG.info("GET /user/" + userId);
+         LOG.info("GET /users/" + userId);
  
          try {
              User user = userDao.getUser(userId);
@@ -84,12 +84,12 @@ import com.estore.api.estoreapi.model.User;
       * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
       * 
       * Example: Create a user
-      * POST http://localhost:8080/user/
+      * POST http://localhost:8080/users/
       * Body: user object to create
       */
      @PostMapping("")
      public ResponseEntity<User> createUser(@PathVariable String username) {
-         LOG.info("POST /user " + username);
+         LOG.info("POST /users " + username);
  
          try {
              User createdCustomer = userDao.createUser(username);
@@ -117,11 +117,11 @@ import com.estore.api.estoreapi.model.User;
       * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
       * 
       * Example: Put to log out user
-      * PUT http://localhost:8080/user/username
+      * PUT http://localhost:8080/users/username
       */
      @PutMapping("")
      public ResponseEntity<User> LogOutUser(@PathVariable String username) {
-         LOG.info("PUT /user " + username);
+         LOG.info("PUT /users " + username);
  
          try {
              User updateUser = userDao.LogOutUser(username);
@@ -148,12 +148,12 @@ import com.estore.api.estoreapi.model.User;
       * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
       * 
       * Example: Put to log in user
-      * PUT http://localhost:8080/user/username
+      * PUT http://localhost:8080/users/username
       */
  
      @PutMapping("")
      public ResponseEntity<User> LoginUser(@PathVariable String username) {
-         LOG.info("PUT /user " + username);
+         LOG.info("PUT /users " + username);
  
          try {
              User updateUser = userDao.LoginUser(username);
