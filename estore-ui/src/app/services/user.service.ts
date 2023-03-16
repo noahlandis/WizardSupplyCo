@@ -21,7 +21,9 @@ export class UserService {
   constructor(
     private http: HttpClient,
     private messageService: MessageService
-  ) { }
+  ) {
+    this.loadCurrentUserFromLocalStorage();
+  }
 
   /** Log a ProductService message with the MessageService */
   private log(message: string) {
@@ -79,9 +81,22 @@ export class UserService {
     );
   }
 
-  /** Sets the current user */
+  /** Sets the current user, and saves to localStorage */
   setCurrentUser(user: User | null): void {
     this.currentUser.next(user);
+    if (user) {
+      localStorage.setItem('currentUser', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('currentUser');
+    }
+  }
+
+  /** Load the current user from local storage */
+  loadCurrentUserFromLocalStorage(): void {
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+      this.currentUser.next(JSON.parse(storedUser));
+    }
   }
 
   /** Returns the current user */
