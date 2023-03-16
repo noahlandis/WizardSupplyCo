@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 import javax.naming.InsufficientResourcesException;
 
@@ -23,6 +24,7 @@ import com.estore.api.estoreapi.model.Stock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.mockito.internal.matchers.Null;
 
 /**
  * Test the Carts File DAO class
@@ -54,6 +56,7 @@ public class CartsFileDAOTest {
         mockProducts[0] = new Product(101, "Newt Lungs (10 pack)", 14.99f, new Stock(100));
         mockProducts[1] = new Product(102, "Frostwing Dragon Egg", 20.99f, new Stock(100));
         mockProducts[2] = new Product(103, "Malachite Heartstones (3 pack)", 50.99f, new Stock(100));
+
 
         // Mock the inventory dao methods
         when(inventoryDao.getProducts()).thenReturn(mockProducts);
@@ -111,6 +114,7 @@ public class CartsFileDAOTest {
         assertTrue(cart instanceof Cart);
         assertEquals(4, cart.getUserId());
     }
+
 
     @Test
     public void testCreateCartAlreadyExists() {
@@ -177,6 +181,51 @@ public class CartsFileDAOTest {
             assertEquals(9, cart.getProductCount(101)); // ensure count is 9
         }
         catch (InsufficientStockException e){
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testAddProductToCartNull() {
+        try{
+            // Setup
+            Cart cart = cartsFileDao.addProductToCart(4, 101, 10);
+
+            // Analyze
+            assertNull(cart);
+        }
+        catch (InsufficientStockException e){
+            fail(e.getMessage());
+        }
+        catch (NullPointerException e){
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testRemoveProductFromCartNull() {
+        try{
+            // Setup
+            Cart cart = cartsFileDao.removeProductFromCart(4, 101, 10);
+
+            // Analyze
+            assertNull(cart);
+        }
+        catch (NullPointerException e){
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testRemoveAllProductsFromCartNull() {
+        try{
+            // Setup
+            Cart cart = cartsFileDao.removeProductFromCart(4,101);
+
+            // Analyze
+            assertNull(cart);
+        }
+        catch (NullPointerException e){
             fail(e.getMessage());
         }
     }
