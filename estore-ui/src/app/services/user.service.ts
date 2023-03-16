@@ -21,8 +21,12 @@ export class UserService {
   constructor(
     private http: HttpClient,
     private messageService: MessageService
-  ) {
+  ) { }
+
+  ngOnInit(): void {
     this.loadCurrentUserFromLocalStorage();
+    this.log(`current user is ${this.currentUser.value}`);
+    console.log(`current user is ${this.currentUser.value}`);
   }
 
   /** Log a ProductService message with the MessageService */
