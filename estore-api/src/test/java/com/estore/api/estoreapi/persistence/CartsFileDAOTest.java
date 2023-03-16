@@ -11,9 +11,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 
-import javax.naming.InsufficientResourcesException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.estore.api.estoreapi.model.Cart;
@@ -24,7 +22,6 @@ import com.estore.api.estoreapi.model.Stock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.matchers.Null;
 
 /**
  * Test the Carts File DAO class
@@ -221,6 +218,20 @@ public class CartsFileDAOTest {
         try{
             // Setup
             Cart cart = cartsFileDao.removeProductFromCart(4,101);
+
+            // Analyze
+            assertNull(cart);
+        }
+        catch (NullPointerException e){
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testRemoveAllProductsFromCartInvalid() {
+        try{
+            // Setup
+            Cart cart = cartsFileDao.removeProductFromCart(3,1011);
 
             // Analyze
             assertNull(cart);
