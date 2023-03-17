@@ -8,7 +8,7 @@ import com.estore.api.estoreapi.model.User;
  * 
  * @author Kanisha Agrawal
  */
-public interface UserDAO {
+public interface UsersDAO {
    /**
      * Retrieves all {@linkplain User users}
      * 
