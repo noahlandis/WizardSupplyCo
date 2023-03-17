@@ -8,6 +8,7 @@ import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -47,6 +48,7 @@ public class UsersFileDAO implements UsersDAO{
         LOG.info("userFileDAO created");
         this.filename = filename;
         this.objectMapper = objectMapper;
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         this.cartsDAO = cartsDAO;
         load();  // load the users from the file
     }
@@ -85,7 +87,7 @@ public class UsersFileDAO implements UsersDAO{
         ArrayList<User> userArrayList = new ArrayList<>();
         /*This for loop goes through each product in the inventory product map */
         for (User user : users.values()) {
-            if (containsText == null || user.getUserName().contains(containsText)) {
+            if (containsText == null || user.getUsername().contains(containsText)) {
                 userArrayList.add(user);
             }
         }
@@ -177,7 +179,7 @@ public class UsersFileDAO implements UsersDAO{
         synchronized(users) {
             // // check if an user with the same name already exists. If so, return null
             for (User user : users.values()) {
-                 if (user.userNameEquals(username))
+                 if (user.usernameEquals(username))
                      return null;
              }
 
@@ -203,12 +205,12 @@ public class UsersFileDAO implements UsersDAO{
             //if it does then log the user in
             // TODO: if the user is already logged in, throw an exception
             for (User user : users.values()) {
-                if (user.userNameEquals(username)) {
+                if (user.usernameEquals(username)) {
                     if(!user.isLoggedIn()){
                         user.logIn();
-                        return user; 
+                        save();
                     }
-                    break;       
+                    return user;
                 }
             }
         }
@@ -227,12 +229,12 @@ public class UsersFileDAO implements UsersDAO{
             //if it does then log the user out
             // TODO: if the user is already logged out, throw an exception
             for (User user : users.values()) {
-                if (user.userNameEquals(username)){
+                if (user.usernameEquals(username)){
                     if(user.isLoggedIn() == true){
                         user.logOut();
-                        return user; 
+                        save();
                     }
-                    break;                
+                    return user;
                 }
             }  
         }
