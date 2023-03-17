@@ -86,7 +86,7 @@ import com.estore.api.estoreapi.model.User;
       * POST http://localhost:8080/users/
       * Body: user object to create
       */
-     @PostMapping("")
+     @PostMapping("/{username}")
      public ResponseEntity<User> createUser(@PathVariable String username) {
          LOG.info("POST /users " + username);
  
@@ -118,7 +118,7 @@ import com.estore.api.estoreapi.model.User;
       * Example: Put to log out user
       * PUT http://localhost:8080/users/username
       */
-     @PutMapping("")
+     @PutMapping("/logout/{username}")
      public ResponseEntity<User> LogOutUser(@PathVariable String username) {
          LOG.info("PUT /users/logout " + username);
  
@@ -147,10 +147,10 @@ import com.estore.api.estoreapi.model.User;
       * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
       * 
       * Example: Put to log in user
-      * PUT http://localhost:8080/users/username
+      * PUT http://localhost:8080/users/login/username
       */
  
-     @PutMapping("")
+     @PutMapping("/login/{username}")
      public ResponseEntity<User> LoginUser(@PathVariable String username) {
          LOG.info("PUT /users/login " + username);
  
