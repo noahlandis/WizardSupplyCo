@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatOptionModule } from '@angular/material/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [],
@@ -25,7 +26,8 @@ import { MatCardModule } from '@angular/material/card';
     MatInputModule,
     MatAutocompleteModule,
     MatOptionModule,
-    MatCardModule
+    MatCardModule,
+    MatTabsModule
   ],
   exports:[
     MatIconModule,
@@ -37,7 +39,8 @@ import { MatCardModule } from '@angular/material/card';
     MatInputModule,
     MatAutocompleteModule,
     MatOptionModule,
-    MatCardModule
+    MatCardModule,
+    MatTabsModule
   ]
 })
 export class MaterialModule { }
