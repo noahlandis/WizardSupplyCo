@@ -45,7 +45,7 @@ export class UserService {
 
   /** POST: create the user on the server */
   registerUser(username: String): Observable<User | { success: boolean; message: string }> {
-    return this.http.post<User>(`${this.usersUrl}`, { username: username }, this.httpOptions).pipe(
+    return this.http.post<User>(`${this.usersUrl}/${username}`, this.httpOptions).pipe(
       tap((newUser: User) => this.log(`registering user w/ userId=${newUser.userId}`)),
       catchError((error) => {
         if (error.status === HttpStatusCode.Conflict) {
