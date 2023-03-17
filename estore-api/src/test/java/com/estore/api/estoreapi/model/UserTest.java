@@ -16,23 +16,23 @@ public class UserTest {
     public void testConstructor()   {
         //Setup
         int userId = 7;
-        String userName = new String("Voldemort");
+        String username = new String("Voldemort");
 
         //Invoke
-        Customer customer = new Customer(userId, userName);
+        Customer customer = new Customer(userId, username);
 
         //Analyze
-        assertEquals(userName, customer.getUserName());
+        assertEquals(username, customer.getUsername());
     }
     
     @Test
     public void testlogIn(){
         //Setup
         int userId = 10;
-        String userName = new String("Oz");
+        String username = new String("Oz");
 
         //Invoke
-        Customer customer = new Customer(userId, userName);
+        Customer customer = new Customer(userId, username);
 
         //Analyze
         assertEquals(customer.isLoggedIn(), true);
@@ -42,10 +42,10 @@ public class UserTest {
     public void testlogOut(){
         //Setup
         int userId = 12;
-        String userName = new String("Wizrd");
+        String username = new String("Wizrd");
 
         //Invoke
-        Customer customer = new Customer(userId, userName);
+        Customer customer = new Customer(userId, username);
         customer.logOut();
 
         //Analyze
@@ -58,6 +58,6 @@ public class UserTest {
         Admin admin = new Admin();
         
         //Analyze
-        assertEquals(admin.getUserName(), "admin");
+        assertEquals(admin.getUsername(), "admin");
     }
 }

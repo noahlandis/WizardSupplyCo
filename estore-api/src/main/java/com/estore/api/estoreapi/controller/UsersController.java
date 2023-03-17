@@ -120,7 +120,7 @@ import com.estore.api.estoreapi.model.User;
       */
      @PutMapping("/logout/{username}")
      public ResponseEntity<User> LogOutUser(@PathVariable String username) {
-         LOG.info("PUT /users/logout " + username);
+         LOG.info("PUT /users/logout/" + username);
  
          try {
              User updateUser = userDao.LogOutUser(username);
@@ -153,7 +153,7 @@ import com.estore.api.estoreapi.model.User;
  
      @PutMapping("/login/{username}")
      public ResponseEntity<User> LoginUser(@PathVariable String username) {
-         LOG.info("PUT /users/login " + username);
+         LOG.info("PUT /users/login/" + username);
  
          try {
              User updateUser = userDao.LoginUser(username);

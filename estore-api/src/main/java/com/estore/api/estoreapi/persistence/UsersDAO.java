@@ -35,7 +35,7 @@ public interface UsersDAO {
     /**
      * Creates and saves a {@linkplain User user}
      * 
-     * @param userName {@linkplain User user} object to be created and saved
+     * @param username {@linkplain User user} object to be created and saved
      * <br>
      * The userId of the user object is ignored and a new unique userId is assigned
      * Checks if the user already exists by name and if so, returns null
@@ -44,12 +44,12 @@ public interface UsersDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    User createUser(String userName) throws IOException;
+    User createUser(String username) throws IOException;
 
     /**
      * Log a user out {@linkplain User user}
      * 
-     * @param userName {@linkplain User user} object to be logged out
+     * @param username {@linkplain User user} object to be logged out
      * <br>
      * Checks if the user already exists by name and if so, returns null
      *
@@ -57,12 +57,12 @@ public interface UsersDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    User LogOutUser(String userName) throws IOException;
+    User LogOutUser(String username) throws IOException;
 
       /**
      * Log a user in the website {@linkplain User user}
      * 
-     * @param userName {@linkplain User user} object to be logged in
+     * @param username {@linkplain User user} object to be logged in
      * <br>
      * Checks if the user already exists by name and if so, returns null
      *
@@ -70,7 +70,7 @@ public interface UsersDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    User LoginUser(String userName) throws IOException;
+    User LoginUser(String username) throws IOException;
 
 }
     
