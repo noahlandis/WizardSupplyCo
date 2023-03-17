@@ -1,1 +1,22 @@
-[{"type":"admin","admin":true,"userId":0,"userName":"admin","loggedIn":false,"isAdmin":true},{"type":"customer","admin":false,"userId":1,"userName":"bobly","loggedIn":false,"isAdmin":false},{"type":"customer","admin":false,"userId":2,"userName":"Rincewind","loggedIn":true,"isAdmin":false}]
+[ {
+  "type" : "admin",
+  "admin" : true,
+  "userId" : 0,
+  "username" : "admin",
+  "loggedIn" : true,
+  "isAdmin" : true
+}, {
+  "type" : "customer",
+  "admin" : false,
+  "userId" : 1,
+  "username" : "bobly",
+  "loggedIn" : false,
+  "isAdmin" : false
+}, {
+  "type" : "customer",
+  "admin" : false,
+  "userId" : 2,
+  "username" : "Rincewind",
+  "loggedIn" : false,
+  "isAdmin" : false
+} ]
