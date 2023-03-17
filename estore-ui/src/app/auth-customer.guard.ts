@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import {AuthService} from './services/auth.service';
 
-export const authCustomerGuard = () => {
+export const authCustomerGuard = (): Observable<boolean | UrlTree> => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
