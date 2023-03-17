@@ -15,7 +15,7 @@ export class UserService {
   private currentUser = new BehaviorSubject<User | null>(null);
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ })
   };
 
   constructor(
@@ -24,14 +24,13 @@ export class UserService {
   ) { }
 
   ngOnInit(): void {
-    this.loadCurrentUserFromLocalStorage();
     this.log(`current user is ${this.currentUser.value}`);
     console.log(`current user is ${this.currentUser.value}`);
   }
 
-  /** Log a ProductService message with the MessageService */
+  /** Log a UserService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`ProductService: ${message}`);
+    this.messageService.add(`UserService: ${message}`);
   }
 
   /** GET user by id. Will 404 if id not found */
@@ -46,7 +45,7 @@ export class UserService {
   /** POST: create the user on the server */
   registerUser(username: String): Observable<User | { success: boolean; message: string }> {
     return this.http.post<User>(`${this.usersUrl}/${username}`, this.httpOptions).pipe(
-      tap((newUser: User) => this.log(`registering user w/ userId=${newUser.userId}`)),
+      tap((newUser: User) => this.log(`registering user w/ userId=${newUser.userId}, username=${newUser.username}`)),
       catchError((error) => {
         if (error.status === HttpStatusCode.Conflict) {
           this.log(`user w/ username=${username} already exists`);
@@ -59,8 +58,8 @@ export class UserService {
 
   /** POST: login the user on the server */
   loginUser(username: String): Observable<User | { success: boolean; message: string }> {
-    return this.http.post<User>(`${this.usersUrl}/login`, { username: username }, this.httpOptions).pipe(
-      tap((newUser: User) => this.log(`logging in user w/ userId=${newUser.userId}`)),
+    return this.http.put<User>(`${this.usersUrl}/login/${username}`, this.httpOptions).pipe(
+      tap((newUser: User) => this.log(`logging in user w/ userId=${newUser.userId} username=${newUser.username}`)),
       catchError((error) => {
         if (error.status === HttpStatusCode.NotFound) {
           this.log(`user w/ username=${username} does not exist`);
@@ -72,12 +71,12 @@ export class UserService {
   }
 
   /** POST: logout the user on the server */
-  logoutUser(userId: Number): Observable<User | { success: boolean; message: string }> {
-    return this.http.post<User>(`${this.usersUrl}/logout`, { userId: userId }, this.httpOptions).pipe(
-      tap((newUser: User) => this.log(`logging out user w/ userId=${newUser.userId}`)),
+  logoutUser(username: String): Observable<User | { success: boolean; message: string }> {
+    return this.http.put<User>(`${this.usersUrl}/logout/${username}`, this.httpOptions).pipe(
+      tap((newUser: User) => this.log(`logging out user w/ userId=${newUser.userId} username=${newUser.username}`)),
       catchError((error) => {
         if (error.status === HttpStatusCode.NotFound) {
-          this.log(`user w/ userId=${userId} does not exist`);
+          this.log(`user w/ username=${username} does not exist`);
           return of({success: false, message: 'User does not exist'});
         }
         return this.handleError<User>('logoutUser')(error);
@@ -87,20 +86,8 @@ export class UserService {
 
   /** Sets the current user, and saves to localStorage */
   setCurrentUser(user: User | null): void {
+    this.log(`setting current user to ${user}`);
     this.currentUser.next(user);
-    if (user) {
-      localStorage.setItem('currentUser', JSON.stringify(user));
-    } else {
-      localStorage.removeItem('currentUser');
-    }
-  }
-
-  /** Load the current user from local storage */
-  loadCurrentUserFromLocalStorage(): void {
-    const storedUser = localStorage.getItem('currentUser');
-    if (storedUser) {
-      this.currentUser.next(JSON.parse(storedUser));
-    }
   }
 
   /** Returns the current user */

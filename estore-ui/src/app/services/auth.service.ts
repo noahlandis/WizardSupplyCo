@@ -16,7 +16,7 @@ export class AuthService {
   constructor(
     private userService: UserService,
     private messageService: MessageService
-  ) { }
+  ) { this.loadCurrentUserFromLocalStorage(); }
 
   /** Log an AuthService message with the MessageService */
   private log(message: string) {
@@ -34,7 +34,11 @@ export class AuthService {
         }
         // If response is a User
         if (response && response.userId) {
-          this.log(`registered user w/ userId=${response.userId}`);
+          this.log(`registered user w/ userId=${response.userId}, username=${response.username}`);
+          // Set the current user in the UserService
+          const user = new User(response.userId, response.username);
+          this.userService.setCurrentUser(user);
+          this.saveCurrentUserToLocalStorage(user);
           this.isLoggedIn.next(true);
           this.isAdmin.next(response.username === 'admin');
           return true;
@@ -48,22 +52,25 @@ export class AuthService {
   login(username: String): Observable<boolean> {
     return this.userService.loginUser(username).pipe(
       map((response: any) => {
+        // log all the fields of the response
+        this.log(`response: ${JSON.stringify(response)}`);
         // If response has a success property and it is false
         if (response && response.success === false) {
           this.log(response.message);
           return false;
         }
         // If response is a User
-        if (response && response.userId) {
-          this.log(`logged in user w/ userId=${response.userId}`);
+        if (response && response.username) {
+          this.log(`logged in user w/ userId=${response.userId}, username=${response.username}`);
           // Set the current user in the UserService
           const user = new User(response.userId, response.username);
           this.userService.setCurrentUser(user);
-          // set auth state
+          this.saveCurrentUserToLocalStorage(user);
           this.isLoggedIn.next(true);
           this.isAdmin.next(response.username === 'admin');
           return true;
         }
+        this.log('response is not a User');
         return false;
       })
     );
@@ -73,7 +80,7 @@ export class AuthService {
   logout(): Observable<boolean> {
     const currentUser = this.userService.getCurrentUser().getValue();
     if (currentUser) {
-      return this.userService.logoutUser(currentUser.userId).pipe(
+      return this.userService.logoutUser(currentUser.username).pipe(
         map((response: any) => {
           // If response has a success property and it is false
           if (response && response.success === false) {
@@ -81,8 +88,9 @@ export class AuthService {
             return false;
           }
           // Otherwise, log out the user
-          this.log(`logged out user w/ userId=${currentUser.userId}`);
+          this.log(`logged out user w/ userId=${currentUser.userId}, username=${currentUser.username}`);
           this.userService.setCurrentUser(null);
+          this.saveCurrentUserToLocalStorage(null);
           this.isLoggedIn.next(false);
           this.isAdmin.next(false);
           return true;
@@ -102,5 +110,27 @@ export class AuthService {
   /** Returns true if the user is authenticated, false otherwise */
   getIsLoggedIn(): BehaviorSubject<boolean> {
     return this.isLoggedIn;
+  }
+
+  /** Load the current user from local storage */
+  loadCurrentUserFromLocalStorage(): void {
+    const storedUser = localStorage.getItem('currentUser');
+    this.log(`loaded 'currentUser' from localStorage: ${storedUser}`);
+    if (storedUser) {
+      this.userService.setCurrentUser(JSON.parse(storedUser));
+      this.isLoggedIn.next(true);
+      this.isAdmin.next(JSON.parse(storedUser).username === 'admin');
+    }
+  }
+
+  /** Save the current user to local storage */
+  saveCurrentUserToLocalStorage(currentUser: User | null): void {
+    if (currentUser) {
+      this.log(`setting localStorage key 'currentUser' to ${JSON.stringify(currentUser)}`)
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    } else {
+      this.log(`removing localStorage key 'currentUser'`)
+      localStorage.removeItem('currentUser');
+    }
   }
 }
