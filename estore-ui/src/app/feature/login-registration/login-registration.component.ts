@@ -40,8 +40,8 @@ export class LoginRegistrationComponent implements OnInit {
     console.log('Login form submitted with username:', username);
 
     // call login on the auth service
-    this.authService.login(username).subscribe(
-      (loginSuccess) => {
+    this.authService.login(username).subscribe({
+      next: (loginSuccess) => {
         if (loginSuccess) {
           console.log('Login successful');
           this.router.navigate(['/']);
@@ -50,10 +50,10 @@ export class LoginRegistrationComponent implements OnInit {
           this.loginForm.controls['username'].setErrors({ invalidUsername: true });
         }
       },
-      (error) => {
-        console.log('Login failed with error:', error);
+      error: (e) => {
+        console.log('Login failed with error:', e);
       }
-    );
+    });
   }
 
   /** Registration form submission handler */
@@ -65,8 +65,8 @@ export class LoginRegistrationComponent implements OnInit {
     console.log('Register form submitted with username:', username);
 
     // call register on the auth service
-    this.authService.register(username).subscribe(
-      (registerSuccess) => {
+    this.authService.register(username).subscribe({
+      next: (registerSuccess) => {
         if (registerSuccess) {
           console.log('Register successful');
           this.router.navigate(['/']);
@@ -75,9 +75,9 @@ export class LoginRegistrationComponent implements OnInit {
           this.registerForm.controls['username'].setErrors({ usernameTaken: true });
         }
       },
-      (error) => {
-        console.log('Register failed with error:', error);
+      error: (e) => {
+        console.log('Register failed with error:', e);
       }
-    );
+    });
   }
 }

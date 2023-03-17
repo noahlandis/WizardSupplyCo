@@ -19,10 +19,10 @@
             <ng-container *ngIf="!(authService.getIsAdmin() | async)">
                 <button routerLink="/cart" mat-raised-button color="accent">Cart</button>
             </ng-container>
-            <button (click)="authService.logout()" mat-raised-button color="accent">Logout</button>
+            <button (click)="onLogout()" mat-raised-button color="accent">Logout</button>
         </ng-container>
         <ng-container *ngIf="!(authService.getIsLoggedIn() | async)">
-            <button routerLink="/login" mat-raised-button color="accent">Login</button>
+            <button routerLink="/auth" mat-raised-button color="accent">Login</button>
         </ng-container>
     </div>
 </mat-toolbar>
