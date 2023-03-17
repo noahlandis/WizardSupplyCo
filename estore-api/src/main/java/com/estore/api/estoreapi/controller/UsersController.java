@@ -129,7 +129,6 @@ import com.estore.api.estoreapi.model.User;
                  return new ResponseEntity<User>(updateUser,HttpStatus.OK);
              
              // Throw not found if user does not exist
-             // TODO: currently, this also throws not found is the user is already logged out
              return new ResponseEntity<>(HttpStatus.NOT_FOUND);
          }
          catch(IOException e) {
@@ -162,7 +161,6 @@ import com.estore.api.estoreapi.model.User;
                  return new ResponseEntity<User>(updateUser,HttpStatus.OK);
              
              // Throw not found if product does not exist
-             // TODO: currently, this also throws not found is the user is already logged in
              return new ResponseEntity<>(HttpStatus.NOT_FOUND);
          }
          catch(IOException e) {
