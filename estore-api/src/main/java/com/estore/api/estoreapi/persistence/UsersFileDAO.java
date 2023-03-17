@@ -201,8 +201,9 @@ public class UsersFileDAO implements UsersDAO{
         synchronized(users) {
             //check if user with given username exists
             //if it does then log the user in
+            // TODO: if the user is already logged in, throw an exception
             for (User user : users.values()) {
-                if (user.userNameEquals(username)){
+                if (user.userNameEquals(username)) {
                     if(!user.isLoggedIn()){
                         user.logIn();
                         return user; 
@@ -224,6 +225,7 @@ public class UsersFileDAO implements UsersDAO{
 
             //check if user with given username exists
             //if it does then log the user out
+            // TODO: if the user is already logged out, throw an exception
             for (User user : users.values()) {
                 if (user.userNameEquals(username)){
                     if(user.isLoggedIn() == true){

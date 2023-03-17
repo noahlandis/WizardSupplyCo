@@ -27,6 +27,7 @@ public abstract class User {
 
     static final String STRING_FORMAT = "User [userId=%d, userName=%s]";
 
+    // TODO: investigate all the fields that are being serialized (there are some duplicates)
     @JsonProperty("userId") private int userId;
     @JsonProperty("userName") private String userName;
     @JsonProperty("loggedIn") private boolean loggedIn;
