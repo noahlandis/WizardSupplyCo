@@ -14,7 +14,7 @@
     <div class="right-section">
         <ng-container *ngIf="(authService.getIsLoggedIn() | async)">
             <ng-container *ngIf="(authService.getIsAdmin() | async)">
-                <button routerLink="/dashboard" mat-raised-button color="accent">Dashboard</button>
+                <button routerLink="/admin" mat-raised-button color="accent">Dashboard</button>
             </ng-container>
             <ng-container *ngIf="!(authService.getIsAdmin() | async)">
                 <button routerLink="/cart" mat-raised-button color="accent">Cart</button>

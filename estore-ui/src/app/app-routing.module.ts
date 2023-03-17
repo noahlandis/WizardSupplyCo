@@ -16,7 +16,7 @@ const routes: Routes = [
     {
         path:'cart',
         component:TestCartComponent,
-        canActivate: [authCustomerGuard],
+        canActivateChild: [authCustomerGuard],
         children: [
             {path:'checkout', component:TestCartComponent}
         ]
