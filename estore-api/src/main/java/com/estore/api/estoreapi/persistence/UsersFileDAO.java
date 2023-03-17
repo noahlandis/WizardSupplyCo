@@ -1,6 +1,5 @@
 package com.estore.api.estoreapi.persistence;
 
-import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,8 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.estore.api.estoreapi.model.Customer;
-import com.estore.api.estoreapi.persistence.CartsFileDAO;
-import com.estore.api.estoreapi.persistence.CartsDAO;
 import com.estore.api.estoreapi.model.User;
 
 /**
@@ -27,7 +24,7 @@ import com.estore.api.estoreapi.model.User;
  * @author Kanisha Agrawal
  */
 @Repository
-public class UsersFileDAO implements UserDAO{
+public class UsersFileDAO implements UsersDAO{
     private static final Logger LOG = Logger.getLogger(UsersFileDAO.class.getName()); 
     private Map<Integer,User> users;   // Provides a local cache of the users objects
                                // so that we don't need to read from the file
