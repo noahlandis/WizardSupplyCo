@@ -3,6 +3,8 @@ package com.estore.api.estoreapi.model;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**
  * This abstract class is made to represent a user
@@ -10,11 +12,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * 
  * @author Priyank Patel
  */
+
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.PROPERTY,
+    property = "type"
+)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Customer.class, name = "customer"),
+    @JsonSubTypes.Type(value = Admin.class, name = "admin")
+})
 public abstract class User {
     private static final Logger LOG = Logger.getLogger(User.class.getName());
 
     static final String STRING_FORMAT = "User [userId=%d, userName=%s]";
 
+    // TODO: investigate all the fields that are being serialized (there are some duplicates)
     @JsonProperty("userId") private int userId;
     @JsonProperty("userName") private String userName;
     @JsonProperty("loggedIn") private boolean loggedIn;
