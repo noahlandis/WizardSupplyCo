@@ -19,7 +19,7 @@ public class UserTest {
         String userName = new String("Voldemort");
 
         //Invoke
-        Customer customer = new Customer(userName, userId);
+        Customer customer = new Customer(userId, userName);
 
         //Analyze
         assertEquals(userName, customer.getUserName());
@@ -32,7 +32,7 @@ public class UserTest {
         String userName = new String("Oz");
 
         //Invoke
-        Customer customer = new Customer(userName,userId);
+        Customer customer = new Customer(userId, userName);
 
         //Analyze
         assertEquals(customer.isLoggedIn(), true);
@@ -45,7 +45,7 @@ public class UserTest {
         String userName = new String("Wizrd");
 
         //Invoke
-        Customer customer = new Customer(userName,userId);
+        Customer customer = new Customer(userId, userName);
         customer.logOut();
 
         //Analyze
