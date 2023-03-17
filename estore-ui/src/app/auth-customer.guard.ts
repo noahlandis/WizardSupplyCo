@@ -12,5 +12,5 @@ export const authCustomerGuard = () => {
   }
 
   // Redirect to the login page
-  return router.parseUrl('/login');
+  return router.parseUrl('/auth');
 };
