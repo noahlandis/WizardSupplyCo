@@ -1,0 +1,49 @@
+<div class="container">
+    <h1>Edit Product</h1>
+    <form [formGroup]="editProductForm" (ngSubmit)="onSubmitEditProductForm()">
+      <mat-form-field appearance="outline">
+        <mat-label>Product Name</mat-label>
+        <input matInput formControlName="name" type="text" placeholder="Something magical..." required />
+        <mat-icon matSuffix>edit</mat-icon>
+        <!-- <mat-hint>The name of the product</mat-hint> -->
+        <mat-error *ngIf="editProductForm.controls['name'].hasError('required')">Name is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Price</mat-label>
+        <input matInput formControlName="price" type="number" placeholder="0.00" required>
+        <mat-icon matPrefix>attach_money</mat-icon>
+        <mat-hint>The price of this product in USD</mat-hint>
+        <mat-error *ngIf="editProductForm.controls['price'].hasError('required')">Price is required</mat-error>
+        <mat-error *ngIf="editProductForm.controls['price'].hasError('pattern')">Price must be a decimal number with 2 decimal places</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Stock Quantity</mat-label>
+        <input matInput formControlName="stockQuantity" type="number" placeholder="0" required />
+        <mat-icon matSuffix>inventory</mat-icon>
+        <mat-hint>Amount of this product you have in stock</mat-hint>
+        <mat-error *ngIf="editProductForm.controls['stockQuantity'].hasError('required')">Stock Quantity is required</mat-error>
+        <mat-error *ngIf="editProductForm.controls['stockQuantity'].hasError('pattern')">Stock Quantity must be a number</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Images</mat-label>
+        <input matInput formControlName="images" type="text" required />
+        <mat-icon matSuffix>image</mat-icon>
+        <mat-hint>Comma-separated image URLs</mat-hint>
+        <mat-error *ngIf="editProductForm.controls['images'].hasError('pattern')">Images must be a comma-separated list of URLs</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" required></textarea>
+        <mat-icon matSuffix>edit_note</mat-icon>
+        <mat-hint>The paragraph description of this product</mat-hint>
+        <mat-error *ngIf="editProductForm.controls['description'].hasError('required')">Description is required</mat-error>
+      </mat-form-field>
+  
+      <button mat-raised-button color="primary" type="submit" [disabled]="!editProductForm.valid">Save</button>
+    </form>
+  </div>
+  

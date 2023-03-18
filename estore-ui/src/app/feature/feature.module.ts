@@ -4,9 +4,16 @@ import { TestCartComponent } from './test-cart/test-cart.component';
 import { TestLoginComponent } from './test-login/test-login.component';
 import { TestAdminDashboardComponent } from './test-admin-dashboard/test-admin-dashboard.component';
 import { TestCatalogComponent } from './test-catalog/test-catalog.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
 
 @NgModule({
-    declarations: [TestCartComponent, TestLoginComponent, TestAdminDashboardComponent, TestCatalogComponent],
+    declarations: [
+        TestCartComponent,
+        TestLoginComponent,
+        TestAdminDashboardComponent,
+        TestCatalogComponent,
+        EditProductComponent,
+    ],
     imports: [
         CommonModule
     ],
@@ -14,7 +21,8 @@ import { TestCatalogComponent } from './test-catalog/test-catalog.component';
         TestCartComponent,
         TestLoginComponent,
         TestAdminDashboardComponent,
-        TestCatalogComponent
+        TestCatalogComponent,
+        EditProductComponent,
     ]
 })
 export class FeatureModule { }
