@@ -1,0 +1,19 @@
+<div class="search-container">
+  <input
+    class="search-input"
+    placeholder="Search products..."
+    #searchBox
+    id="search-box"
+    aria-label="Search products"
+    [matAutocomplete]="auto"
+    (input)="search(searchBox.value)"
+  />
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let product of products$ | async" [value]="product.name">
+      <a routerLink="/catalog">
+        <span>{{ product.name }}</span> |
+        <small>${{ product.price }}</small>
+      </a>
+    </mat-option>
+  </mat-autocomplete>
+</div>

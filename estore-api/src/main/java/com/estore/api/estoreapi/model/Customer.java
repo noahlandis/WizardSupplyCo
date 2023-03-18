@@ -1,10 +1,5 @@
 package com.estore.api.estoreapi.model;
 
-import java.util.logging.Logger;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 /**
  * This class represents a Customer and it extends the abstract
  * class "User"
@@ -13,12 +8,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Customer extends User{
     /**
-     * This creates a user with the given userName and userId
+     * This creates a user with the given username and userId
      * 
-     * @param userName - userName for the customer
+     * @param username - username for the customer
      * @param userId - userId of the 
      */
-    public Customer(String userName, int userId){
-        super(userId, userName);
+    public Customer(int userId, String username){
+        super(userId, username);
     }
 }

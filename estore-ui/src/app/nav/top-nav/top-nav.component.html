@@ -1,0 +1,28 @@
+<mat-toolbar class="header" color="primary">
+    <div class="left-section">
+        <a mat-icon-button class="mobile-hamburger-menu" (click)="onToggleSidenav()">
+            <mat-icon>menu</mat-icon>
+        </a>
+        <a [routerLink]="['/']" mat-icon-button aria-label="Logo button with a home icon">
+            <mat-icon>home</mat-icon>
+        </a>
+        <button [routerLink]="['/catalog']" mat-raised-button color="accent">Catalog</button>
+    </div>
+    <div class="middle-section">
+        <app-product-search class="search-bar" />
+      </div>
+    <div class="right-section">
+        <ng-container *ngIf="(authService.getIsLoggedIn() | async)">
+            <ng-container *ngIf="(authService.getIsAdmin() | async)">
+                <button routerLink="/admin" mat-raised-button color="accent">Dashboard</button>
+            </ng-container>
+            <ng-container *ngIf="!(authService.getIsAdmin() | async)">
+                <button routerLink="/cart" mat-raised-button color="accent">Cart</button>
+            </ng-container>
+            <button (click)="onLogout()" mat-raised-button color="accent">Logout</button>
+        </ng-container>
+        <ng-container *ngIf="!(authService.getIsLoggedIn() | async)">
+            <button routerLink="/auth" mat-raised-button color="accent">Login</button>
+        </ng-container>
+    </div>
+</mat-toolbar>

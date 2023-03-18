@@ -150,7 +150,7 @@ public class InventoryController {
             if (createdProduct != null)
                 return new ResponseEntity<Product>(createdProduct, HttpStatus.CREATED);
                 
-            // Throw conflict since hero already exists
+            // Throw conflict since product already exists
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         catch(IOException e) {
