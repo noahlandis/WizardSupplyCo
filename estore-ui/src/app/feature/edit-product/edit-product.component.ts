@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { ProductService } from 'src/app/services/product.service';
-import { Product } from 'src/app/types/product';
+import { Product } from 'src/app/model/product.model';
 
 @Component({
   selector: 'app-edit-product',
