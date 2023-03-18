@@ -3,15 +3,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { ProductService } from 'src/app/services/product.service';
-import { BaseProduct } from 'src/app/model/product.model';
+import { BaseProduct, Description } from 'src/app/model/product.model';
 
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
-  styleUrls: ['./create-product.component.css']
+  styleUrls: ['./create-product.component.scss']
 })
 export class CreateProductComponent {
-  editProductForm: FormGroup;
+  createProductForm: FormGroup;
   
   @ViewChild('createButtonText', { static: false }) createButtonText!: ElementRef;
 
@@ -23,14 +23,16 @@ export class CreateProductComponent {
     private fb: FormBuilder,
     private productService: ProductService,
     ) {
-      this.editProductForm = this.fb.group({
+      this.createProductForm = this.fb.group({
         name: ['', [Validators.required]],
         // price is required, and must be a decimal number with 2 decimal places
         price: ['', [Validators.required, Validators.pattern('[0-9]+(\.[0-9][0-9]?)?')]],
         stockQuantity: ['', [Validators.required, Validators.pattern('[0-9]*')]],
         // images is required, and must be a comma-separated list of URL strings
         images: ['', [Validators.pattern('^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|png|svg))(?:, https?:\/\/.*\.(?:png|jpg|jpeg|gif|png|svg))*$')]],
-        description: ['', []]
+        summary: ['', []],
+        // tags is required, and must be a comma-separated list of strings
+        tags: ['', [Validators.pattern('^[a-zA-Z0-9]+(?:, [a-zA-Z0-9]+)*$')]],
       });
   }
 
@@ -38,11 +40,13 @@ export class CreateProductComponent {
 
   /** Create product form submittion handler */
   async create(): Promise<void> {
-    if (!this.editProductForm.valid)
+    if (!this.createProductForm.valid)
       return;
     
-    const { name, price, stockQuantity, images, description } = this.editProductForm.value;
+    const { name, price, stockQuantity, images, summary, tags } = this.createProductForm.value;
     const imagesArray: string[] = images.split(', ');
+    const tagsArray: string[] = tags.split(', ');
+    const description = new Description(summary, tagsArray);
 
     const product = new BaseProduct(name, price, stockQuantity, imagesArray, description);
     console.log('Create product form submitted with product:', JSON.stringify(product));
