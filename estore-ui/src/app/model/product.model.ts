@@ -4,7 +4,7 @@ export class BaseProduct {
     public price: number,
     public stockQuantity: number,
     public images: string[],
-    public description: string
+    public description: Description,
   ) { }
 }
 
@@ -15,8 +15,15 @@ export class Product extends BaseProduct {
     price: number,
     stockQuantity: number,
     images: string[],
-    description: string
+    description: Description,
   ) {
     super(name, price, stockQuantity, images, description);
   }
+}
+
+export class Description {
+  constructor(
+    public summary: string,
+    public tags: string[],
+  ) { }
 }
