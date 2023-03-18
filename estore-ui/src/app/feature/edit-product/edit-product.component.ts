@@ -35,7 +35,7 @@ export class EditProductComponent implements OnInit {
   }
 
   getProduct(): void {
-    const sku = Number(this.route.snapshot.paramMap.get('id'));
+    const sku = Number(this.route.snapshot.paramMap.get('sku'));
     this.productService.getProduct(sku).subscribe({
       next: product => {
         this.editProductForm.setValue({
@@ -56,7 +56,7 @@ export class EditProductComponent implements OnInit {
     if (!this.editProductForm.valid)
       return;
     
-    const sku = Number(this.route.snapshot.paramMap.get('id'));
+    const sku = Number(this.route.snapshot.paramMap.get('sku'));
     const { name, price, stockQuantity, images, description } = this.editProductForm.value;
     const imagesArray: string[] = images.split(', ');
 

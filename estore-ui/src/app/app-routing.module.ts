@@ -9,6 +9,7 @@ import { LoginRegistrationComponent } from './feature/login-registration/login-r
 import { TestAdminDashboardComponent } from './feature/test-admin-dashboard/test-admin-dashboard.component';
 import { authAdminGuard } from './auth-admin.guard';
 import { noAuthGuard } from './auth-none.guard';
+import { EditProductComponent } from './feature/edit-product/edit-product.component';
 
 const routes: Routes = [
     {path:'', component:TestCatalogComponent},
@@ -32,7 +33,7 @@ const routes: Routes = [
         canActivateChild: [authAdminGuard],
         children: [
             {path:'create', component:TestAdminDashboardComponent},
-            {path:'edit', component:TestAdminDashboardComponent}
+            {path:'edit/:sku', component:EditProductComponent}
         ]
     }
 ];
