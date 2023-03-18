@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.estore.api.estoreapi.model.Cart;
+import com.estore.api.estoreapi.model.InsufficientStockException;
 
 /**
  * Implements the functionality for JSON file-based persistence for Carts
@@ -135,22 +136,29 @@ public class CartsFileDAO implements CartsDAO {
 
     /**
      * {@inheritDoc}
+     * @throws InsufficientStockException
      */
     @Override
-    public Cart addProductToCart(int userId, int sku, int quantity) {
+    public Cart addProductToCart(int userId, int sku, int quantity) throws InsufficientStockException {
         synchronized (carts) {
+            if (!carts.containsKey(userId)) {
+                LOG.warning("User with id " + userId + " does not have a cart!");
+                return null;
+            }
+            
             Cart cart = carts.get(userId);
-            if (cart != null) {
-                boolean success = cart.addProduct(sku, quantity);
-                try {
-                    save();
-                } catch (IOException e) {
-                    LOG.warning("Failed to save cart for user " + userId + ". " + e.getMessage());
-                }
+            boolean success = cart.addProduct(sku, quantity);
 
-                // If the product could not be added to the cart, return null
-                if (!success) 
-                    return null;
+            // If the product could not be added to the cart, return null
+            if (!success) {
+                LOG.warning("User with id " + userId + " does not have product with sku " + sku + " in their cart!");
+                return null;
+            }
+
+            try {
+                save();
+            } catch (IOException e) {
+                LOG.warning("Failed to save cart for user " + userId + ". " + e.getMessage());
             }
 
             return cart;
@@ -163,18 +171,23 @@ public class CartsFileDAO implements CartsDAO {
     @Override
     public Cart removeProductFromCart(int userId, int sku, int quantity) {
         synchronized (carts) {
+            if (!carts.containsKey(userId)) {
+                LOG.warning("User with id " + userId + " does not have a cart!");
+                return null;
+            }
+
             Cart cart = carts.get(userId);
-            if (cart != null) {
-                boolean success = cart.removeProduct(sku, quantity);
-                try {
-                    save();
-                } catch (IOException e) {
-                    LOG.warning("Failed to save cart for user " + userId + ". " + e.getMessage());
-                }
-                
-                // If the product could not be removed from the cart, return null
-                if (!success) 
-                    return null;
+            boolean success = cart.removeProduct(sku, quantity);
+
+            if (!success) {
+                LOG.warning("User with id " + userId + " does not have product with sku " + sku + " in their cart!");
+                return null;
+            }          
+
+            try {
+                save();
+            } catch (IOException e) {
+                LOG.warning("Failed to save cart for user " + userId + ". " + e.getMessage());
             }
 
             return cart;
@@ -187,18 +200,23 @@ public class CartsFileDAO implements CartsDAO {
     @Override
     public Cart removeProductFromCart(int userId, int sku) {
         synchronized (carts) {
+            if (!carts.containsKey(userId)) {
+                LOG.warning("User with id " + userId + " does not have a cart!");
+                return null;
+            }
+
             Cart cart = carts.get(userId);
-            if (cart != null) {
-                boolean success = cart.removeProduct(sku);
-                try {
-                    save();
-                } catch (IOException e) {
-                    LOG.warning("Failed to save cart for user " + userId + ". " + e.getMessage());
-                }
-                
-                // If the product could not be removed from the cart, return null
-                if (!success) 
-                    return null;
+            boolean success = cart.removeProduct(sku);
+
+            if (!success) {
+                LOG.warning("User with id " + userId + " does not have product with sku " + sku + " in their cart!");
+                return null;
+            }          
+
+            try {
+                save();
+            } catch (IOException e) {
+                LOG.warning("Failed to save cart for user " + userId + ". " + e.getMessage());
             }
 
             return cart;

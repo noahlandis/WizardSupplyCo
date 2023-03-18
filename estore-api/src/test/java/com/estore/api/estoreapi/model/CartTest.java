@@ -3,7 +3,9 @@ package com.estore.api.estoreapi.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -110,8 +112,12 @@ public class CartTest {
     @Test
     public void testAddProduct() {
         // Invoke
-        testCart.addProduct(103, 5);
-        
+        try{
+            testCart.addProduct(103, 5);
+        }
+        catch (InsufficientStockException e){
+            fail(e.getMessage());
+        }
         // Analyze
         assertTrue(testCart.containsProduct(103));
         assertEquals(5, testCart.getProductCount(103));
@@ -123,9 +129,8 @@ public class CartTest {
      */
     @Test
     public void testAddProductQuantityGreaterThanInventoryQuantity() {
-        // Analyze
-        assertFalse(testCart.addProduct(101, 6));
-        assertEquals(5, testCart.getProductCount(101));
+        //Invoke and Analyze
+        assertThrows(InsufficientStockException.class, () -> testCart.addProduct(101,6));
     }
 
     /**
@@ -134,7 +139,12 @@ public class CartTest {
     @Test
     public void testAddProductInvalidSku() {
         // Analyze
-        assertFalse(testCart.addProduct(104, 5));
+        try{
+            assertFalse(testCart.addProduct(104, 5));
+        }
+        catch (InsufficientStockException e) {
+            fail(e.getMessage());
+        }
         assertFalse(testCart.containsProduct(104));
     }
 
