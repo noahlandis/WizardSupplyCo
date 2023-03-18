@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -13,6 +13,11 @@ import { Product } from 'src/app/model/product.model';
 })
 export class EditProductComponent implements OnInit {
   editProductForm: FormGroup;
+  
+  @ViewChild('saveButtonText', { static: false }) saveButtonText!: ElementRef;
+
+  isLoading = false;
+  isSuccess = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,13 +25,13 @@ export class EditProductComponent implements OnInit {
     private productService: ProductService,
     ) {
       this.editProductForm = this.fb.group({
-        name: ['', Validators.required],
+        name: ['', [Validators.required]],
         // price is required, and must be a decimal number with 2 decimal places
-        price: ['', Validators.required, Validators.pattern('[0-9]+(\.[0-9][0-9]?)?')],
-        stockQuantity: ['', Validators.required, Validators.pattern('[0-9]*')],
+        price: ['', [Validators.required, Validators.pattern('[0-9]+(\.[0-9][0-9]?)?')]],
+        stockQuantity: ['', [Validators.required, Validators.pattern('[0-9]*')]],
         // images is required, and must be a comma-separated list of URL strings
-        images: ['', Validators.pattern('^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|png|svg))(?:, https?:\/\/.*\.(?:png|jpg|jpeg|gif|png|svg))*$')],
-        description: ['', Validators.required]
+        images: ['', [Validators.pattern('^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|png|svg))(?:, https?:\/\/.*\.(?:png|jpg|jpeg|gif|png|svg))*$')]],
+        description: ['', []]
       });
   }
 
@@ -38,12 +43,13 @@ export class EditProductComponent implements OnInit {
     const sku = Number(this.route.snapshot.paramMap.get('sku'));
     this.productService.getProduct(sku).subscribe({
       next: product => {
+        console.log('Product retrieved:', JSON.stringify(product));
         this.editProductForm.setValue({
-          sku: product.sku,
           name: product.name,
           price: product.price,
           stockQuantity: product.stockQuantity,
-          images: product.images,
+          // Join the images array into a string or set a default value if null
+          images: product.images ? product.images.join(', ') : '',
           description: product.description
         });
       },
@@ -52,7 +58,7 @@ export class EditProductComponent implements OnInit {
   }
 
   /** Product edit form save/submit handler */
-  onSubmitEditProductForm(): void {
+  async onSubmitEditProductForm(): Promise<void> {
     if (!this.editProductForm.valid)
       return;
     
@@ -65,16 +71,28 @@ export class EditProductComponent implements OnInit {
 
     // call update product on the product service
     this.productService.updateProduct(product).subscribe({
-      next: (updateSuccess) => {
+      next: async (updateSuccess) => {
         if (updateSuccess) {
           console.log('Product updated successfully');
         } else {
           console.log('Product update failed');
         }
+        this.showSubmitFeedback(updateSuccess);
       },
       error: (e) => {
         console.log('Product update failed with error:', e);
-      }
+      },
     });
+  }
+
+  async showSubmitFeedback(success: boolean): Promise<void> {
+    this.saveButtonText.nativeElement.textContent = '';
+    this.isLoading = true;
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    this.isLoading = false;
+    this.isSuccess = success;
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    this.isSuccess = false;
+    this.saveButtonText.nativeElement.textContent = 'Save';
   }
 }

@@ -30,11 +30,17 @@ const routes: Routes = [
     {
         path:'admin',
         component:TestAdminDashboardComponent,
-        canActivateChild: [authAdminGuard],
-        children: [
-            {path:'create', component:TestAdminDashboardComponent},
-            {path:'edit/:sku', component:EditProductComponent}
-        ]
+        canActivateChild: [authAdminGuard]
+    },
+    {
+        path:'edit-product/:sku',
+        component:EditProductComponent,
+        canActivateChild: [authAdminGuard]
+    },
+    {
+        path:'create-product',
+        component:TestAdminDashboardComponent,
+        canActivateChild: [authAdminGuard]
     }
 ];
 
