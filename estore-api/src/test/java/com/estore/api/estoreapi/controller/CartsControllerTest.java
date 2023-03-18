@@ -43,7 +43,7 @@ public class CartsControllerTest {
     @Test
     public void testGetCart() throws IOException {
         // Setup
-        Customer customer = new Customer("Andromeda", 11);
+        Customer customer = new Customer(11, "Andromeda");
         Cart cart = new Cart(customer.getUserId());
         //When the same UserId is passed in, our mock Carts DAO will return the Cart object
         when(mockCartsDAO.getCart(cart.getUserId())).thenReturn(cart);
@@ -58,7 +58,7 @@ public class CartsControllerTest {
     @Test
     public void testGetCartNotFound() throws IOException {
         // Setup
-        Customer customer = new Customer("Andromeda", 11);
+        Customer customer = new Customer(11, "Andromeda");
         //When the same UserId is passed in, our mock Carts DAO will return null, simulating
         // no cart found
         when(mockCartsDAO.getCart(customer.getUserId())).thenReturn(null);
@@ -74,7 +74,7 @@ public class CartsControllerTest {
     public void testGetCartIOException() throws IOException{
 
         //Setup
-        Customer customer = new Customer("Andromeda", 11);
+        Customer customer = new Customer(11, "Andromeda");
         //When using getCart, throw an IOException simulating IO error
         when(mockCartsDAO.getCart(customer.getUserId())).thenThrow(new IOException());
 
