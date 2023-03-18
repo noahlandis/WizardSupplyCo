@@ -120,7 +120,7 @@ import com.estore.api.estoreapi.model.User;
       */
      @PutMapping("/logout/{username}")
      public ResponseEntity<User> LogOutUser(@PathVariable String username) {
-         LOG.info("PUT /users/logout " + username);
+         LOG.info("PUT /users/logout/" + username);
  
          try {
              User updateUser = userDao.LogOutUser(username);
@@ -129,7 +129,6 @@ import com.estore.api.estoreapi.model.User;
                  return new ResponseEntity<User>(updateUser,HttpStatus.OK);
              
              // Throw not found if user does not exist
-             // TODO: currently, this also throws not found is the user is already logged out
              return new ResponseEntity<>(HttpStatus.NOT_FOUND);
          }
          catch(IOException e) {
@@ -153,7 +152,7 @@ import com.estore.api.estoreapi.model.User;
  
      @PutMapping("/login/{username}")
      public ResponseEntity<User> LoginUser(@PathVariable String username) {
-         LOG.info("PUT /users/login " + username);
+         LOG.info("PUT /users/login/" + username);
  
          try {
              User updateUser = userDao.LoginUser(username);
@@ -162,7 +161,6 @@ import com.estore.api.estoreapi.model.User;
                  return new ResponseEntity<User>(updateUser,HttpStatus.OK);
              
              // Throw not found if product does not exist
-             // TODO: currently, this also throws not found is the user is already logged in
              return new ResponseEntity<>(HttpStatus.NOT_FOUND);
          }
          catch(IOException e) {

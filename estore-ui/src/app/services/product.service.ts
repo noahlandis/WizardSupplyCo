@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { Product } from '../types/product';
+import { Product } from '../model/product.model';
 import { MessageService } from './message.service';
 
 

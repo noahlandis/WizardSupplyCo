@@ -7,6 +7,7 @@ import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -41,7 +42,7 @@ public class CartsFileDAO implements CartsDAO {
         LOG.info("CartsFileDAO created");
         this.filename = filename;
         this.objectMapper = objectMapper;
-
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         this.inventoryDao = inventoryDao;
         load(); // load the carts from the file
     }
