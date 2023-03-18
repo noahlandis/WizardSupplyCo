@@ -1,0 +1,44 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // height: 100%;
+    padding-top: 20px;
+}
+
+.container {
+    border-radius: 16px;
+    padding: 20px 20px;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #ebebeb; // light grey
+}
+
+@media only screen and (max-width: 960px) {
+    .container {
+        max-width: 75%
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        max-width: 80%
+    }
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+mat-form-field {
+    width: 90%;
+    padding-bottom: 24px;
+}
+
+.submit-btn {
+    max-width: 200px;
+}
