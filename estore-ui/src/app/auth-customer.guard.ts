@@ -1,5 +1,6 @@
 import {inject} from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, UrlTree } from '@angular/router';
+import { Observable, of } from 'rxjs';
 
 import {AuthService} from './services/auth.service';
 
@@ -8,9 +9,9 @@ export const authCustomerGuard = (): Observable<boolean | UrlTree> => {
   const router = inject(Router);
 
   if (authService.getIsLoggedIn() && !authService.getIsAdmin()) {
-    return true;
+    return of(true);
   }
 
   // Redirect to the login page
-  return router.parseUrl('/auth');
+  return of(router.parseUrl('/auth'));
 };
