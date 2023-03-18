@@ -8,12 +8,12 @@ package com.estore.api.estoreapi.model;
  */
 public class Customer extends User{
     /**
-     * This creates a user with the given userName and userId
+     * This creates a user with the given username and userId
      * 
-     * @param userName - userName for the customer
+     * @param username - username for the customer
      * @param userId - userId of the 
      */
-    public Customer(int userId, String userName){
-        super(userId, userName);
+    public Customer(int userId, String username){
+        super(userId, username);
     }
 }

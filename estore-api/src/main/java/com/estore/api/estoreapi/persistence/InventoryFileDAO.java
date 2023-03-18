@@ -8,6 +8,7 @@ import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -46,6 +47,7 @@ public class InventoryFileDAO implements InventoryDAO {
         LOG.info("InventoryFileDAO created");
         this.filename = filename;
         this.objectMapper = objectMapper;
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         load();  // load the products from the file
     }
 

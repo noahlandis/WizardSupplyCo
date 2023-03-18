@@ -25,23 +25,23 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 public abstract class User {
     private static final Logger LOG = Logger.getLogger(User.class.getName());
 
-    static final String STRING_FORMAT = "User [userId=%d, userName=%s]";
+    static final String STRING_FORMAT = "User [userId=%d, username=%s]";
 
     // TODO: investigate all the fields that are being serialized (there are some duplicates)
     @JsonProperty("userId") private int userId;
-    @JsonProperty("userName") private String userName;
+    @JsonProperty("username") private String username;
     @JsonProperty("loggedIn") private boolean loggedIn;
     @JsonProperty("isAdmin") private boolean isAdmin;
 
     /**
-     * Create a User with the given userID, userName and the default
+     * Create a User with the given userID, username and the default
      * state of loggedIn as true
      * @param userId The User ID of the user
-     * @param userName The Username of the user
+     * @param username The Username of the user
      */
-    public User(@JsonProperty("userId") int userId, @JsonProperty("userName") String userName){
+    public User(@JsonProperty("userId") int userId, @JsonProperty("username") String username){
         this.userId = userId;
-        this.userName = userName;
+        this.username = username;
         this.loggedIn = true;
         if(userId == 0){isAdmin = true;}    else isAdmin = false;
     }
@@ -66,9 +66,9 @@ public abstract class User {
 
     /**
      * Returns the username of the user
-     * @return userName
+     * @return username
      */
-    public String getUserName() {return userName;}
+    public String getUsername() {return username;}
 
     /**
      * Returns the userId of the user
@@ -77,13 +77,13 @@ public abstract class User {
     public int getUserId() {return userId;}
 
     /**
-     * Checks if the userName of the user is the same as the name of the
+     * Checks if the username of the user is the same as the name of the
      * user passed in.
-     * @param userNameToCheck The name to check
-     * @return True if the name of the userName is the same as the userName passed in
+     * @param usernameToCheck The name to check
+     * @return True if the name of the username is the same as the username passed in
      */
-    public boolean userNameEquals(String userNameToCheck){
-        return this.userName.equals(userNameToCheck);
+    public boolean usernameEquals(String usernameToCheck){
+        return this.username.equals(usernameToCheck);
     }
 
     /**
@@ -97,6 +97,6 @@ public abstract class User {
      */
     @Override
     public String toString(){
-        return String.format(STRING_FORMAT, userId, userName);
+        return String.format(STRING_FORMAT, userId, username);
     }
 }

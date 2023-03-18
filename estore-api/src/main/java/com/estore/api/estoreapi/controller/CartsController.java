@@ -153,7 +153,6 @@ public class CartsController {
 
         try {
             Cart cart = cartsDao.removeProductFromCart(userId, sku, quantity);
-            // TODO: This shouldn't return a 404 if the product is not in the cart
             if (cart == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
