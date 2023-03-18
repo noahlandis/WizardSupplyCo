@@ -1,13 +1,15 @@
 package com.estore.api.estoreapi.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the User class and its Child classes
- * @author Priyank Patel
+ * @author Priyank Patel, Kanisha Agrawal
  */
 
 @Tag("Model-tier")
@@ -23,6 +25,7 @@ public class UserTest {
 
         //Analyze
         assertEquals(username, customer.getUsername());
+        assertEquals(userId, customer.getUserId());
     }
     
     @Test
@@ -35,7 +38,7 @@ public class UserTest {
         Customer customer = new Customer(userId, username);
 
         //Analyze
-        assertEquals(customer.isLoggedIn(), true);
+        assertTrue(customer.isLoggedIn());
     }
 
     @Test
@@ -49,7 +52,60 @@ public class UserTest {
         customer.logOut();
 
         //Analyze
-        assertEquals(customer.isLoggedIn(), false);
+        assertFalse(customer.isLoggedIn());
+    }
+
+    @Test
+    public void testUserNameEquals(){
+         //Setup
+         int userId = 16;
+         String userName1 = new String("Mack");
+         String userName2 = new String( "Mack");
+
+         //Invoke
+         Customer customer = new Customer(userName1,userId);
+
+         //Analyze
+         assertTrue(customer.userNameEquals(userName2));
+         
+    }  
+    
+    @Test
+    public void testUserNameNotEquals(){
+        //Setup
+        int userId = 16;
+        String userName1 = new String("Mack");
+        String userName2 = new String( "Mk");
+
+        //Invoke
+        Customer customer = new Customer(userName1,userId);
+
+        //Analyze
+        assertFalse(customer.userNameEquals(userName2));
+        
+   }  
+   
+    
+    @Test
+    public void testIsAdmin(){
+        //Setup
+        Admin admin = new Admin();
+
+        //Analyze
+        assertTrue(admin.isAdmin());
+    }
+
+    @Test
+    public void testIsNotAdmin(){
+        //Setup
+        int userId = 11;
+        String userName1 = new String("ka");
+
+        //Invoke
+        Customer customer = new Customer(userName1,userId);
+
+        //Analyze
+        assertFalse(customer.isAdmin());
     }
 
     @Test
@@ -59,5 +115,23 @@ public class UserTest {
         
         //Analyze
         assertEquals(admin.getUsername(), "admin");
+    }
+
+    @Test
+    public void testToString() {
+        //Setup
+        int userId = 22;
+        String userName = new String("Mackenzie");
+
+        //Invoke
+        Customer customer = new Customer(userName, userId);
+
+        String expectedString = String.format(User.STRING_FORMAT, userId, userName);
+
+        // Invoke
+        String actualString = customer.toString();
+
+        // Analyze
+        assertEquals(expectedString, actualString);
     }
 }
