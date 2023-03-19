@@ -43,8 +43,23 @@
             <mat-hint>The paragraph description of this product</mat-hint>
             <mat-error *ngIf="editProductForm.controls['description'].hasError('required')">Description is required</mat-error>
           </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Summary</mat-label>
+            <textarea matInput formControlName="summary"></textarea>
+            <mat-icon matPrefix>edit_note</mat-icon>
+            <mat-hint>A paragraph summary of this product</mat-hint>
+            <mat-error *ngIf="editProductForm.controls['summary'].hasError('required')">Summary is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Tags</mat-label>
+            <input matInput formControlName="tags" type="text" />
+            <mat-icon matPrefix>label</mat-icon>
+            <mat-hint>Comma-separated tags</mat-hint>
+            <mat-error *ngIf="editProductForm.controls['tags'].hasError('pattern')">Tags must be a comma-separated list of words</mat-error>
+          </mat-form-field>
       
-          <!-- <button mat-raised-button color="primary" class="submit-btn" type="submit" [disabled]="!editProductForm.valid">Save</button> -->
           <button
             mat-raised-button
             class="submit-btn"

@@ -32,7 +32,8 @@ export class EditProductComponent implements OnInit {
         // images is required, and must be a comma-separated list of URL strings
         images: ['', [Validators.pattern('^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|png|svg))(?:, https?:\/\/.*\.(?:png|jpg|jpeg|gif|png|svg))*$')]],
         summary: ['', []],
-        tags: ['', []],
+        // tags is required, and must be a comma-separated list of strings
+        tags: ['', [Validators.pattern('^[a-zA-Z0-9]+(?:, [a-zA-Z0-9]+)*$')]],
       });
   }
 
@@ -51,7 +52,9 @@ export class EditProductComponent implements OnInit {
           stockQuantity: product.stockQuantity,
           // Join the images array into a string or set a default value if null
           images: product.images ? product.images.join(', ') : '',
-          description: product.description
+          summary: product.description ? product.description.summary : '',
+          // Join the tags array into a string or set a default value if null
+          tags: product.description ? product.description.tags.join(', ') : ''
         });
       },
       error: err => console.log(err)
@@ -65,11 +68,12 @@ export class EditProductComponent implements OnInit {
     
     const sku = Number(this.route.snapshot.paramMap.get('sku'));
     const { name, price, stockQuantity, images, summary, tags } = this.editProductForm.value;
-    const imagesArray: string[] = images.split(', ');
-    const tagsArray: string[] = tags.split(', ');
-    const description = new Description(summary, tags);
+    const imagesArray: string[] = images ? images.split(', ') : [];
 
-    const product = new Product(sku, name, price, stockQuantity, images, description);
+    const tagsArray: string[] = tags ? tags.split(', ') : [];
+    const description = new Description(summary, tagsArray);
+
+    const product = new Product(sku, name, price, stockQuantity, imagesArray, description);
     console.log('Edit product form submitted with product:', JSON.stringify(product));
 
     // call update product on the product service
