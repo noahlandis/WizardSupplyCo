@@ -86,7 +86,7 @@ export class UserService {
 
   /** Sets the current user, and saves to localStorage */
   setCurrentUser(user: User | null): void {
-    this.log(`setting current user to ${user}`);
+    this.log(`setting current user to ${JSON.stringify(user)}`);
     this.currentUser.next(user);
   }
 
