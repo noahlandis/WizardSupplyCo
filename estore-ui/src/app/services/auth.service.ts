@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { User } from '../model/user.model';
-import { UserService } from './user.service';
+import { UsersService } from './users.service';
 import { MessageService } from './message.service';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class AuthService {
   private isAdmin = new BehaviorSubject<boolean>(false);
 
   constructor(
-    private userService: UserService,
+    private usersService: UsersService,
     private messageService: MessageService
   ) { this.loadCurrentUserFromLocalStorage(); }
 
@@ -25,7 +25,7 @@ export class AuthService {
 
   /** Attempt to register the user with the given username */
   register(username: String): Observable<boolean> {
-    return this.userService.registerUser(username).pipe(
+    return this.usersService.registerUser(username).pipe(
       map((response: any) => {
         // If response has a success property and it is false
         if (response && response.success === false) {
@@ -35,9 +35,9 @@ export class AuthService {
         // If response is a User
         if (response && response.userId) {
           this.log(`registered user w/ userId=${response.userId}, username=${response.username}`);
-          // Set the current user in the UserService
+          // Set the current user in the UsersService
           const user = new User(response.userId, response.username);
-          this.userService.setCurrentUser(user);
+          this.usersService.setCurrentUser(user);
           this.saveCurrentUserToLocalStorage(user);
           this.isLoggedIn.next(true);
           this.isAdmin.next(response.username === 'admin');
@@ -50,7 +50,7 @@ export class AuthService {
 
   /** Attempt to login the user with the given username */
   login(username: String): Observable<boolean> {
-    return this.userService.loginUser(username).pipe(
+    return this.usersService.loginUser(username).pipe(
       map((response: any) => {
         // log all the fields of the response
         this.log(`response: ${JSON.stringify(response)}`);
@@ -62,9 +62,9 @@ export class AuthService {
         // If response is a User
         if (response && response.username) {
           this.log(`logged in user w/ userId=${response.userId}, username=${response.username}`);
-          // Set the current user in the UserService
+          // Set the current user in the UsersService
           const user = new User(response.userId, response.username);
-          this.userService.setCurrentUser(user);
+          this.usersService.setCurrentUser(user);
           this.saveCurrentUserToLocalStorage(user);
           this.isLoggedIn.next(true);
           this.isAdmin.next(response.username === 'admin');
@@ -78,9 +78,9 @@ export class AuthService {
 
   /** Log out the currently logged in user */
   logout(): Observable<boolean> {
-    const currentUser = this.userService.getCurrentUser().getValue();
+    const currentUser = this.usersService.getCurrentUser().getValue();
     if (currentUser) {
-      return this.userService.logoutUser(currentUser.username).pipe(
+      return this.usersService.logoutUser(currentUser.username).pipe(
         map((response: any) => {
           // If response has a success property and it is false
           if (response && response.success === false) {
@@ -89,7 +89,7 @@ export class AuthService {
           }
           // Otherwise, log out the user
           this.log(`logged out user w/ userId=${currentUser.userId}, username=${currentUser.username}`);
-          this.userService.setCurrentUser(null);
+          this.usersService.setCurrentUser(null);
           this.saveCurrentUserToLocalStorage(null);
           this.isLoggedIn.next(false);
           this.isAdmin.next(false);
@@ -117,7 +117,7 @@ export class AuthService {
     const storedUser = localStorage.getItem('currentUser');
     this.log(`loaded 'currentUser' from localStorage: ${storedUser}`);
     if (storedUser) {
-      this.userService.setCurrentUser(JSON.parse(storedUser));
+      this.usersService.setCurrentUser(JSON.parse(storedUser));
       this.isLoggedIn.next(true);
       this.isAdmin.next(JSON.parse(storedUser).username === 'admin');
     }
