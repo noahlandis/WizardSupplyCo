@@ -42,7 +42,7 @@ const routes: Routes = [
     },
     {
         path:'create-product',
-        component:TestAdminDashboardComponent,
+        component:CreateProductComponent,
         canActivate: [authAdminGuard]
     }
 ];
