@@ -49,20 +49,10 @@ export class CartsService {
   }
 
   /** DELETE: remove a quantity of a product from a user's cart on the server */
-  removeProductQuantityFromCart(userId: number, sku: number, quantity?: number): Observable<Cart> {
-    const url = quantity ? `${this.cartsUrl}/${userId}/products/${sku}/removeQuantity?quantity=${quantity}` : `${this.cartsUrl}/${userId}/products/${sku}`;
+  removeProductFromCart(userId: number, sku: number, quantity?: number): Observable<Cart> {
+    const url = quantity ? `${this.cartsUrl}/${userId}/products/${sku}/removeQuantity?quantity=${quantity}`
+                         : `${this.cartsUrl}/${userId}/products/${sku}`;
     this.log(`removing product w/ sku=${sku} from cart w/ userId=${userId} ...`);
-
-    return this.http.delete<Cart>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`product removed from cart successfully`)),
-      catchError(this.handleError<Cart>('removeProductFromCart'))
-    );
-  }
-
-  /** DELETE: remove all of a product from a user's cart on the server */
-  removeProductFromCart(userId: number, sku: number): Observable<Cart> {
-    const url = `${this.cartsUrl}/${userId}/products/${sku}/`;
-    this.log(`removing all of product w/ sku=${sku} from cart w/ userId=${userId} ...`);
 
     return this.http.delete<Cart>(url, this.httpOptions).pipe(
       tap(_ => this.log(`product removed from cart successfully`)),

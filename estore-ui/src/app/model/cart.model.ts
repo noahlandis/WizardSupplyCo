@@ -1,8 +1,11 @@
+interface ProductMap {
+  [sku: number]: number;
+}
 export class Cart {
   constructor(
     public userId: number,
-    public productsMap: Map<number, number>,
+    public productsMap: ProductMap,
     public count: number,
-    public total: number
+    public totalPrice: number
   ) { }
 }
