@@ -48,7 +48,9 @@ export class CartsService {
     );
   }
 
-  /** DELETE: remove a quantity of a product from a user's cart on the server */
+  /** DELETE: remove a quantity of a product from a user's cart on the server
+   * If quantity is not specified, remove all of the product from the cart
+   */
   removeProductFromCart(userId: number, sku: number, quantity?: number): Observable<Cart> {
     const url = quantity ? `${this.cartsUrl}/${userId}/products/${sku}/removeQuantity?quantity=${quantity}`
                          : `${this.cartsUrl}/${userId}/products/${sku}`;
