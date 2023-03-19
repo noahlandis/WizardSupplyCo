@@ -59,11 +59,10 @@
           type="submit"
           [disabled]="!editProductForm.valid || isLoading || isSuccess"
           [ngClass]="{'disabled': isLoading}"
-          (click)="onSubmitEditProductForm()"
         >
           <mat-spinner *ngIf="isLoading" diameter="24"></mat-spinner>
           <mat-icon *ngIf="isSuccess && !isLoading">checkmark</mat-icon>
-          <span #editButtonText>Save</span>
+          <span #saveButtonText>Save</span>
         </button>
 
 
