@@ -17,10 +17,12 @@ const routes: Routes = [
     {
         path:'cart',
         component:TestCartComponent,
-        canActivateChild: [authCustomerGuard],
-        children: [
-            {path:'checkout', component:TestCartComponent}
-        ]
+        canActivateChild: [authCustomerGuard]
+    },
+    {
+        path:'checkout',
+        component:TestCartComponent,
+        canActivateChild: [authCustomerGuard]
     },
     {
         path:'auth',
