@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { ProductService } from 'src/app/services/product.service';
-import { Product } from 'src/app/model/product.model';
+import { Description, Product } from 'src/app/model/product.model';
 
 @Component({
   selector: 'app-edit-product',
@@ -31,7 +31,8 @@ export class EditProductComponent implements OnInit {
         stockQuantity: ['', [Validators.required, Validators.pattern('[0-9]*')]],
         // images is required, and must be a comma-separated list of URL strings
         images: ['', [Validators.pattern('^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|png|svg))(?:, https?:\/\/.*\.(?:png|jpg|jpeg|gif|png|svg))*$')]],
-        description: ['', []]
+        summary: ['', []],
+        tags: ['', []],
       });
   }
 
@@ -63,10 +64,12 @@ export class EditProductComponent implements OnInit {
       return;
     
     const sku = Number(this.route.snapshot.paramMap.get('sku'));
-    const { name, price, stockQuantity, images, description } = this.editProductForm.value;
+    const { name, price, stockQuantity, images, summary, tags } = this.editProductForm.value;
     const imagesArray: string[] = images.split(', ');
+    const tagsArray: string[] = tags.split(', ');
+    const description = new Description(summary, tags);
 
-    const product = new Product(sku, name, price, stockQuantity, imagesArray, description);
+    const product = new Product(sku, name, price, stockQuantity, images, description);
     console.log('Edit product form submitted with product:', JSON.stringify(product));
 
     // call update product on the product service
