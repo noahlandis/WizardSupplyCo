@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { ProductService } from 'src/app/services/product.service';
+import { InventoryService } from 'src/app/services/inventory.service';
 import { BaseProduct, Description } from 'src/app/model/product.model';
 
 @Component({
@@ -21,7 +21,7 @@ export class CreateProductComponent {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private productService: ProductService,
+    private inventoryService: InventoryService,
     ) {
       this.createProductForm = this.fb.group({
         name: ['', [Validators.required]],
@@ -51,8 +51,8 @@ export class CreateProductComponent {
     const product = new BaseProduct(name, price, stockQuantity, imagesArray, description);
     console.log('Create product form submitted with product:', JSON.stringify(product));
 
-    // call update product on the product service
-    this.productService.addProduct(product).subscribe({
+    // call update product on the inventory service
+    this.inventoryService.addProduct(product).subscribe({
       next: async (updateSuccess) => {
         if (updateSuccess) {
           console.log('Product updated successfully');

@@ -10,7 +10,7 @@ import { MessageService } from './message.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
+export class InventoryService {
 
   private productsUrl = 'http://localhost:8080/inventory'  // URL to estore-api inventory endpoint
 
@@ -23,9 +23,9 @@ export class ProductService {
     private messageService: MessageService
   ) { }
 
-  /** Log a ProductService message with the MessageService */
+  /** Log a InventoryService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`ProductService: ${message}`);
+    this.messageService.add(`InventoryService: ${message}`);
   }
 
   /** GET products from the server */

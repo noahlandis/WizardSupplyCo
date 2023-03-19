@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { ProductService } from 'src/app/services/product.service';
+import { InventoryService } from 'src/app/services/inventory.service';
 import { Description, Product } from 'src/app/model/product.model';
 
 @Component({
@@ -22,7 +22,7 @@ export class EditProductComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private productService: ProductService,
+    private inventoryService: InventoryService,
     ) {
       this.editProductForm = this.fb.group({
         name: ['', [Validators.required]],
@@ -43,7 +43,7 @@ export class EditProductComponent implements OnInit {
 
   getProduct(): void {
     const sku = Number(this.route.snapshot.paramMap.get('sku'));
-    this.productService.getProduct(sku).subscribe({
+    this.inventoryService.getProduct(sku).subscribe({
       next: product => {
         console.log('Product retrieved:', JSON.stringify(product));
         this.editProductForm.setValue({
@@ -76,8 +76,8 @@ export class EditProductComponent implements OnInit {
     const product = new Product(sku, name, price, stockQuantity, imagesArray, description);
     console.log('Edit product form submitted with product:', JSON.stringify(product));
 
-    // call update product on the product service
-    this.productService.updateProduct(product).subscribe({
+    // call update product on the inventory service
+    this.inventoryService.updateProduct(product).subscribe({
       next: async (updateSuccess) => {
         if (updateSuccess) {
           console.log('Product updated successfully');
