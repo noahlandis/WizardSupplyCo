@@ -44,7 +44,9 @@ export class LoginRegistrationComponent implements OnInit {
       next: (loginSuccess) => {
         if (loginSuccess) {
           console.log('Login successful');
-          this.router.navigate(['/']);
+          if (this.authService.getIsAdmin().getValue())
+            this.router.navigate(['/admin']);
+          else this.router.navigate(['/']);
         } else {
           console.log('Login failed: invalid username');
           this.loginForm.controls['username'].setErrors({ invalidUsername: true });

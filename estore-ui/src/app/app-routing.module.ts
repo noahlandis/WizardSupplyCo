@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { authCustomerGuard } from './auth-customer.guard';
+import { authAdminGuard } from './auth-admin.guard';
+import { noAuthGuard } from './auth-none.guard';
 
 import { TestCatalogComponent } from './feature/test-catalog/test-catalog.component';
 import { TestCartComponent } from './feature/test-cart/test-cart.component';
 import { LoginRegistrationComponent } from './feature/login-registration/login-registration.component';
 import { TestAdminDashboardComponent } from './feature/test-admin-dashboard/test-admin-dashboard.component';
-import { authAdminGuard } from './auth-admin.guard';
-import { noAuthGuard } from './auth-none.guard';
+import { EditProductComponent } from './feature/edit-product/edit-product.component';
 import { CreateProductComponent } from './feature/create-product/create-product.component';
 
 const routes: Routes = [
@@ -17,10 +18,12 @@ const routes: Routes = [
     {
         path:'cart',
         component:TestCartComponent,
-        canActivateChild: [authCustomerGuard],
-        children: [
-            {path:'checkout', component:TestCartComponent}
-        ]
+        canActivate: [authCustomerGuard]
+    },
+    {
+        path:'checkout',
+        component:TestCartComponent,
+        canActivate: [authCustomerGuard]
     },
     {
         path:'auth',
@@ -30,17 +33,17 @@ const routes: Routes = [
     {
         path:'admin',
         component:TestAdminDashboardComponent,
-        canActivateChild: [authAdminGuard]
+        canActivate: [authAdminGuard]
     },
     {
         path:'edit-product/:sku',
-        component:TestAdminDashboardComponent,
-        canActivateChild: [authAdminGuard]
+        component:EditProductComponent,
+        canActivate: [authAdminGuard]
     },
     {
         path:'create-product',
-        component:CreateProductComponent,
-        canActivateChild: [authAdminGuard]
+        component:TestAdminDashboardComponent,
+        canActivate: [authAdminGuard]
     }
 ];
 
