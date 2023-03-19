@@ -1,12 +1,11 @@
 <div class="container">
-    <h1>Add a New Product</h1>
+    <h1 class="text-center">Add New Product</h1>
     <form [formGroup]="createProductForm" (ngSubmit)="create()">
       <div class="form-group">
         <mat-form-field appearance="outline">
             <mat-label>Product Name</mat-label>
             <input matInput formControlName="name" type="text" placeholder="Something magical..." required />
             <mat-icon matPrefix>edit</mat-icon>
-            <!-- <mat-hint>The name of the product</mat-hint> -->
             <mat-error *ngIf="createProductForm.controls['name'].hasError('required')">Name is required</mat-error>
           </mat-form-field>
       
@@ -59,7 +58,6 @@
             type="submit"
             [disabled]="!createProductForm.valid || isLoading || isSuccess"
             [ngClass]="{'disabled': isLoading}"
-            (click)="create()"
           >
             <mat-spinner *ngIf="isLoading" diameter="24"></mat-spinner>
             <mat-icon *ngIf="isSuccess && !isLoading">checkmark</mat-icon>
