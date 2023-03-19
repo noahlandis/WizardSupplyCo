@@ -59,7 +59,11 @@ export class CreateProductComponent {
         } else {
           console.log('Product update failed');
         }
-        this.showSubmitFeedback();
+        
+        await this.showSubmitFeedback();
+
+        // clear the form
+        this.createProductForm.reset();
       },
       error: (e) => {
         console.log('Product update failed with error:', e);
