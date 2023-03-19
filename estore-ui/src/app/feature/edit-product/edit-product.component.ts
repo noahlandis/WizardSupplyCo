@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { ProductService } from 'src/app/services/product.service';
-import { Product } from 'src/app/model/product.model';
+import { Description, Product } from 'src/app/model/product.model';
 
 @Component({
   selector: 'app-edit-product',
@@ -31,7 +31,9 @@ export class EditProductComponent implements OnInit {
         stockQuantity: ['', [Validators.required, Validators.pattern('[0-9]*')]],
         // images is required, and must be a comma-separated list of URL strings
         images: ['', [Validators.pattern('^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|png|svg))(?:, https?:\/\/.*\.(?:png|jpg|jpeg|gif|png|svg))*$')]],
-        description: ['', []]
+        summary: ['', []],
+        // tags is required, and must be a comma-separated list of strings
+        tags: ['', [Validators.pattern('^[a-zA-Z0-9]+(?:, [a-zA-Z0-9]+)*$')]],
       });
   }
 
@@ -50,7 +52,9 @@ export class EditProductComponent implements OnInit {
           stockQuantity: product.stockQuantity,
           // Join the images array into a string or set a default value if null
           images: product.images ? product.images.join(', ') : '',
-          description: product.description
+          summary: product.description ? product.description.summary : '',
+          // Join the tags array into a string or set a default value if null
+          tags: product.description ? product.description.tags.join(', ') : ''
         });
       },
       error: err => console.log(err)
@@ -63,8 +67,11 @@ export class EditProductComponent implements OnInit {
       return;
     
     const sku = Number(this.route.snapshot.paramMap.get('sku'));
-    const { name, price, stockQuantity, images, description } = this.editProductForm.value;
-    const imagesArray: string[] = images.split(', ');
+    const { name, price, stockQuantity, images, summary, tags } = this.editProductForm.value;
+    const imagesArray: string[] = images ? images.split(', ') : [];
+
+    const tagsArray: string[] = tags ? tags.split(', ') : [];
+    const description = new Description(summary, tagsArray);
 
     const product = new Product(sku, name, price, stockQuantity, imagesArray, description);
     console.log('Edit product form submitted with product:', JSON.stringify(product));
