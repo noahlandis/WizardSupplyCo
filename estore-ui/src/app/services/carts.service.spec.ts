@@ -142,8 +142,7 @@ fdescribe('CartsService', () => {
     // Mock response from the server
     const mockCartResponse = {
       userId: 1,
-      productsMap: { 
-      },
+      productsMap: { },
       count: 0,
       totalPrice: 0.00
     }
