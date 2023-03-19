@@ -9,10 +9,11 @@ import { TestAdminDashboardComponent } from './test-admin-dashboard/test-admin-d
 import { LoginRegistrationComponent } from './login-registration/login-registration.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { CreateProductComponent } from './create-product/create-product.component';
+import { CatalogProductCardComponent } from './catalog-product-card/catalog-product-card.component';
 
 
 @NgModule({
-    declarations: [TestCartComponent, TestAdminDashboardComponent, TestCatalogComponent, LoginRegistrationComponent, EditProductComponent, CreateProductComponent],
+    declarations: [TestCartComponent, TestAdminDashboardComponent, TestCatalogComponent, LoginRegistrationComponent, EditProductComponent, CreateProductComponent, CatalogProductCardComponent],
     imports: [
         CommonModule,
         MaterialModule,
