@@ -1,66 +1,72 @@
 <div class="container">
-    <h1>Edit Product</h1>
-    <form [formGroup]="editProductForm" (ngSubmit)="onSubmitEditProductForm()">
-      <div class="form-group">
+  <h1 class="text-center">Edit Existing Product</h1>
+  <form [formGroup]="editProductForm" (ngSubmit)="onSubmitEditProductForm()">
+    <div class="form-group">
+      <mat-form-field appearance="outline">
+          <mat-label>Product Name</mat-label>
+          <input matInput formControlName="name" type="text" placeholder="Something magical..." required />
+          <mat-icon matPrefix>edit</mat-icon>
+          <!-- <mat-hint>The name of the product</mat-hint> -->
+          <mat-error *ngIf="editProductForm.controls['name'].hasError('required')">Name is required</mat-error>
+        </mat-form-field>
+    
         <mat-form-field appearance="outline">
-            <mat-label>Product Name</mat-label>
-            <input matInput formControlName="name" type="text" placeholder="Something magical..." required />
-            <mat-icon matPrefix>edit</mat-icon>
-            <!-- <mat-hint>The name of the product</mat-hint> -->
-            <mat-error *ngIf="editProductForm.controls['name'].hasError('required')">Name is required</mat-error>
-          </mat-form-field>
-      
-          <mat-form-field appearance="outline">
-            <mat-label>Price</mat-label>
-            <input matInput formControlName="price" type="number" placeholder="0.00" required>
-            <mat-icon matPrefix>attach_money</mat-icon>
-            <mat-hint>The price of this product in USD</mat-hint>
-            <mat-error *ngIf="editProductForm.controls['price'].hasError('required')">Price is required</mat-error>
-            <mat-error *ngIf="editProductForm.controls['price'].hasError('pattern')">Price must be a decimal number with 2 decimal places</mat-error>
-          </mat-form-field>
-      
-          <mat-form-field appearance="outline">
-            <mat-label>Stock Quantity</mat-label>
-            <input matInput formControlName="stockQuantity" type="number" placeholder="0" required />
-            <mat-icon matPrefix>inventory</mat-icon>
-            <mat-hint>Amount of this product you have in stock</mat-hint>
-            <mat-error *ngIf="editProductForm.controls['stockQuantity'].hasError('required')">Stock Quantity is required</mat-error>
-            <mat-error *ngIf="editProductForm.controls['stockQuantity'].hasError('pattern')">Stock Quantity must be a number</mat-error>
-          </mat-form-field>
-      
-          <mat-form-field appearance="outline">
-            <mat-label>Images</mat-label>
-            <input matInput formControlName="images" type="text" />
-            <mat-icon matPrefix>image</mat-icon>
-            <mat-hint>Comma-separated image URLs</mat-hint>
-            <mat-error *ngIf="editProductForm.controls['images'].hasError('pattern')">Images must be a comma-separated list of URLs</mat-error>
-          </mat-form-field>
-      
-          <mat-form-field appearance="outline">
-            <mat-label>Description</mat-label>
-            <textarea matInput formControlName="description"></textarea>
-            <mat-icon matPrefix>edit_note</mat-icon>
-            <mat-hint>The paragraph description of this product</mat-hint>
-            <mat-error *ngIf="editProductForm.controls['description'].hasError('required')">Description is required</mat-error>
-          </mat-form-field>
-      
-          <!-- <button mat-raised-button color="primary" class="submit-btn" type="submit" [disabled]="!editProductForm.valid">Save</button> -->
-          <button
-            mat-raised-button
-            class="submit-btn"
-            color="primary"
-            type="submit"
-            [disabled]="!editProductForm.valid || isLoading || isSuccess"
-            [ngClass]="{'disabled': isLoading}"
-            (click)="onSubmitEditProductForm()"
-          >
-            <mat-spinner *ngIf="isLoading" diameter="24"></mat-spinner>
-            <mat-icon *ngIf="isSuccess && !isLoading">checkmark</mat-icon>
-            <span #saveButtonText>Save</span>
-          </button>
+          <mat-label>Price</mat-label>
+          <input matInput formControlName="price" type="number" placeholder="0.00" required>
+          <mat-icon matPrefix>attach_money</mat-icon>
+          <mat-hint>The price of this product in USD</mat-hint>
+          <mat-error *ngIf="editProductForm.controls['price'].hasError('required')">Price is required</mat-error>
+          <mat-error *ngIf="editProductForm.controls['price'].hasError('pattern')">Price must be a decimal number with 2 decimal places</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline">
+          <mat-label>Stock Quantity</mat-label>
+          <input matInput formControlName="stockQuantity" type="number" placeholder="0" required />
+          <mat-icon matPrefix>inventory</mat-icon>
+          <mat-hint>Amount of this product you have in stock</mat-hint>
+          <mat-error *ngIf="editProductForm.controls['stockQuantity'].hasError('required')">Stock Quantity is required</mat-error>
+          <mat-error *ngIf="editProductForm.controls['stockQuantity'].hasError('pattern')">Stock Quantity must be a number</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline">
+          <mat-label>Images</mat-label>
+          <input matInput formControlName="images" type="text" />
+          <mat-icon matPrefix>image</mat-icon>
+          <mat-hint>Comma-separated image URLs</mat-hint>
+          <mat-error *ngIf="editProductForm.controls['images'].hasError('pattern')">Images must be a comma-separated list of URLs</mat-error>
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline">
+          <mat-label>Summary</mat-label>
+          <textarea matInput formControlName="summary"></textarea>
+          <mat-icon matPrefix>edit_note</mat-icon>
+          <mat-hint>A paragraph summary of this product</mat-hint>
+          <mat-error *ngIf="editProductForm.controls['summary'].hasError('required')">Summary is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Tags</mat-label>
+          <input matInput formControlName="tags" type="text" />
+          <mat-icon matPrefix>label</mat-icon>
+          <mat-hint>Comma-separated tags</mat-hint>
+          <mat-error *ngIf="editProductForm.controls['tags'].hasError('pattern')">Tags must be a comma-separated list of words</mat-error>
+        </mat-form-field>
+    
+        <button
+          mat-raised-button
+          class="submit-btn"
+          color="primary"
+          type="submit"
+          [disabled]="!editProductForm.valid || isLoading || isSuccess"
+          [ngClass]="{'disabled': isLoading}"
+          (click)="onSubmitEditProductForm()"
+        >
+          <mat-spinner *ngIf="isLoading" diameter="24"></mat-spinner>
+          <mat-icon *ngIf="isSuccess && !isLoading">checkmark</mat-icon>
+          <span #editButtonText>Save</span>
+        </button>
 
 
-      </div>
-    </form>
-  </div>
-  
+    </div>
+  </form>
+</div>
