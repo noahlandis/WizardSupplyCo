@@ -17,12 +17,12 @@ const routes: Routes = [
     {
         path:'cart',
         component:TestCartComponent,
-        canActivateChild: [authCustomerGuard]
+        canActivate: [authCustomerGuard]
     },
     {
         path:'checkout',
         component:TestCartComponent,
-        canActivateChild: [authCustomerGuard]
+        canActivate: [authCustomerGuard]
     },
     {
         path:'auth',
@@ -32,17 +32,17 @@ const routes: Routes = [
     {
         path:'admin',
         component:TestAdminDashboardComponent,
-        canActivateChild: [authAdminGuard]
+        canActivate: [authAdminGuard]
     },
     {
         path:'edit-product/:sku',
         component:EditProductComponent,
-        canActivateChild: [authAdminGuard]
+        canActivate: [authAdminGuard]
     },
     {
         path:'create-product',
         component:TestAdminDashboardComponent,
-        canActivateChild: [authAdminGuard]
+        canActivate: [authAdminGuard]
     }
 ];
 
