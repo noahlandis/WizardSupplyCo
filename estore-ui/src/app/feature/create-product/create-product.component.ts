@@ -44,8 +44,8 @@ export class CreateProductComponent {
       return;
     
     const { name, price, stockQuantity, images, summary, tags } = this.createProductForm.value;
-    const imagesArray: string[] = images.split(', ');
-    const tagsArray: string[] = tags.split(', ');
+    const imagesArray: string[] = images ? images.split(', ') : [];
+    const tagsArray: string[] = tags ? tags.split(', ') : [];
     const description = new Description(summary, tagsArray);
 
     const product = new BaseProduct(name, price, stockQuantity, imagesArray, description);
