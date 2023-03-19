@@ -63,10 +63,10 @@ public class UserTest {
          String userName2 = new String( "Mack");
 
          //Invoke
-         Customer customer = new Customer(userName1,userId);
+         Customer customer = new Customer(userId, userName1);
 
          //Analyze
-         assertTrue(customer.userNameEquals(userName2));
+         assertTrue(customer.usernameEquals(userName2));
          
     }  
     
@@ -78,10 +78,10 @@ public class UserTest {
         String userName2 = new String( "Mk");
 
         //Invoke
-        Customer customer = new Customer(userName1,userId);
+        Customer customer = new Customer(userId, userName1);
 
         //Analyze
-        assertFalse(customer.userNameEquals(userName2));
+        assertFalse(customer.usernameEquals(userName2));
         
    }  
    
@@ -102,7 +102,7 @@ public class UserTest {
         String userName1 = new String("ka");
 
         //Invoke
-        Customer customer = new Customer(userName1,userId);
+        Customer customer = new Customer(userId, userName1);
 
         //Analyze
         assertFalse(customer.isAdmin());
@@ -124,7 +124,7 @@ public class UserTest {
         String userName = new String("Mackenzie");
 
         //Invoke
-        Customer customer = new Customer(userName, userId);
+        Customer customer = new Customer(userId, userName);
 
         String expectedString = String.format(User.STRING_FORMAT, userId, userName);
 
