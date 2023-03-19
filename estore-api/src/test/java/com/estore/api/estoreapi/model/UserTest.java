@@ -59,14 +59,14 @@ public class UserTest {
     public void testUserNameEquals(){
          //Setup
          int userId = 16;
-         String userName1 = new String("Mack");
-         String userName2 = new String( "Mack");
+         String username1 = new String("Mack");
+         String username2 = new String( "Mack");
 
          //Invoke
-         Customer customer = new Customer(userName1,userId);
+         Customer customer = new Customer(userId, username1);
 
          //Analyze
-         assertTrue(customer.userNameEquals(userName2));
+         assertTrue(customer.usernameEquals(username2));
          
     }  
     
@@ -74,14 +74,14 @@ public class UserTest {
     public void testUserNameNotEquals(){
         //Setup
         int userId = 16;
-        String userName1 = new String("Mack");
-        String userName2 = new String( "Mk");
+        String username1 = new String("Mack");
+        String username2 = new String( "Mk");
 
         //Invoke
-        Customer customer = new Customer(userName1,userId);
+        Customer customer =new Customer(userId, username1);
 
         //Analyze
-        assertFalse(customer.userNameEquals(userName2));
+        assertFalse(customer.usernameEquals(username2));
         
    }  
    
@@ -99,10 +99,10 @@ public class UserTest {
     public void testIsNotAdmin(){
         //Setup
         int userId = 11;
-        String userName1 = new String("ka");
+        String username1 = new String("ka");
 
         //Invoke
-        Customer customer = new Customer(userName1,userId);
+        Customer customer = new Customer(userId, username1);
 
         //Analyze
         assertFalse(customer.isAdmin());
@@ -121,12 +121,12 @@ public class UserTest {
     public void testToString() {
         //Setup
         int userId = 22;
-        String userName = new String("Mackenzie");
+        String username = new String("Mackenzie");
 
         //Invoke
-        Customer customer = new Customer(userName, userId);
+        Customer customer = new Customer(userId, username);
 
-        String expectedString = String.format(User.STRING_FORMAT, userId, userName);
+        String expectedString = String.format(User.STRING_FORMAT, userId, username);
 
         // Invoke
         String actualString = customer.toString();
