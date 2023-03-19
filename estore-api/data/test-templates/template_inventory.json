@@ -1,98 +1,131 @@
-[
-  {
-    "sku": 11,
-    "name": "Soulstone Catalysts (4 Pack)",
-    "price": 3.99,
-    "stockQuantity": 0,
-    "images": null,
-    "description": null
-  },
-  {
-    "sku": 12,
-    "name": "The Vruum Broom TM",
-    "price": 199.99,
-    "stockQuantity": 10,
-    "images": null,
-    "description": null
-  },
-  {
-    "sku": 13,
-    "name": "Nightmare Elyxir Flask",
-    "price": 14.99,
-    "stockQuantity": 10,
-    "images": null,
-    "description": null
-  },
-  {
-    "sku": 14,
-    "name": "Binmus 2000 Racing Broom",
-    "price": 999.99,
-    "stockQuantity": 10,
-    "images": null,
-    "description": null
-  },
-  {
-    "sku": 15,
-    "name": "Frostwing Dragon Egg",
-    "price": 2499.99,
-    "stockQuantity": 10,
-    "images": null,
-    "description": null
-  },
-  {
-    "sku": 16,
-    "name": "Newt Lungs (10 pack)",
-    "price": 3.99,
-    "stockQuantity": 10,
-    "images": null,
-    "description": null
-  },
-  {
-    "sku": 17,
-    "name": "Starshot v3 Sports Broom",
-    "price": 1199.99,
-    "stockQuantity": 10,
-    "images": null,
-    "description": null
-  },
-  {
-    "sku": 18,
-    "name": "Deathwart Stalks (10 pack)",
-    "price": 4.99,
-    "stockQuantity": 10,
-    "images": null,
-    "description": null
-  },
-  {
-    "sku": 19,
-    "name": "Frog Legs (100 Pack)",
-    "price": 1.99,
-    "stockQuantity": 20,
-    "images": null,
-    "description": null
-  },
-  {
-    "sku": 20,
-    "name": "Starshade Cloak",
-    "price": 49.99,
-    "stockQuantity": 30,
-    "images": null,
-    "description": null
-  },
-  {
-    "sku": 22,
-    "name": "Centipede Hearts (1000 Pack)",
-    "price": 1.99,
-    "stockQuantity": 40,
-    "images": null,
-    "description": null
-  },
-  {
-    "sku": 23,
-    "name": "Truth Serum Vial",
-    "price": 79.99,
-    "stockQuantity": 50,
-    "images": null,
-    "description": null
+[ {
+  "sku" : 11,
+  "name" : "Soulstone Catalysts (4 Pack)",
+  "price" : 3.99,
+  "stockQuantity" : 0,
+  "images" : null,
+  "description" : {
+    "summary" : "Unleash the power within! This 4-pack of Soulstone Catalysts will elevate your magical abilities to new heights.",
+    "tags" : [ "magic", "catalyst", "soulstone" ]
   }
-]
+}, {
+  "sku" : 12,
+  "name" : "The Vruum Broom TM",
+  "price" : 199.99,
+  "stockQuantity" : 10,
+  "images" : null,
+  "description" : {
+    "summary" : "Experience the freedom of the skies with The Vruum Broom™! Fly swiftly and comfortably with this cutting-edge magical transportation.",
+    "tags" : [ "magic", "flight", "broom" ]
+  }
+}, {
+  "sku" : 13,
+  "name" : "Nightmare Elyxir Flask",
+  "price" : 14.99,
+  "stockQuantity" : 10,
+  "images" : null,
+  "description" : {
+    "summary" : "Dare to dream darkly with the Nightmare Elixir Flask. This potent potion will conjure up the most spine-chilling nightmares imaginable.",
+    "tags" : [ "potion", "elixir", "nightmare" ]
+  }
+}, {
+  "sku" : 14,
+  "name" : "Binmus 2000 Racing Broom",
+  "price" : 999.99,
+  "stockQuantity" : 10,
+  "images" : null,
+  "description" : {
+    "summary" : "Soar through the skies with unparalleled speed on the Binmus 2000 Racing Broom! Designed for professional racers seeking the ultimate competitive edge.",
+    "tags" : [ "racing", "broom", "sport" ]
+  }
+}, {
+  "sku" : 15,
+  "name" : "Frostwing Dragon Egg",
+  "price" : 2499.99,
+  "stockQuantity" : 10,
+  "images" : null,
+  "description" : {
+    "summary" : "Witness the birth of majesty! The rare Frostwing Dragon Egg holds incredible magical potential, ready to unleash its icy power upon hatching.",
+    "tags" : [ "magic", "egg", "dragon" ]
+  }
+}, {
+  "sku" : 16,
+  "name" : "Newt Lungs (10 pack)",
+  "price" : 3.99,
+  "stockQuantity" : 10,
+  "images" : null,
+  "description" : {
+    "summary" : "Breathe new life into your potions with this pack of 10 premium Newt Lungs, perfect for a variety of mystical concoctions.",
+    "tags" : [ "newt", "lungs", "ingredients" ]
+  }
+}, {
+  "sku" : 17,
+  "name" : "Starshot v3 Sports Broom",
+  "price" : 1199.99,
+  "stockQuantity" : 10,
+  "images" : null,
+  "description" : {
+    "summary" : "Reach for the stars with the Starshot v3! This advanced sports broom delivers extreme performance and unparalleled agility.",
+    "tags" : [ "magic", "sports", "broom" ]
+  }
+}, {
+  "sku" : 18,
+  "name" : "Deathwart Stalks (10 pack)",
+  "price" : 4.99,
+  "stockQuantity" : 10,
+  "images" : null,
+  "description" : {
+    "summary" : "Brew potions with a deadly touch using these 10 Deathwart Stalks. Ideal for potent concoctions and bewitching brews.",
+    "tags" : [ "deathwart", "stalks", "ingredients" ]
+  }
+}, {
+  "sku" : 19,
+  "name" : "Frog Legs (100 Pack)",
+  "price" : 1.99,
+  "stockQuantity" : 20,
+  "images" : null,
+  "description" : {
+    "summary" : "Leap into the magical realm with 100 versatile Frog Legs! Great for enchanting elixirs, creative cuisine, and whimsical witchcraft.",
+    "tags" : [ "frog", "legs", "ingredients" ]
+  }
+}, {
+  "sku" : 20,
+  "name" : "Starshade Cloak",
+  "price" : 49.99,
+  "stockQuantity" : 30,
+  "images" : null,
+  "description" : {
+    "summary" : "Stay protected and stylish with the Starshade Cloak! This enchanting garment offers excellent defense against the elements and a touch of magic.",
+    "tags" : [ "magic", "cloak", "protection" ]
+  }
+}, {
+  "sku" : 22,
+  "name" : "Centipede Hearts (1000 Pack)",
+  "price" : 1.99,
+  "stockQuantity" : 40,
+  "images" : null,
+  "description" : {
+    "summary" : "Fuel your spells with 1000 Centipede Hearts! These tiny treasures are the perfect potion and spell ingredients for any arcane endeavor.",
+    "tags" : [ "hearts", "ingredients", "centipede" ]
+  }
+}, {
+  "sku" : 23,
+  "name" : "Truth Serum Vial",
+  "price" : 79.99,
+  "stockQuantity" : 50,
+  "images" : null,
+  "description" : {
+    "summary" : "Discover the unspoken with a single-use vial of Truth Serum. One drop will have anyone revealing their deepest secrets and sincerest truths.",
+    "tags" : [ "potion", "truth", "serum" ]
+  }
+}, {
+  "sku" : 24,
+  "name" : "Phoenix Ashes",
+  "price" : 499.99,
+  "stockQuantity" : 3,
+  "images" : [ "https://i.imgur.com/aM0slHu.png" ],
+  "description" : {
+    "summary" : "Welcome a mythical companion into your life with our Phoenix Ashes. Experience the awe of witnessing your very own phoenix rise from its ashes to form a majestic, fiery creature. While the rebirth timeframe may vary, the magic of this enchanting bond will last a lifetime.",
+    "tags" : [ "phoenix", "companion", "ashes", "fire", "rebirth" ]
+  }
+} ]
