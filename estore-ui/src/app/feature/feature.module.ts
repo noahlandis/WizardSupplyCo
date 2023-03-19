@@ -3,23 +3,32 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { TestCartComponent } from './test-cart/test-cart.component';
-import { TestAdminDashboardComponent } from './test-admin-dashboard/test-admin-dashboard.component';
 import { TestCatalogComponent } from './test-catalog/test-catalog.component';
 import { LoginRegistrationComponent } from './login-registration/login-registration.component';
+import { TestCartComponent } from './test-cart/test-cart.component';
+import { TestAdminDashboardComponent } from './test-admin-dashboard/test-admin-dashboard.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
 
 @NgModule({
-    declarations: [TestCartComponent, TestAdminDashboardComponent, TestCatalogComponent, LoginRegistrationComponent],
+    declarations: [
+        TestCatalogComponent,
+        LoginRegistrationComponent,
+        TestCartComponent,
+        TestAdminDashboardComponent,
+        EditProductComponent,
+    ],
     imports: [
         CommonModule,
         MaterialModule,
         ReactiveFormsModule
     ],
     exports: [
-        TestCartComponent,
+        TestCatalogComponent,
         LoginRegistrationComponent,
+        TestCartComponent,
         TestAdminDashboardComponent,
-        TestCatalogComponent
+        TestCatalogComponent,
+        EditProductComponent,
     ]
 })
 export class FeatureModule { }
