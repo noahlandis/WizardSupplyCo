@@ -11,6 +11,7 @@ export class CatalogProductCardComponent {
   @Input() price = 0;
   @Input() description = '';
   @Input() image = '';
+  @Input() sku = 0;
 
   constructor() {}
 }
