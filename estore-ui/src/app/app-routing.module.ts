@@ -14,7 +14,6 @@ import { CreateProductComponent } from './feature/create-product/create-product.
 import { CatalogProductCardComponent } from './feature/catalog-product-card/catalog-product-card.component';
 
 const routes: Routes = [
-  { path: '', component: CatalogProductCardComponent },
   { path: 'catalog', component: TestCatalogComponent },
   {
     path: 'cart',
