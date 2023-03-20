@@ -10,6 +10,7 @@ import { TestAdminDashboardComponent } from './feature/test-admin-dashboard/test
 import { authAdminGuard } from './auth-admin.guard';
 import { noAuthGuard } from './auth-none.guard';
 import { EditProductComponent } from './feature/edit-product/edit-product.component';
+import { AdminDashboardComponent } from './feature/admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
     {path:'', component:TestCatalogComponent},
@@ -43,6 +44,11 @@ const routes: Routes = [
         path:'create-product',
         component:TestAdminDashboardComponent,
         canActivate: [authAdminGuard]
+    },
+    {
+        path:'admin-dash',
+        component:AdminDashboardComponent,
+        canActivate: [noAuthGuard]
     }
 ];
 

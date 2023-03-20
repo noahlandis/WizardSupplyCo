@@ -8,6 +8,7 @@ import { LoginRegistrationComponent } from './login-registration/login-registrat
 import { TestCartComponent } from './test-cart/test-cart.component';
 import { TestAdminDashboardComponent } from './test-admin-dashboard/test-admin-dashboard.component';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
 @NgModule({
     declarations: [
@@ -16,6 +17,7 @@ import { EditProductComponent } from './edit-product/edit-product.component';
         TestCartComponent,
         TestAdminDashboardComponent,
         EditProductComponent,
+        AdminDashboardComponent,
     ],
     imports: [
         CommonModule,
@@ -27,6 +29,7 @@ import { EditProductComponent } from './edit-product/edit-product.component';
         LoginRegistrationComponent,
         TestCartComponent,
         TestAdminDashboardComponent,
+        AdminDashboardComponent,
         TestCatalogComponent,
         EditProductComponent,
     ]
