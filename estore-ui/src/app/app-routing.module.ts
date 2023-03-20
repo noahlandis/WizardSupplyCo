@@ -33,7 +33,7 @@ const routes: Routes = [
     },
     {
         path:'admin',
-        component:TestAdminDashboardComponent,
+        component:AdminDashboardComponent,
         canActivate: [authAdminGuard]
     },
     {
@@ -46,11 +46,6 @@ const routes: Routes = [
         component:CreateProductComponent,
         canActivate: [authAdminGuard]
     },
-    {
-        path:'admin-dash',
-        component:AdminDashboardComponent,
-        canActivate: [noAuthGuard]
-    }
 ];
 
 @NgModule({
