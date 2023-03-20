@@ -9,7 +9,7 @@ import { MessageService } from './message.service';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UsersService {
 
   private usersUrl: String = 'http://localhost:8080/users';
   private currentUser = new BehaviorSubject<User | null>(null);
@@ -28,9 +28,9 @@ export class UserService {
     console.log(`current user is ${this.currentUser.value}`);
   }
 
-  /** Log a UserService message with the MessageService */
+  /** Log a UsersService message with the MessageService */
   private log(message: string) {
-    this.messageService.add(`UserService: ${message}`);
+    this.messageService.add(`UsersService: ${message}`);
   }
 
   /** GET user by id. Will 404 if id not found */
