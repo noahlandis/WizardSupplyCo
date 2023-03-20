@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Represents a Product entity
  */
@@ -34,11 +35,37 @@ public class Product {
      * value, i.e. 0 for int
      */
     @JsonCreator
-    public Product(@JsonProperty("sku") int sku, @JsonProperty("name") String name, @JsonProperty("price") float price, @JsonProperty("stockQuantity") int stockQuantity) {
+    public Product(
+        @JsonProperty("sku") int sku,
+        @JsonProperty("name") String name,
+        @JsonProperty("price") float price,
+        @JsonProperty("stockQuantity") int stockQuantity,
+        @JsonProperty("images") String[] images,
+        @JsonProperty("description") Description description) {
         this.sku = sku;
         this.name = name;
         this.price = price;
         this.stock = new Stock(stockQuantity);
+        this.images = images;
+        this.description = description;
+    }
+
+    /**
+     * Creates a product with the given SKU, name, price, stock, images and description 
+     * @param sku The sku of the product
+     * @param name The name of the product
+     * @param price the price of the product
+     * @param stock the stock object of the product
+     * @param images the images of the product
+     * @param description the description of the product
+     */ 
+    public Product(int sku, String name, float price, Stock stock, String[] images, Description description) {
+        this.sku = sku;
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+        this.images = images;
+        this.description = description;
     }
 
     /**
@@ -90,6 +117,7 @@ public class Product {
      * in string form
      * @return the array of strings containing image data
      */
+    @JsonProperty("images")
     public String[] getImages() {return images;}
 
     /**
@@ -128,6 +156,7 @@ public class Product {
      * Retrieves the description of the product
      * @return Description object
      */
+    @JsonProperty("description")
     public Description getDescription(){return description;}
 
     /**
