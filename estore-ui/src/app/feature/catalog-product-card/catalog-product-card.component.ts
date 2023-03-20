@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Product } from 'src/app/model/product.model';
 @Component({
   selector: 'app-catalog-product-card',
   templateUrl: './catalog-product-card.component.html',
@@ -7,7 +8,7 @@ import { Subscription } from 'rxjs';
 })
 export class CatalogProductCardComponent {
   @Input() name = '';
-  @Input() price = '';
+  @Input() price = 0;
   @Input() description = '';
   @Input() image = '';
 

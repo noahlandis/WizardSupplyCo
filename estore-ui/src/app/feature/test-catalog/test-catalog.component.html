@@ -1,1 +1,7 @@
-<p>test-catalog works!</p>
+<div class="catalog">
+  <app-catalog-product-card *ngFor="let product of products"
+    [name]="product.name"
+    [price]="product.price"
+    [description]="product.description.summary">
+    </app-catalog-product-card>
+</div>
