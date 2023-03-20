@@ -1,0 +1,15 @@
+<h1>Admin Dashboard</h1>
+    <nav>
+        <button routerLink="/create-product" mat-raised-button color="accent" class="add-product">Add Product 
+            <mat-icon>
+            add-circle
+            </mat-icon>
+        </button>
+    </nav>
+<div class="admin-dashboard">
+    <mat-grid-list cols="4" rowHeight="250px">
+        <mat-grid-tile  *ngFor="let product of products">
+            <label>Test</label>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
