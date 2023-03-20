@@ -11,40 +11,43 @@ import { LoginRegistrationComponent } from './feature/login-registration/login-r
 import { TestAdminDashboardComponent } from './feature/test-admin-dashboard/test-admin-dashboard.component';
 import { EditProductComponent } from './feature/edit-product/edit-product.component';
 import { CreateProductComponent } from './feature/create-product/create-product.component';
+import { CartComponent } from './feature/cart/cart.component';
 import { CatalogProductCardComponent } from './feature/catalog-product-card/catalog-product-card.component';
 
 const routes: Routes = [
-  { path: 'catalog', component: TestCatalogComponent },
-  {
-    path: 'cart',
-    component: TestCartComponent,
-    canActivate: [authCustomerGuard],
-  },
-  {
-    path: 'checkout',
-    component: TestCartComponent,
-    canActivate: [authCustomerGuard],
-  },
-  {
-    path: 'auth',
-    component: LoginRegistrationComponent,
-    canActivate: [noAuthGuard],
-  },
-  {
-    path: 'admin',
-    component: TestAdminDashboardComponent,
-    canActivate: [authAdminGuard],
-  },
-  {
-    path: 'edit-product/:sku',
-    component: EditProductComponent,
-    canActivate: [authAdminGuard],
-  },
-  {
-    path: 'create-product',
-    component: CreateProductComponent,
-    canActivate: [authAdminGuard],
-  },
+    {path:'', component:TestCatalogComponent},
+    {path:'catalog', component:TestCatalogComponent},
+    {path:'catalog/:sku', component:TestCatalogComponent},
+    {
+        path:'cart',
+        component:CartComponent,
+        canActivate: [authCustomerGuard]
+    },
+    {
+        path:'checkout',
+        component:TestCartComponent,
+        canActivate: [authCustomerGuard]
+    },
+    {
+        path:'auth',
+        component:LoginRegistrationComponent,
+        canActivate: [noAuthGuard]
+    },
+    {
+        path:'admin',
+        component:TestAdminDashboardComponent,
+        canActivate: [authAdminGuard]
+    },
+    {
+        path:'edit-product/:sku',
+        component:EditProductComponent,
+        canActivate: [authAdminGuard]
+    },
+    {
+        path:'create-product',
+        component:CreateProductComponent,
+        canActivate: [authAdminGuard]
+    }
 ];
 
 @NgModule({
