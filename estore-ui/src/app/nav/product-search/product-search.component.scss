@@ -1,7 +1,14 @@
 .search-container {
-  // position: relative;
-  // display: inline-block;
+  position: relative;
+  display: inline-block;
   width: 95%;
+}
+
+button[mat-icon-button] {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .search-input {
