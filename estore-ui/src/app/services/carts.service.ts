@@ -5,6 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Cart } from '../model/cart.model';
 import { MessageService } from './message.service';
+import { UpdateService } from './update.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class CartsService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private updateService: UpdateService
   ) { }
 
   /** Log a CartsService message with the MessageService */
@@ -38,15 +40,19 @@ export class CartsService {
   }
 
   /** PUT: add a quantity of a product to a user's cart on the server */
-  addProductToCart(userId: number, sku: number, quantity: number): Observable<Cart> {
+  addProductToCart(userId: number, sku: number, quantity: number, triggerUpdate?: boolean): Observable<Cart> {
     const url = `${this.cartsUrl}/${userId}/products/${sku}?quantity=${quantity}`;
     this.log(`adding product w/ sku=${sku} and quantity=${quantity} to cart w/ userId=${userId} ...`);
 
     return this.http.put<Cart>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`product added to cart successfully`)),
+      tap(_ => {
+        this.log(`product added to cart successfully`)
+        if (triggerUpdate) this.updateService.updateCart();
+      }),
       catchError(this.handleError<Cart>('addProductToCart'))
     );
   }
+
 
   /** DELETE: remove a quantity of a product from a user's cart on the server
    * If quantity is not specified, remove all of the product from the cart
@@ -57,7 +63,14 @@ export class CartsService {
     this.log(`removing product w/ sku=${sku} from cart w/ userId=${userId} ...`);
 
     return this.http.delete<Cart>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`product removed from cart successfully`)),
+      tap(_ => {
+        if (quantity) {
+          this.log(`successfully removed ${quantity} of product from cart`)
+        } else {
+          this.log(`successfully removed product from cart`)
+          this.updateService.updateCart();
+        }
+      }),
       catchError(this.handleError<Cart>('removeProductFromCart'))
     );
   }
@@ -68,7 +81,10 @@ export class CartsService {
     this.log(`clearing cart w/ userId=${userId} ...`);
 
     return this.http.delete<Cart>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`cart cleared successfully`)),
+      tap(_ => {
+        this.log(`cart cleared successfully`)
+        this.updateService.updateCart();
+      }),
       catchError(this.handleError<Cart>('clearCart'))
     );
   }
