@@ -1,29 +1,24 @@
-[
-    {
-        "userId": 1,
-        "productMap": {
-            "1": 3,
-            "2": 1,
-            "3": 2,
-            "4": 10
-        }
-    },
-    {
-        "userId": 2,
-        "productMap": {
-            "1": 3,
-            "2": 1,
-            "3": 2,
-            "4": 10
-        }
-    },
-    {
-        "userId": 3,
-        "productMap": {
-            "1": 3,
-            "2": 1,
-            "3": 2,
-            "4": 10
-        }
-    }
-]
+[ {
+  "userId" : 0,
+  "productsMap" : { },
+  "count" : 0,
+  "totalPrice" : 0.0
+}, {
+  "userId" : 1,
+  "productsMap" : {
+    "13" : 1,
+    "14" : 1
+  },
+  "count" : 2,
+  "totalPrice" : 1014.98
+}, {
+  "userId" : 2,
+  "productsMap" : { },
+  "count" : 0,
+  "totalPrice" : 0.0
+}, {
+  "userId" : 3,
+  "productsMap" : { },
+  "count" : 0,
+  "totalPrice" : 0.0
+} ]

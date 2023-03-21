@@ -2,7 +2,10 @@ package com.estore.api.estoreapi.model;
 
 import java.util.logging.Logger;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Represents a Product entity
  */
@@ -15,23 +18,64 @@ public class Product {
     @JsonProperty("sku") private int sku;
     @JsonProperty("name") private String name;
     @JsonProperty("price") private float price;
-    @JsonProperty("stock") private Stock stock;
     @JsonProperty("images") private String[] images;
     @JsonProperty("description") private Description description;
+    private Stock stock;
 
     /**
-     * Create a product with the given SKU, name, price and stock
+     * JSON contructor to create a product with the given SKU, name, price and stock quantity
      * @param sku The sku of the product
      * @param name The name of the product
      * @param price the price of the product
-     * @param stock the stock of the product
+     * @param stock the stock quantity of the product
      * 
      * {@literal @}JsonProperty is used in serialization and deserialization
      * of the JSON object to the Java object in mapping the fields.  If a field
      * is not provided in the JSON object, the Java field gets the default Java
      * value, i.e. 0 for int
      */
-    public Product(@JsonProperty("sku") int sku, @JsonProperty("name") String name, @JsonProperty("price") float price, @JsonProperty("stock") Stock stock) {
+    @JsonCreator
+    public Product(
+        @JsonProperty("sku") int sku,
+        @JsonProperty("name") String name,
+        @JsonProperty("price") float price,
+        @JsonProperty("stockQuantity") int stockQuantity,
+        @JsonProperty("images") String[] images,
+        @JsonProperty("description") Description description) {
+        this.sku = sku;
+        this.name = name;
+        this.price = price;
+        this.stock = new Stock(stockQuantity);
+        this.images = images;
+        this.description = description;
+    }
+
+    /**
+     * Creates a product with the given SKU, name, price, stock, images and description 
+     * @param sku The sku of the product
+     * @param name The name of the product
+     * @param price the price of the product
+     * @param stock the stock object of the product
+     * @param images the images of the product
+     * @param description the description of the product
+     */ 
+    public Product(int sku, String name, float price, Stock stock, String[] images, Description description) {
+        this.sku = sku;
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+        this.images = images;
+        this.description = description;
+    }
+
+    /**
+     * Creates a product with the given SKU, name, price and stock object
+     * @param sku The sku of the product
+     * @param name The name of the product
+     * @param price the price of the product
+     * @param stock the stock object of the product
+     */
+    public Product(int sku, String name, float price, Stock stock) {
         this.sku = sku;
         this.name = name;
         this.price = price;
@@ -73,20 +117,46 @@ public class Product {
      * in string form
      * @return the array of strings containing image data
      */
+    @JsonProperty("images")
     public String[] getImages() {return images;}
 
     /**
      * Retrieves the product's stock object
      * @return The stock object of the product
+     * 
+     * @JsonIgnore is used to ignore the stock object when serializing the product to JSON
      */
+    @JsonIgnore
     public Stock getStock() {
         return stock;
+    }
+
+    /**
+     * Gets the stock quantity of the product.
+     * 
+     * This method is used to serialize the stock quantity to JSON
+     * 
+     * @return The stock quantity of the product
+     */
+    @JsonProperty("stockQuantity")
+    public int getStockQuantity() {
+        return stock.getQuantity();
+    }
+
+    /**
+     * Checks if there is enough stock for the quantity passed in
+     * @param quantity The quantity to check
+     * @return True if there is enough stock for the quantity passed in
+     */
+    public boolean hasEnoughStockFor(int quantity) {
+        return stock.getQuantity() >= quantity;
     }
 
     /**
      * Retrieves the description of the product
      * @return Description object
      */
+    @JsonProperty("description")
     public Description getDescription(){return description;}
 
     /**

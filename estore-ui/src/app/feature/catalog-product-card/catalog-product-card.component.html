@@ -1,0 +1,17 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>{{ name }}</mat-card-title>
+    <mat-card-subtitle>{{ price }}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image />
+  <mat-card-content>{{ description }}</mat-card-content>
+  <mat-card-actions align="end">
+    <button
+      mat-button
+      style="background-color: #673ab7; color: white"
+      (click)="addToCart(sku)"
+    >
+      Add To Cart
+    </button>
+  </mat-card-actions>
+</mat-card>

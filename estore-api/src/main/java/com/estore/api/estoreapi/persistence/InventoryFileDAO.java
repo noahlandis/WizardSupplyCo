@@ -8,9 +8,10 @@ import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.estore.api.estoreapi.model.Product;
 
@@ -22,7 +23,7 @@ import com.estore.api.estoreapi.model.Product;
  * 
  * @author SWEN Faculty
  */
-@Component
+@Repository
 public class InventoryFileDAO implements InventoryDAO {
     private static final Logger LOG = Logger.getLogger(InventoryFileDAO.class.getName());
     Map<Integer,Product> products;   // Provides a local cache of the product objects
@@ -43,8 +44,10 @@ public class InventoryFileDAO implements InventoryDAO {
      * @throws IOException when file cannot be accessed or read from
      */
     public InventoryFileDAO(@Value("${products.file}") String filename,ObjectMapper objectMapper) throws IOException {
+        LOG.info("InventoryFileDAO created");
         this.filename = filename;
         this.objectMapper = objectMapper;
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         load();  // load the products from the file
     }
 
@@ -81,7 +84,7 @@ public class InventoryFileDAO implements InventoryDAO {
         ArrayList<Product> productArrayList = new ArrayList<>();
         /*This for loop goes through each product in the inventory product map */
         for (Product product : products.values()) {
-            if (containsText == null || product.getName().contains(containsText)) {
+            if (containsText == null || product.getName().toLowerCase().contains(containsText.toLowerCase())) {
                 productArrayList.add(product);
             }
         }
@@ -99,6 +102,7 @@ public class InventoryFileDAO implements InventoryDAO {
      * @throws IOException when file cannot be accessed or written to
      */
     private boolean save() throws IOException {
+        LOG.info("Saving products to file: " + filename);
         Product[] productArray = getProductsArray();
 
         // Serializes the Java Objects to JSON objects into the file
@@ -118,6 +122,7 @@ public class InventoryFileDAO implements InventoryDAO {
      * @throws IOException when file cannot be accessed or read from
      */
     private boolean load() throws IOException {
+        LOG.info("Loading products from file: " + filename);
         products = new TreeMap<>();
         nextSku = 0;
 
@@ -184,7 +189,14 @@ public class InventoryFileDAO implements InventoryDAO {
 
             // We create a new product object because the sku field is immutable
             // and we need to assign the next unique sku
-            Product newProduct = new Product(nextSku(), product.getName(), product.getPrice(), product.getStock());
+            Product newProduct = new Product(
+                nextSku(),
+                product.getName(),
+                product.getPrice(),
+                product.getStock(),
+                product.getImages(),
+                product.getDescription()
+            );
             products.put(newProduct.getSku(),newProduct);
             save(); // may throw an IOException
             return newProduct;

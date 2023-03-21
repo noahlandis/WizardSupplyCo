@@ -1,16 +1,22 @@
 package com.estore.api.estoreapi.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import java.util.HashSet;
 
 /**
  * The unit test suite for the Description class
+ * 
+ * @author Noah Landis
  */
 @Tag("Model-tier")
 public class DescriptionTest {
     @Test
-    public void testConstructor() {
+    public void testConstructorSummaryAndTags() {
         // Setup
         String expectedSummary = "A REALLY Fast Broom!";
         HashSet<String> expectedTags = new HashSet<>();
@@ -24,6 +30,36 @@ public class DescriptionTest {
         // Analyze
         assertEquals(expectedSummary, description.getSummary());
         assertEquals(expectedTags, description.getTags());
+    }
+
+
+    @Test
+    public void testConstructorSummaryOnly() {
+        // Setup
+        String expectedSummary = "A REALLY Fast Broom!";
+
+        // Invoke
+        Description description = new Description(expectedSummary);
+
+        // Analyze
+        assertEquals(expectedSummary, description.getSummary());
+        assertNotNull(description.getTags());
+        assertTrue(description.getTags().isEmpty());
+    }
+
+    @Test
+    public void testSetSummary() {
+        // Setup
+        String initialSummary = "A REALLY Fast Broom!";
+        String expectedSummary = "An EVEN FASTER Broom!";
+        Description description = new Description(initialSummary);
+
+        // Invoke
+        description.setSummary(expectedSummary);
+        
+
+        // Analyze
+        assertEquals(expectedSummary, description.getSummary());
     }
 
     @Test
@@ -47,7 +83,7 @@ public class DescriptionTest {
     public void testAddTag() {
         // Setup
         String summary = "A REALLY Fast Broom!";
-        Description description = new Description(summary, new HashSet<>());
+        Description description = new Description(summary);
         int expectedTagCount = 1;
 
         // Invoke
@@ -56,13 +92,13 @@ public class DescriptionTest {
 
         // Analyze
         assertEquals(expectedTagCount, returnedTags.size());
-        assertEquals(true, returnedTags.contains("New Tag"));
+        assertTrue(returnedTags.contains("New Tag"));
     }
 
     @Test
     public void removeTag() {
         // Setupv
-        Description description = new Description("A REALLY Fast Broom!", new HashSet<>());
+        Description description = new Description("A REALLY Fast Broom!");
         String tag = "New Tag";
         description.addTag(tag);
         int expectedTagCount = 0;
@@ -75,7 +111,7 @@ public class DescriptionTest {
         // Analyze
         assertEquals(expectedReturnedTags, returnedTags);
         assertEquals(expectedTagCount, returnedTags.size());
-        assertEquals(false, returnedTags.contains(tag));
+        assertFalse(returnedTags.contains(tag));
 
     }
 
@@ -84,7 +120,7 @@ public class DescriptionTest {
     public void testToString() {
         // Setup
         String summary = "A REALLY Fast Broom!";
-        Description description = new Description(summary, new HashSet<>());
+        Description description = new Description(summary);
         description.addTag("Wood");
         description.addTag("Broom");
         description.addTag("Flying");
