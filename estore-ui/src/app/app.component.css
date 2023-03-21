@@ -1,0 +1,18 @@
+/* for sidenav to take a whole page */
+.root-container { 
+    height: 100vh;
+}
+
+/* for sidenav to take a whole page */
+.flex-fill {
+    height: 100%;
+    min-height: 100%;
+    min-width: 100%;
+    width: 100%;
+}
+
+@media only screen and (min-width: 960px) {
+    .gt-small-hide {
+        display: none;
+    }
+}

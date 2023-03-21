@@ -1,0 +1,36 @@
+<div class="container">
+  <mat-tab-group>
+    <mat-tab label="Login">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmitLoginForm()">
+        <div class="form-group">
+          <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" type="text" required />
+            <mat-error *ngIf="loginForm.controls['username'].hasError('invalidUsername')">Invalid username</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password" />
+          </mat-form-field>
+          <button mat-raised-button color="primary" class="submit-btn" type="submit" [disabled]="!loginForm.valid">Login</button>
+        </div>
+      </form>
+    </mat-tab>
+    <mat-tab label="Register">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegisterForm()">
+        <div class="form-group">
+          <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput formControlName="username" type="text" required />
+            <mat-error *ngIf="registerForm.controls['username'].hasError('usernameTaken')">Username already taken</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password" />
+          </mat-form-field>
+          <button mat-raised-button color="primary" class="submit-btn" type="submit" [disabled]="!registerForm.valid">Register</button>
+        </div>
+      </form>
+    </mat-tab>
+  </mat-tab-group>
+</div>

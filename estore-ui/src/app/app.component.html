@@ -1,0 +1,13 @@
+<div class="root-container">
+  <app-top-nav (sidenavToggle)="sidenav.toggle()"></app-top-nav>
+  <mat-sidenav-container class="flex-fill">
+      <mat-sidenav #sidenav class="gt-small-hide">
+          <app-side-nav (sidenavClose)="sidenav.close()"></app-side-nav>
+      </mat-sidenav>
+      <mat-sidenav-content class="flex-fill">
+          <router-outlet />
+          <app-messages />
+      </mat-sidenav-content>
+  </mat-sidenav-container>
+  
+</div>
