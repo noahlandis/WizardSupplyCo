@@ -32,7 +32,7 @@ import {MatMenuModule} from '@angular/material/menu';
     MatTabsModule,
     MatProgressSpinnerModule,
     MatGridListModule,
-    MatMenuModule
+    MatMenuModule,    
   ],
   exports:[
     MatIconModule,
