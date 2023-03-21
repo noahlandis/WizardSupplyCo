@@ -9,28 +9,44 @@ geometry: margin=1in
 > and appear in the generated PDF in italics._
 ​
 ## Team Information
-* Team name: TEAMNAME
+### Team name: Scrumblebees
+![Team logo](https://i.imgur.com/6moQ15s.png)
 * Team members
-  * MEMBER1
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  * Ryan Webb
+  * Kanisha Agrawal
+  * Noah Landis
+  * Priyank Patel
 ​
 ## Executive Summary
 ​
-This is a summary of the project.
+Introducing Wizbiz (development codename), a captivating web application that transports the wonderful world of magical commerce into the digital age. Wizbiz offers users a spellbinding platform to explore and acquire a wide array of magical items, from wands to brooms, and everything in between.
+
+In its present iteration, Wizbiz allows users to effortlessly create an account, peruse the diverse selection of magical items, and add desired products to their cart. Moreover, the application's owner possesses the ability to enrich the store's inventory by adding new items, as well as editing or deleting existing offerings as needed.
+
+Built using Angular and TypeScript for the front-end, our eStore is easy to navigate and visually appealing, thanks to the Angular Material UI component library. Customers can browse through our collection of magical items effortlessly and enjoy a smooth shopping experience.
+
+The back-end, powered by a Java Spring Boot API, takes care of essential elements like carts, users, and inventory management. This ensures a secure and reliable platform for our customers to shop with confidence.
 ​
 ### Purpose
 >  _**[Sprint 2 & 4]** Provide a very brief statement about the project and the most
 > important user group and user goals._
 ​
+Wizbiz provides a platform for users to search and buy magic products. The most important user group for this website are people who want to buy magical items. The primary user goals for this project are to easily be able to find and purchase magic products online.
 ### Glossary and Acronyms
 > _**[Sprint 2 & 4]** Provide a table of terms and acronyms._
 ​
-| Term | Definition |
-|------|------------|
-| SPA | Single Page |
-​
+| Term |        Definition       |
+|------|-------------------------|
+| SPA  | Single Page Application |
+| API  | Application Programming Interface |
+| DAO  | Data Access Object |
+| SKU  | Stock Keeping Unit |
+| UI   | User Interface |
+| MVC  | Model-View-Controller |
+| MVVM | Model-View-ViewModel |
+| CRUD | Create, Read, Update, Delete |
+| HTTP | Hypertext Transfer Protocol |
+| REST | Representational State Transfer |
 ​
 ## Requirements
 ​
@@ -40,9 +56,16 @@ This section describes the features of the application.
 > story.  Focus on top-level features from the Vision document and
 > maybe Epics and critical Stories._
 ​
+1)There should be simple authentication system for both the admin and the users.
+2)Users should be able to create and account and login/logout from the website.
+3)Users should be able to see a list of products in the webiste and also be able to search for the products they need.
+4)Users should have full control of the items in cart and their quantities.
+5)All the data of the users should be saved to the inventory so that users can view what's in their cart when they login next time.
+
 ### Definition of MVP
 > _**[Sprint 2 & 4]** Provide a simple description of the Minimum Viable Product._
 ​
+A simple magic shop website that allows users to search, select, add to cart and order magic products that are in stock. The Owner of the website can manage the product by adding,deleting or editing the products displayed in the website.  
 ### MVP Features
 >  _**[Sprint 4]** Provide a list of top-level Epics and/or Stories of the MVP._
 ​
@@ -118,14 +141,15 @@ with the e-store application.
 ![Replace with your ViewModel Tier class diagram 1, etc.](model-placeholder.png)
 ​
 ### Model Tier
-> _**[Sprint 2, 3 & 4]** Provide a summary of this tier of your architecture. This
-> section will follow the same instructions that are given for the View
-> Tier above._
-​
-> _At appropriate places as part of this narrative provide **one** or more updated and **properly labeled**
-> static models (UML class diagrams) with some details such as critical attributes and methods._
-> 
-![Replace with your Model Tier class diagram 1, etc.](model-placeholder.png)
+Our model tier (`M` in `MVC`) is built using Java and Spring Framework. The model tier is responsible for storing the application data objects and providing persistance. The model tier also exposes a set of APIs to the controller tier (`C` in `MVC`) to manipulate the data objects from the Model. The model tier is divided into three resources: `Inventory`, `User` and `Carts`. 
+
+The `Inventory` resource is responsible for storing the `Product` data objects and providing persistence via Data Access Object (DAO) classes. The `Product` class is the highest abstraction class used for storing data about a product, such as name, price, SKU (Stock Keeping Unit), images, as well an instance of a `Description` object and a `Stock` object. The `Description` class is used for storing data about a product's description such as the product's summary text, the product's tags. `Description` also encapsulates behavior related to said data. The `Stock` class is used for storing the product's stock quantity, and encapsulates behavior related to it.
+
+The `User` resource is responsible for storing the `User` data objects and providing persistance. The primary data object stored in the `User` resource is the `User` class stores a user's ID, login state, and whether the user is an admin or not. The `User` class also encapsulates behavior related to said data.
+
+The `Carts` resource is responsible for storing the cart data objects. 
+ 
+![Model tier class diagrams for backend](class-diagrams.png)
 ​
 ## OO Design Principles
 > _**[Sprint 2, 3 & 4]** Discuss at least **4 key OO Principles** in your current design. This should be taken from your work in "Adherence to Architecture and Design Principles" that you have completed in a previous Sprint. Be sure to include any diagrams (or clearly refer to ones elsewhere in your Tier sections above) to support your claims._
@@ -159,3 +183,5 @@ with the e-store application.
 ​
 >_**[Sprint 2 & 4]** **Include images of your code coverage report.** If there are any anomalies, discuss
 > those._
+![Model tier code coverage for backend](code-coverage-model-tier.png)
+
