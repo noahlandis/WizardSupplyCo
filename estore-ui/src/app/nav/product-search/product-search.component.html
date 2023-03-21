@@ -8,12 +8,18 @@
     [matAutocomplete]="auto"
     (input)="search(searchBox.value)"
   />
-  <mat-autocomplete #auto="matAutocomplete">
-    <mat-option *ngFor="let product of products$ | async" [value]="product.name">
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event, searchBox)">
+    <mat-option *ngFor="let product of products$ | async" [value]="product">
       <a routerLink="/catalog">
         <span>{{ product.name }}</span> |
         <small>${{ product.price }}</small>
       </a>
+      <button
+        mat-icon-button
+        aria-label="Add to cart"
+        (click)="addToCart(product, $event, searchBox)">
+        <mat-icon>add_shopping_cart</mat-icon>
+      </button>
     </mat-option>
   </mat-autocomplete>
 </div>

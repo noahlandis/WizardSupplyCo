@@ -12,13 +12,15 @@ import { TestAdminDashboardComponent } from './feature/test-admin-dashboard/test
 import { EditProductComponent } from './feature/edit-product/edit-product.component';
 import { AdminDashboardComponent } from './feature/admin-dashboard/admin-dashboard.component';
 import { CreateProductComponent } from './feature/create-product/create-product.component';
+import { CartComponent } from './feature/cart/cart.component';
 
 const routes: Routes = [
     {path:'', component:TestCatalogComponent},
     {path:'catalog', component:TestCatalogComponent},
+    {path:'catalog/:sku', component:TestCatalogComponent},
     {
         path:'cart',
-        component:TestCartComponent,
+        component:CartComponent,
         canActivate: [authCustomerGuard]
     },
     {
