@@ -6,6 +6,15 @@
     <img mat-card-image />
     <mat-card-content>{{description}}</mat-card-content>
     <mat-card-actions align="end">
-       
+        <button mat-button class="edit-button">
+        <mat-icon class="icon">edit</mat-icon>
+        </button>
+        <mat-menu #aboveMenu="matMenu" xPosition="before">
+        </mat-menu>
+        <button mat-icon-button color="warn" class="close-button" aria-label="Close">
+        <mat-icon class="icon">delete_outline</mat-icon>
+        </button>
+        <mat-menu #afterMenu="matMenu" xPosition="after">
+        </mat-menu>
     </mat-card-actions>
   </mat-card>
