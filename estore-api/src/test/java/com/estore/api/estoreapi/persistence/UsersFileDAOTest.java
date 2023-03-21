@@ -1,6 +1,9 @@
 package com.estore.api.estoreapi.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -34,17 +37,12 @@ public class UsersFileDAOTest {
         mockCustomers[2] = new Customer(3, "jasonBourne");
         
         /* When the object mapper is supposed to read from the file
-            the mock object mapper will return the product array above */
+            the mock object mapper will return the users array above */
         when(mockObjectMapper
-            .readValue((new File("Users_file.txt")),Customer[].class))
+            .readValue((new File("Users_file.txt")),User[].class))
                 .thenReturn(mockCustomers);
 
         usersFileDAO = new UsersFileDAO("Users_file.txt", mockObjectMapper, mockCartsDAO);
-
-        // when(usersFileDAO.getUsers()).thenReturn(mockCustomers);
-        // when(usersFileDAO.getUser(1)).thenReturn(mockCustomers[0]);
-        // when(usersFileDAO.getUser(2)).thenReturn(mockCustomers[1]);
-        // when(usersFileDAO.getUser(3)).thenReturn(mockCustomers[2]);
     }
 
     @Test
@@ -54,7 +52,7 @@ public class UsersFileDAOTest {
 
         for(int i = 0; i < mockCustomers.length; i++)
         {
-            assertEquals(users[i].getUserId(), i);
+            assertEquals( i+1, users[i].getUserId());
         }    
     }
 
@@ -67,12 +65,91 @@ public class UsersFileDAOTest {
         assertEquals(user.getUserId(), 1);
     }
 
+    @Test 
+    public void testGetUserNull(){
+        // Invoke
+        User user = usersFileDAO.getUser(100);
+
+        // Analyze
+        assertEquals(user, null);
+    }
+
     @Test
     public void testCreateUser() throws IOException {
 
         usersFileDAO.createUser("ethanHunt");
         
         // Analyze
-        assertEquals(usersFileDAO.getUser(4).getUserId(), 4);
+        assertEquals(usersFileDAO.getUser(4).getUsername(), "ethanHunt");
+    }
+
+    @Test
+    public void testCreateUserAlreadyExists() throws IOException {
+        // Invoke
+        User user = usersFileDAO.createUser(mockCustomers[1].getUsername());
+
+        // Analyze
+        assertNull(user);
+    }
+
+    @Test
+    public void testLoginUser() throws IOException {
+        // Setup
+        usersFileDAO.LogOutUser(mockCustomers[0].getUsername());
+        // Invoke
+        User user = usersFileDAO.LoginUser(mockCustomers[0].getUsername());
+
+        // Analyze
+        assertTrue(user.isLoggedIn());
+    }
+
+    @Test
+    public void testLoginUserNull() throws IOException {
+        //Invoke
+        User user = usersFileDAO.LoginUser("fakeUser");
+
+        // Analyze
+        assertNull(user);
+    }
+
+    @Test
+    public void testLogoutUser() throws IOException {
+        //Setup
+        usersFileDAO.LoginUser(mockCustomers[0].getUsername());
+
+        // Invoke
+        User user = usersFileDAO.LogOutUser(mockCustomers[0].getUsername());
+
+        // Analyze
+        assertFalse(user.isLoggedIn());
+    }
+
+    @Test
+    public void testLogoutUserNull() throws IOException {
+        //Invoke
+        User user = usersFileDAO.LogOutUser("fakeUser");
+
+        // Analyze
+        assertNull(user);
+    }
+
+    @Test
+    public void testLoginUserAlreadyLoggedIn() throws IOException {
+        // Invoke
+        User user = usersFileDAO.LoginUser(mockCustomers[0].getUsername());
+
+        // Analyze
+        assertTrue(user.isLoggedIn());
+    }
+
+    @Test
+    public void testLogoutUserAlreadyLoggedOut() throws IOException {
+        // Setup
+        usersFileDAO.LogOutUser(mockCustomers[0].getUsername());
+        // Invoke
+        User user = usersFileDAO.LogOutUser(mockCustomers[0].getUsername());
+
+        // Analyze
+        assertTrue(!user.isLoggedIn());
     }
 }
