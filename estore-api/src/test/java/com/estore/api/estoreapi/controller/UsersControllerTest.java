@@ -1,5 +1,4 @@
 package com.estore.api.estoreapi.controller;
-package com.estore.api.estoreapi.controller;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -24,7 +23,7 @@ import com.estore.api.estoreapi.persistence.UsersDAO;
  * 
  * @author Priyank Patel
  */
-@Tag('Controller-tier')
+@Tag("Controller-tier")
 public class UsersControllerTest {
     private UsersController usersController;
     private UsersDAO mockUsersDAO;
@@ -40,7 +39,7 @@ public class UsersControllerTest {
     }
 
     @Test
-    public void testGetUserSuccessful() {
+    public void testGetUserSuccessful() throws IOException {
         // Arrange
         Customer customer = new Customer(1, "JohnDoe");
         when(mockUsersDAO.getUser(customer.getUserId())).thenReturn(customer);
@@ -53,7 +52,7 @@ public class UsersControllerTest {
     }
 
     @Test
-    public void testGetUserNull() {
+    public void testGetUserNull() throws IOException {
         // Arrange
         when(mockUsersDAO.getUser(1)).thenReturn(null);
         
@@ -65,7 +64,7 @@ public class UsersControllerTest {
     }
 
     @Test
-    public void testGetUsersException() {
+    public void testGetUsersException() throws IOException {
         // Arrange
         when(mockUsersDAO.getUser(1)).thenThrow(new IOException());
         
@@ -77,20 +76,20 @@ public class UsersControllerTest {
     }
 
     @Test
-    public void testCreateUserSuccessful() {
+    public void testCreateUserSuccessful() throws IOException {
         String userName = "JohnMcClane";
         // Arrange
-        when(mockUsersDAO.createUser(userName)).thenReturn(customer);
+        when(mockUsersDAO.createUser(userName)).thenReturn(new Customer(12, userName));
         
         // Act
-        ResponseEntity<User> response = usersController.createUser(customer);
+        ResponseEntity<User> response = usersController.createUser(userName);
 
         // Analyze
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
 
     @Test
-    public void testCreateUserNUll() {
+    public void testCreateUserNUll() throws IOException {
         // Arrange
         when(mockUsersDAO.createUser(null)).thenReturn(null);
         
@@ -98,17 +97,90 @@ public class UsersControllerTest {
         ResponseEntity<User> response = usersController.createUser(null);
 
         // Analyze
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
     }
 
     @Test
-    public void testCreateUserException() {
+    public void testCreateUserException() throws IOException {
         // Arrange
-        Customer customer = new Customer(1, "JohnDoe");
-        when(mockUsersDAO.createUser(customer)).thenThrow(new IOException());
+        when(mockUsersDAO.createUser(null)).thenThrow(new IOException());
         
         // Act
-        ResponseEntity<User> response = usersController.createUser(customer);
+        ResponseEntity<User> response = usersController.createUser(null);
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+
+    @Test
+    public void testLogOutUser() throws IOException{
+        // Arrange
+        String userName = "MichaelScott";
+        when(mockUsersDAO.LogOutUser(userName)).thenReturn(new Customer(12, userName));
+        
+        // Act
+        ResponseEntity<User> response = usersController.LogOutUser(userName);
+
+        // Analyze
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void testLogOutUserNull() throws IOException {
+        // Arrange
+        when(mockUsersDAO.LogOutUser(null)).thenReturn(null);
+        
+        // Act
+        ResponseEntity<User> response = usersController.LogOutUser(null);
+
+        // Analyze
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    public void testLogOutUserException() throws IOException {
+        // Arrange
+        when(mockUsersDAO.LogOutUser(null)).thenThrow(new IOException());
+        
+        // Act
+        ResponseEntity<User> response = usersController.LogOutUser(null);
+
+        // Analyze
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+
+    @Test
+    public void testLogInUser() throws IOException{
+        // Arrange
+        String userName = "MichaelScott";
+        when(mockUsersDAO.LoginUser(userName)).thenReturn(new Customer(12, userName));
+        
+        // Act
+        ResponseEntity<User> response = usersController.LoginUser(userName);
+
+        // Analyze
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    public void testLogInUserNull() throws IOException {
+        // Arrange
+        when(mockUsersDAO.LoginUser(null)).thenReturn(null);
+        
+        // Act
+        ResponseEntity<User> response = usersController.LoginUser(null);
+
+        // Analyze
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    public void testLogInUserException() throws IOException {
+        // Arrange
+        when(mockUsersDAO.LoginUser(null)).thenThrow(new IOException());
+        
+        // Act
+        ResponseEntity<User> response = usersController.LoginUser(null);
 
         // Analyze
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
