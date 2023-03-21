@@ -10,6 +10,7 @@ import { TestCartComponent } from './feature/test-cart/test-cart.component';
 import { LoginRegistrationComponent } from './feature/login-registration/login-registration.component';
 import { TestAdminDashboardComponent } from './feature/test-admin-dashboard/test-admin-dashboard.component';
 import { EditProductComponent } from './feature/edit-product/edit-product.component';
+import { AdminDashboardComponent } from './feature/admin-dashboard/admin-dashboard.component';
 import { CreateProductComponent } from './feature/create-product/create-product.component';
 import { CartComponent } from './feature/cart/cart.component';
 import { CatalogProductCardComponent } from './feature/catalog-product-card/catalog-product-card.component';
@@ -35,7 +36,7 @@ const routes: Routes = [
     },
     {
         path:'admin',
-        component:TestAdminDashboardComponent,
+        component:AdminDashboardComponent,
         canActivate: [authAdminGuard]
     },
     {
@@ -47,7 +48,7 @@ const routes: Routes = [
         path:'create-product',
         component:CreateProductComponent,
         canActivate: [authAdminGuard]
-    }
+    },
 ];
 
 @NgModule({

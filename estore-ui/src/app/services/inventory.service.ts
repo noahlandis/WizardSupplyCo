@@ -5,6 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { BaseProduct, Product } from '../model/product.model';
 import { MessageService } from './message.service';
+import { UpdateService } from './update.service';
 
 
 @Injectable({
@@ -20,7 +21,8 @@ export class InventoryService {
 
   constructor(
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private updateService: UpdateService
   ) { }
 
   /** Log a InventoryService message with the MessageService */
@@ -73,7 +75,10 @@ export class InventoryService {
     this.log(`deleting product w/ sku=${sku} ...`);
 
     return this.http.delete<Product>(url, this.httpOptions).pipe(
-      tap(_ => this.log(`deleted product w/ sku=${sku}`)),
+      tap(_ => {
+        this.log(`deleted product w/ sku=${sku}`)
+        this.updateService.updateDashboard()
+      }),
       catchError(this.handleError<Product>('deleteProduct'))
     );
   }

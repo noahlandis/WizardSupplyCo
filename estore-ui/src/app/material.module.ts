@@ -14,7 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
-
+import {MatMenuModule} from '@angular/material/menu';
 @NgModule({
   declarations: [],
   imports: [
@@ -31,7 +31,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatCardModule,
     MatTabsModule,
     MatProgressSpinnerModule,
-    MatGridListModule
+    MatGridListModule,
+    MatMenuModule,    
   ],
   exports:[
     MatIconModule,
@@ -46,7 +47,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatCardModule,
     MatTabsModule,
     MatProgressSpinnerModule,
-    MatGridListModule
+    MatGridListModule,
+    MatMenuModule
   ]
 })
 export class MaterialModule { }
