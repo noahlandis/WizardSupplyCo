@@ -12,6 +12,7 @@ import { TestAdminDashboardComponent } from './feature/test-admin-dashboard/test
 import { EditProductComponent } from './feature/edit-product/edit-product.component';
 import { CreateProductComponent } from './feature/create-product/create-product.component';
 import { CartComponent } from './feature/cart/cart.component';
+import { CatalogProductCardComponent } from './feature/catalog-product-card/catalog-product-card.component';
 
 const routes: Routes = [
     {path:'', component:TestCatalogComponent},
@@ -50,7 +51,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

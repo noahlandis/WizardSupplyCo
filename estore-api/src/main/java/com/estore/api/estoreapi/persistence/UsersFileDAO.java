@@ -85,7 +85,7 @@ public class UsersFileDAO implements UsersDAO{
      */
     private User[] getUsersArray(String containsText) { // if containsText == null, no filter
         ArrayList<User> userArrayList = new ArrayList<>();
-        /*This for loop goes through each product in the inventory product map */
+        /*This for loop goes through each user in the user map */
         for (User user : users.values()) {
             if (containsText == null || user.getUsername().contains(containsText)) {
                 userArrayList.add(user);
