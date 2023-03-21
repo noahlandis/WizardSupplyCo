@@ -159,7 +159,33 @@ Persistence is provided by the `CartsDAO` interface, and its concrete implementa
 ​
 ## OO Design Principles
 > _**[Sprint 2, 3 & 4]** Discuss at least **4 key OO Principles** in your current design. This should be taken from your work in "Adherence to Architecture and Design Principles" that you have completed in a previous Sprint. Be sure to include any diagrams (or clearly refer to ones elsewhere in your Tier sections above) to support your claims._
-​
+
+### Dependency Inversion Principle (DIP)
+Dependency inversion (D in SOLID) is adhered to in this project because we rely on abstraction interfaces instead of low-level concrete implementations for data storage. For data storage, we will use a Data Access Object (DAO) abstract interface, which multiple data access classes will implement. This way, at instantiation, we can directly inject the data access method we would like to use into the modules which depend only on the DAO abstraction. 
+In a more complicated eStore, the dependency inversion principle could be used to create abstractions for modules handling authentication and authorization, as well as for payment handling. We could also apply dependency inversion to make a logger interface, which is injected into modules that utilize a logger. This makes implementing different types of loggers easier.
+
+
+### Dependency Injection
+Our application relies heavily on dependency injection in all tiers. In the controller tier, Spring Boot injects the InventoryFileDAO into the InventoryController class. This allows the InventoryController to use the InventoryFileDAO to access the data in the inventory. In the model tier, the InventoryFileDAO is injected into the Product class. This allows the Product class to use the InventoryFileDAO to access the data in the inventory. In the angular front-end, we use dependency injection for the services. We have a service for each of the REST API resources, a service for authentication, as well as a service to handle updating of components when their contents change. The services are injected into the components that need them. For example, we inject the InventoryService into components that need to fetch data from the inventory resource. This allows us to easily swap out the implementation of the service without having to change the components that use it.
+
+### Pure Fabrication
+Creating a software system dedicated to handling data access also adheres to the pure fabrication principle of GRASP; it isn’t directly represented in the problem domain, yet its fabrication is integral to the solution architecture. Looking back at the eStore domain model, the Inventory domain entity represents the result of using a data access layer. The data access layer is not present in the model; it merely supports the behavior of the system architecture.
+Another example of pure fabrication in our eStore would be a wishlist management system. The management system does not correspond to any particular entity in the problem domain and is designed purely to handle the management aspect of a wishlist.
+
+### Single Responsibility
+We have an API for the CRUD operations related to a product. In the API, this principle can be seen with the InventoryFileDAO class. This class is particularly concerned with handling the underlying data which is stored in a json file which stores the data for this API. It is not concerned with handling API requests or giving responses back to the user. That is done by InventoryController class which is more of a front for this class which makes calls to this class. This is the file that implements the InventoryDAO interface. It maintains a hashmap of all the products stored in the JSON file when initialized. Any searching is done directly from the hashmap. When a new product is to be added to the file, the hashmap is updated first and then it is overwritten on the file that stores the products. So the hashmap is basically a temporary point of storage between the user and the file.
+
+### Law of demeter
+In our Java classes, we didn’t use method chaining such as product.getStock().getQuantity(). Instead, we have a getStockQuantity() method which is accessed directly from the Product class. In doing so, we followed the law of demeter. In the case where we want to ensure enough stock quantity for a product when adding to the cart, we don't make direct calls to the Stock class, we have a method called hasEnoughStockFor() rather than making a direct call from the Cart class to the Stock class.
+
+![alt tag](file_name.png)
+
+### Controller
+In our backend, we have a controller tier which handles API requests from the Angular frontend (view). The controller tier is responsible for handling the requests and sending the appropriate responses back to the frontend, and represents a separation of responsibility between our View tier (the Angular frontend) and the Model tier (backend API DAO classes and supporting data model classes).
+
+### Information Expert
+In our frontend Angular code, we have a catalog component which uses product-card component inside it to display the products. This component utilizes a service called product service which can fetch the products in the inventory and display them to the frontend. The catalog component already has the service injected into it which contains the method to get the products from the inventory, i.e., the backend. This is information expert because of instead of having the seperate cards fetch the data, we have the catalog do it for the cards and then pass that value to that card component.
+
 > _**[Sprint 3 & 4]** OO Design Principles should span across **all tiers.**_
 ​
 ## Static Code Analysis/Future Design Improvements
@@ -173,6 +199,7 @@ Persistence is provided by the `CartsDAO` interface, and its concrete implementa
 ## Testing
 > _This section will provide information about the testing performed
 > and the results of the testing._
+We tested our project using both unit tests and manual testing. For unit testing, we ensured that for new code written, we wrote the unit tests for that immediately so that the code coverage doesn't fall below 90%. We also did manual testing for before merging any new features to the main branch for this sprint.
 ​
 ### Acceptance Testing
 > _**[Sprint 2 & 4]** Report on the number of user stories that have passed all their
@@ -180,7 +207,8 @@ Persistence is provided by the `CartsDAO` interface, and its concrete implementa
 > criteria tests failing, and the number of user stories that
 > have not had any testing yet. Highlight the issues found during
 > acceptance testing and if there are any concerns._
-​
+​We have 20 stories in sprint 2 that have passed all their acceptance criteria tests, 1 story that has some acceptance criteria tests failing, and 0 stories that have not had any testing yet. The failing acceptance criteria is the popup confirmation for deleting a product from the inventory. We have not yet implemented this behavior.
+
 ### Unit Testing and Code Coverage
 > _**[Sprint 4]** Discuss your unit testing strategy. Report on the code coverage
 > achieved from unit testing of the code base. Discuss the team's
@@ -190,4 +218,4 @@ Persistence is provided by the `CartsDAO` interface, and its concrete implementa
 >_**[Sprint 2 & 4]** **Include images of your code coverage report.** If there are any anomalies, discuss
 > those._
 ![Model tier code coverage for backend](code-coverage-model-tier.png)
-
+![Controller tier code coverage for backend]()
