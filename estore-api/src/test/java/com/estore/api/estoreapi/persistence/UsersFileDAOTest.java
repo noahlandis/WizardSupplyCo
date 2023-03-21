@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import com.estore.api.estoreapi.model.Customer;
@@ -21,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * Test the Users File DAO class
  * @author Priyank Patel
  */
+
+@Tag("Persistence-tier")
 public class UsersFileDAOTest {
     UsersFileDAO usersFileDAO;
     ObjectMapper mockObjectMapper;
@@ -52,7 +55,7 @@ public class UsersFileDAOTest {
 
         for(int i = 0; i < mockCustomers.length; i++)
         {
-            assertEquals( i+1, users[i].getUserId());
+            assertEquals(i+1, users[i].getUserId());
         }    
     }
 
@@ -150,6 +153,6 @@ public class UsersFileDAOTest {
         User user = usersFileDAO.LogOutUser(mockCustomers[0].getUsername());
 
         // Analyze
-        assertTrue(!user.isLoggedIn());
+        assertFalse(user.isLoggedIn());
     }
 }

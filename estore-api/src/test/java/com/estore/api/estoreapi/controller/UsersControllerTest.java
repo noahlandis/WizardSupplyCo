@@ -40,11 +40,11 @@ public class UsersControllerTest {
 
     @Test
     public void testGetUserSuccessful() throws IOException {
-        // Arrange
+        // Setup
         Customer customer = new Customer(1, "JohnDoe");
         when(mockUsersDAO.getUser(customer.getUserId())).thenReturn(customer);
         
-        // Act
+        // Invoke
         ResponseEntity<User> response = usersController.getUser(customer.getUserId());
 
         // Analyze
@@ -53,10 +53,10 @@ public class UsersControllerTest {
 
     @Test
     public void testGetUserNull() throws IOException {
-        // Arrange
+        // Setup
         when(mockUsersDAO.getUser(1)).thenReturn(null);
         
-        // Act
+        // Invoke
         ResponseEntity<User> response = usersController.getUser(1);
 
         // Analyze
@@ -65,10 +65,10 @@ public class UsersControllerTest {
 
     @Test
     public void testGetUsersException() throws IOException {
-        // Arrange
+        // Setup
         when(mockUsersDAO.getUser(1)).thenThrow(new IOException());
         
-        // Act
+        // Invoke
         ResponseEntity<User> response = usersController.getUser(1);
 
         // Analyze
@@ -78,10 +78,10 @@ public class UsersControllerTest {
     @Test
     public void testCreateUserSuccessful() throws IOException {
         String userName = "JohnMcClane";
-        // Arrange
+        // Setup
         when(mockUsersDAO.createUser(userName)).thenReturn(new Customer(12, userName));
         
-        // Act
+        // Invoke
         ResponseEntity<User> response = usersController.createUser(userName);
 
         // Analyze
@@ -90,10 +90,10 @@ public class UsersControllerTest {
 
     @Test
     public void testCreateUserNUll() throws IOException {
-        // Arrange
+        // Setup
         when(mockUsersDAO.createUser(null)).thenReturn(null);
         
-        // Act
+        // Invoke
         ResponseEntity<User> response = usersController.createUser(null);
 
         // Analyze
@@ -102,10 +102,10 @@ public class UsersControllerTest {
 
     @Test
     public void testCreateUserException() throws IOException {
-        // Arrange
+        // Setup
         when(mockUsersDAO.createUser(null)).thenThrow(new IOException());
         
-        // Act
+        // Invoke
         ResponseEntity<User> response = usersController.createUser(null);
 
         // Analyze
@@ -114,11 +114,11 @@ public class UsersControllerTest {
 
     @Test
     public void testLogOutUser() throws IOException{
-        // Arrange
+        // Setup
         String userName = "MichaelScott";
         when(mockUsersDAO.LogOutUser(userName)).thenReturn(new Customer(12, userName));
         
-        // Act
+        // Invoke
         ResponseEntity<User> response = usersController.LogOutUser(userName);
 
         // Analyze
@@ -127,10 +127,10 @@ public class UsersControllerTest {
 
     @Test
     public void testLogOutUserNull() throws IOException {
-        // Arrange
+        // Setup
         when(mockUsersDAO.LogOutUser(null)).thenReturn(null);
         
-        // Act
+        // Invoke
         ResponseEntity<User> response = usersController.LogOutUser(null);
 
         // Analyze
@@ -139,10 +139,10 @@ public class UsersControllerTest {
 
     @Test
     public void testLogOutUserException() throws IOException {
-        // Arrange
+        // Setup
         when(mockUsersDAO.LogOutUser(null)).thenThrow(new IOException());
         
-        // Act
+        // Invoke
         ResponseEntity<User> response = usersController.LogOutUser(null);
 
         // Analyze
@@ -151,11 +151,11 @@ public class UsersControllerTest {
 
     @Test
     public void testLogInUser() throws IOException{
-        // Arrange
+        // Setup
         String userName = "MichaelScott";
         when(mockUsersDAO.LoginUser(userName)).thenReturn(new Customer(12, userName));
         
-        // Act
+        // Invoke
         ResponseEntity<User> response = usersController.LoginUser(userName);
 
         // Analyze
@@ -164,10 +164,10 @@ public class UsersControllerTest {
 
     @Test
     public void testLogInUserNull() throws IOException {
-        // Arrange
+        // Setup
         when(mockUsersDAO.LoginUser(null)).thenReturn(null);
         
-        // Act
+        // Invoke
         ResponseEntity<User> response = usersController.LoginUser(null);
 
         // Analyze
@@ -176,10 +176,10 @@ public class UsersControllerTest {
 
     @Test
     public void testLogInUserException() throws IOException {
-        // Arrange
+        // Setup
         when(mockUsersDAO.LoginUser(null)).thenThrow(new IOException());
         
-        // Act
+        // Invoke
         ResponseEntity<User> response = usersController.LoginUser(null);
 
         // Analyze
