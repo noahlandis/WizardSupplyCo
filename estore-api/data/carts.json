@@ -2,7 +2,7 @@
     {
         "userId": 0,
         "productsMap": { },
-        "count": 2,
+        "count": 0,
         "totalPrice": 0.0
     },
     {
@@ -11,7 +11,7 @@
             "13": 1,
             "14": 1
         },
-        "count": 0,
+        "count": 2,
         "totalPrice": 1014.98
     },
     {

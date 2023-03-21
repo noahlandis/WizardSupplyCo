@@ -2,21 +2,24 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { authCustomerGuard } from './auth-customer.guard';
+import { authAdminGuard } from './auth-admin.guard';
+import { noAuthGuard } from './auth-none.guard';
 
 import { TestCatalogComponent } from './feature/test-catalog/test-catalog.component';
 import { TestCartComponent } from './feature/test-cart/test-cart.component';
 import { LoginRegistrationComponent } from './feature/login-registration/login-registration.component';
 import { TestAdminDashboardComponent } from './feature/test-admin-dashboard/test-admin-dashboard.component';
-import { authAdminGuard } from './auth-admin.guard';
-import { noAuthGuard } from './auth-none.guard';
 import { EditProductComponent } from './feature/edit-product/edit-product.component';
+import { CreateProductComponent } from './feature/create-product/create-product.component';
+import { CartComponent } from './feature/cart/cart.component';
 
 const routes: Routes = [
     {path:'', component:TestCatalogComponent},
     {path:'catalog', component:TestCatalogComponent},
+    {path:'catalog/:sku', component:TestCatalogComponent},
     {
         path:'cart',
-        component:TestCartComponent,
+        component:CartComponent,
         canActivate: [authCustomerGuard]
     },
     {
@@ -41,7 +44,7 @@ const routes: Routes = [
     },
     {
         path:'create-product',
-        component:TestAdminDashboardComponent,
+        component:CreateProductComponent,
         canActivate: [authAdminGuard]
     }
 ];

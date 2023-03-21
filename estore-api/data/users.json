@@ -3,7 +3,7 @@
   "admin" : true,
   "userId" : 0,
   "username" : "admin",
-  "loggedIn" : false,
+  "loggedIn" : true,
   "isAdmin" : true
 }, {
   "type" : "customer",

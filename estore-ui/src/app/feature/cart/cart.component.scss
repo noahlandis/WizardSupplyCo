@@ -1,0 +1,54 @@
+.text-center {
+    text-align: center;
+}
+
+app-cart-product-card {
+    display: block;
+    margin: 30px auto;
+    width: 80%;
+}
+
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.container {
+    border-radius: 16px;
+    padding: 20px 20px;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #ebebeb; // light grey
+}
+
+@media only screen and (max-width: 960px) {
+    .container {
+        max-width: 75%
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        max-width: 80%
+    }
+}
+
+.empty-cart-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  
+    p {
+      margin-bottom: 1rem;
+    }
+  
+    button {
+      font-weight: bold;
+    }
+  }
+  
