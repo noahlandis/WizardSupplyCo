@@ -13,7 +13,10 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { CreateProductComponent } from './create-product/create-product.component';
 import { CartProductCardComponent } from './cart-product-card/cart-product-card.component';
-import { CartComponent } from './cart/cart.component';import { AdminProductCardComponent } from './admin-product-card/admin-product-card.component';
+import { CartComponent } from './cart/cart.component';
+import { AdminProductCardComponent } from './admin-product-card/admin-product-card.component';
+
+
 
 
 @NgModule({
