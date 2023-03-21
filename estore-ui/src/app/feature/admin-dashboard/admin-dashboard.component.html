@@ -9,7 +9,12 @@
 <div class="admin-dashboard">
     <mat-grid-list cols="4" rowHeight="250px">
         <mat-grid-tile  *ngFor="let product of products">
-            <label>Test</label>
+            <app-admin-product-card
+                [name]="product.name"
+                [price]="product.price"
+                [description]="product.description.summary"
+                [sku]="product.sku">
+            </app-admin-product-card>
         </mat-grid-tile>
     </mat-grid-list>
 </div>

@@ -29,6 +29,7 @@ import { AdminProductCardComponent } from './admin-product-card/admin-product-ca
         TestCartComponent,
         TestAdminDashboardComponent,
         AdminDashboardComponent,
+        AdminProductCardComponent,
         TestCatalogComponent,
         EditProductComponent,
         CreateProductComponent

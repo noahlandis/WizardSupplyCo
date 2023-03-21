@@ -128,4 +128,24 @@
     "summary" : "Welcome a mythical companion into your life with our Phoenix Ashes. Experience the awe of witnessing your very own phoenix rise from its ashes to form a majestic, fiery creature. While the rebirth timeframe may vary, the magic of this enchanting bond will last a lifetime.",
     "tags" : [ "phoenix", "companion", "ashes", "fire", "rebirth" ]
   }
+}, {
+  "sku" : 25,
+  "name" : "Angelo Loschiavo",
+  "price" : 3.0,
+  "stockQuantity" : 2,
+  "images" : [ ],
+  "description" : {
+    "summary" : "",
+    "tags" : [ ]
+  }
+}, {
+  "sku" : 26,
+  "name" : "a",
+  "price" : 32.0,
+  "stockQuantity" : 3,
+  "images" : [ ],
+  "description" : {
+    "summary" : "",
+    "tags" : [ ]
+  }
 } ]
