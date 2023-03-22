@@ -16,6 +16,7 @@ geometry: margin=1in
   * Kanisha Agrawal
   * Noah Landis
   * Priyank Patel
+  * Brianna Vottis 
 ​
 ## Executive Summary
 ​
@@ -28,12 +29,9 @@ Built using Angular and TypeScript for the front-end, our eStore is easy to navi
 The back-end, powered by a Java Spring Boot API, takes care of essential elements like carts, users, and inventory management. This ensures a secure and reliable platform for our customers to shop with confidence.
 ​
 ### Purpose
->  _**[Sprint 2 & 4]** Provide a very brief statement about the project and the most
-> important user group and user goals._
-​
+
 Wizbiz provides a platform for users to search and buy magic products. The most important user group for this website are people who want to buy magical items. The primary user goals for this project are to easily be able to find and purchase magic products online.
 ### Glossary and Acronyms
-> _**[Sprint 2 & 4]** Provide a table of terms and acronyms._
 ​
 | Term |        Definition       |
 |------|-------------------------|
@@ -52,10 +50,6 @@ Wizbiz provides a platform for users to search and buy magic products. The most 
 ​
 This section describes the features of the application.
 ​
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
-​
 1)There should be simple authentication system for both the admin and the users.
 2)Users should be able to create and account and login/logout from the website.
 3)Users should be able to see a list of products in the webiste and also be able to search for the products they need.
@@ -63,7 +57,6 @@ This section describes the features of the application.
 5)All the data of the users should be saved to the inventory so that users can view what's in their cart when they login next time.
 
 ### Definition of MVP
-> _**[Sprint 2 & 4]** Provide a simple description of the Minimum Viable Product._
 ​
 A simple magic shop website that allows users to search, select, add to cart and order magic products that are in stock. The Owner of the website can manage the product by adding,deleting or editing the products displayed in the website.  
 ### MVP Features
@@ -77,12 +70,9 @@ A simple magic shop website that allows users to search, select, add to cart and
 ​
 This section describes the application domain.
 ​
-![Domain Model](Domain-Model-Sprint-2.png)
-​
-> _**[Sprint 2 & 4]** Provide a high-level overview of the domain for this application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
-​
+![Domain Model](DomainModelSprint2.png)
+
+The major relationships in this are admin- dashboard - inventory, which represents the relationship between the admin and how the admin manages the inventory. Another one is customer-admin-user, which shows the heirarchy of users. We added order, wishlist, product review.
 ​
 ## Architecture and Design
 ​
@@ -108,10 +98,12 @@ Both the ViewModel and Model are built using Java and Spring Framework. Details 
 This section describes the web interface flow; this is how the user views and interacts
 with the e-store application.
 ​
-> _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application._
-​
-​
+​As soon as a user visits our website, they are greeted with the site's name and an eye-catching grid of products that we offer. To access the full range of features, users can log in or register by clicking an icon located at the top right of the header which provides users with login form.
+
+Once inside the website, users can browse our vast collection of products, which are presented in an intuitive grid format. They can easily add items to their shopping cart by clicking the Add to cart button. They can also adjust the quantity of each item by using the round buttons within the cart listing page. If a user decides they no longer need a particular item, they can simply click on the delete icon to remove it from the cart. 
+
+Our search bar is located in the header that helps users find the exact product they're looking for.
+
 ### View Tier
 > _**[Sprint 4]** Provide a summary of the View Tier UI of your architecture.
 > Describe the types of components in the tier and describe their
@@ -143,7 +135,7 @@ with the e-store application.
 ### Model Tier
 Our model tier (`M` in `MVC`) is built using Java and Spring Framework. The model tier is responsible for storing the application data objects and providing persistance. The model tier also exposes a set of APIs to the controller tier (`C` in `MVC`) to manipulate the data objects from the Model. The model tier is divided into three resources: `Inventory`, `User` and `Carts`. 
 
-The `Inventory` resource is responsible for storing the `Product` data objects and providing persistence via Data Access Object (DAO) classes. The `Product` class is the highest abstraction class used for storing data about a product, such as name, price, SKU (Stock Keeping Unit), images, as well an instace of a `Description` object and a `Stock` object. The `Description` class is used for storing data about a product's description such as the product's nsummary text, the product's tags. `Description` also encapsulates behavior related to said data. The `Stock` class is used for storing the product's stock quantity, and encapsulates behavior related to it.
+The `Inventory` resource is responsible for storing the `Product` data objects and providing persistence via Data Access Object (DAO) classes. The `Product` class is the highest abstraction class used for storing data about a product, such as name, price, SKU (Stock Keeping Unit), images, as well an instance of a `Description` object and a `Stock` object. The `Description` class is used for storing data about a product's description such as the product's summary text, the product's tags. `Description` also encapsulates behavior related to said data. The `Stock` class is used for storing the product's stock quantity, and encapsulates behavior related to it.
 
 Persistence is provided by the `InventoryDAO` interface, and its concrete implementation `InventoryFileDAO`. The `ProductFileDAO` class is the layer between the product data objects and thee controller tier, and provides methods for saving, loading, and altering `Product` data objects. It achieves this via serialization and deserialization of `Product` objects to and from a JSON file.
 
@@ -158,34 +150,40 @@ Persistence is provided by the `CartsDAO` interface, and its concrete implementa
 ![Model tier class diagrams for backend](class-diagrams.png)
 ​
 ## OO Design Principles
-> _**[Sprint 2, 3 & 4]** Discuss at least **4 key OO Principles** in your current design. This should be taken from your work in "Adherence to Architecture and Design Principles" that you have completed in a previous Sprint. Be sure to include any diagrams (or clearly refer to ones elsewhere in your Tier sections above) to support your claims._
 
 ### Dependency Inversion Principle (DIP)
 Dependency inversion (D in SOLID) is adhered to in this project because we rely on abstraction interfaces instead of low-level concrete implementations for data storage. For data storage, we will use a Data Access Object (DAO) abstract interface, which multiple data access classes will implement. This way, at instantiation, we can directly inject the data access method we would like to use into the modules which depend only on the DAO abstraction. 
 In a more complicated eStore, the dependency inversion principle could be used to create abstractions for modules handling authentication and authorization, as well as for payment handling. We could also apply dependency inversion to make a logger interface, which is injected into modules that utilize a logger. This makes implementing different types of loggers easier.
 
+![Diagram for Dependency Inversion](dependency-inversion.png)
 
 ### Dependency Injection
 Our application relies heavily on dependency injection in all tiers. In the controller tier, Spring Boot injects the InventoryFileDAO into the InventoryController class. This allows the InventoryController to use the InventoryFileDAO to access the data in the inventory. In the model tier, the InventoryFileDAO is injected into the Product class. This allows the Product class to use the InventoryFileDAO to access the data in the inventory. In the angular front-end, we use dependency injection for the services. We have a service for each of the REST API resources, a service for authentication, as well as a service to handle updating of components when their contents change. The services are injected into the components that need them. For example, we inject the InventoryService into components that need to fetch data from the inventory resource. This allows us to easily swap out the implementation of the service without having to change the components that use it.
 
+![Diagram for Dependency Injection](dependency-injection.png)
+
 ### Pure Fabrication
 Creating a software system dedicated to handling data access also adheres to the pure fabrication principle of GRASP; it isn’t directly represented in the problem domain, yet its fabrication is integral to the solution architecture. Looking back at the eStore domain model, the Inventory domain entity represents the result of using a data access layer. The data access layer is not present in the model; it merely supports the behavior of the system architecture.
 Another example of pure fabrication in our eStore would be a wishlist management system. The management system does not correspond to any particular entity in the problem domain and is designed purely to handle the management aspect of a wishlist.
+![Diagram for Dependency Injection](dependency-injection.png)
 
 ### Single Responsibility
 We have an API for the CRUD operations related to a product. In the API, this principle can be seen with the InventoryFileDAO class. This class is particularly concerned with handling the underlying data which is stored in a json file which stores the data for this API. It is not concerned with handling API requests or giving responses back to the user. That is done by InventoryController class which is more of a front for this class which makes calls to this class. This is the file that implements the InventoryDAO interface. It maintains a hashmap of all the products stored in the JSON file when initialized. Any searching is done directly from the hashmap. When a new product is to be added to the file, the hashmap is updated first and then it is overwritten on the file that stores the products. So the hashmap is basically a temporary point of storage between the user and the file.
 
+![Diagram for Single Responsibility](single-responsibility.png)
+
 ### Law of demeter
 In our Java classes, we didn’t use method chaining such as product.getStock().getQuantity(). Instead, we have a getStockQuantity() method which is accessed directly from the Product class. In doing so, we followed the law of demeter. In the case where we want to ensure enough stock quantity for a product when adding to the cart, we don't make direct calls to the Stock class, we have a method called hasEnoughStockFor() rather than making a direct call from the Cart class to the Stock class.
 
-![alt tag](file_name.png)
+![Diagram for Law of Demeter](law-of-demeter.png)
 
 ### Controller
 In our backend, we have a controller tier which handles API requests from the Angular frontend (view). The controller tier is responsible for handling the requests and sending the appropriate responses back to the frontend, and represents a separation of responsibility between our View tier (the Angular frontend) and the Model tier (backend API DAO classes and supporting data model classes).
 
 ### Information Expert
 In our frontend Angular code, we have a catalog component which uses product-card component inside it to display the products. This component utilizes a service called product service which can fetch the products in the inventory and display them to the frontend. The catalog component already has the service injected into it which contains the method to get the products from the inventory, i.e., the backend. This is information expert because of instead of having the seperate cards fetch the data, we have the catalog do it for the cards and then pass that value to that card component.
-
+_
+​
 > _**[Sprint 3 & 4]** OO Design Principles should span across **all tiers.**_
 ​
 ## Static Code Analysis/Future Design Improvements
@@ -199,23 +197,19 @@ In our frontend Angular code, we have a catalog component which uses product-car
 ## Testing
 > _This section will provide information about the testing performed
 > and the results of the testing._
-We tested our project using both unit tests and manual testing. For unit testing, we ensured that for new code written, we wrote the unit tests for that immediately so that the code coverage doesn't fall below 90%. We also did manual testing for before merging any new features to the main branch for this sprint.
 ​
 ### Acceptance Testing
-> _**[Sprint 2 & 4]** Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
-​We have 20 stories in sprint 2 that have passed all their acceptance criteria tests, 1 story that has some acceptance criteria tests failing, and 0 stories that have not had any testing yet. The failing acceptance criteria is the popup confirmation for deleting a product from the inventory. We have not yet implemented this behavior.
 
+We had a total of 10 stories in the acceptance testing document, which is the total number of user stories. Out of those 10 stories, 3 of those stories didn't meet the acceptance criteria that we had come up with while doing sprint planning. The tests that failed were testing features that weren't required for the sprint 2 like adding images to product. One functional requirement that we did fail is getting the button to remove a product from the inventory working. This was a good practice to explore all the test cases that could break the code. 
+​
 ### Unit Testing and Code Coverage
 > _**[Sprint 4]** Discuss your unit testing strategy. Report on the code coverage
 > achieved from unit testing of the code base. Discuss the team's
 > coverage targets, why you selected those values, and how well your
 > code coverage met your targets._
 ​
->_**[Sprint 2 & 4]** **Include images of your code coverage report.** If there are any anomalies, discuss
-> those._
 ![Model tier code coverage for backend](code-coverage-model-tier.png)
+![Controller tier code coverage for backend](code-coverage-controller-tier.png)
+![Persistence tier code coverage for backend](code-coverage-persistence-tier.png)
 
+We ensured code coverage for all public methods and thus we have high code coverage. We used mockito wherever necessary. We also used PowerMockito to mock static methods. We used Jacoco to generate the code coverage reports. We used that to monitor the code coverage.
