@@ -77,7 +77,7 @@ A simple magic shop website that allows users to search, select, add to cart and
 ​
 This section describes the application domain.
 ​
-![Domain Model](domain-model-placeholder.png)
+![Domain Model](Domain-Model-Sprint-2.png)
 ​
 > _**[Sprint 2 & 4]** Provide a high-level overview of the domain for this application. You
 > can discuss the more important domain entities and their relationship
@@ -218,4 +218,4 @@ We tested our project using both unit tests and manual testing. For unit testing
 >_**[Sprint 2 & 4]** **Include images of your code coverage report.** If there are any anomalies, discuss
 > those._
 ![Model tier code coverage for backend](code-coverage-model-tier.png)
-![Controller tier code coverage for backend]()
+
