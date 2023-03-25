@@ -4,7 +4,15 @@
     <mat-card-subtitle>{{ price }}</mat-card-subtitle>
   </mat-card-header>
   <img mat-card-image />
-  <mat-card-content>{{ description }}</mat-card-content>
+  <mat-card-content>
+    <!-- image rendering -->
+    <img
+      [src]="image"
+      [alt]="['Image of ', name]"
+      style="width: 100%; height: 100%; object-fit: contain"
+    />
+    {{ description }}
+  </mat-card-content>
   <mat-card-actions align="end">
     <button
       mat-button
