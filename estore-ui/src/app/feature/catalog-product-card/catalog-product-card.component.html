@@ -14,12 +14,14 @@
     {{ description }}
   </mat-card-content>
   <mat-card-actions align="end">
-    <button
-      mat-button
-      style="background-color: #673ab7; color: white"
-      (click)="addToCart(sku)"
-    >
-      Add To Cart
-    </button>
+    <ng-container *ngIf="!(authService.getIsAdmin() | async)">
+      <button
+        mat-button
+        style="background-color: #673ab7; color: white"
+        (click)="addToCart(sku)"
+      >
+        Add To Cart
+      </button>
+    </ng-container>
   </mat-card-actions>
 </mat-card>

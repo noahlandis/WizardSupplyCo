@@ -12,6 +12,7 @@ import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/m
 import { CartsService } from 'src/app/services/carts.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-product-search',
@@ -25,12 +26,13 @@ export class ProductSearchComponent implements OnInit {
   // Get a reference to the autocomplete trigger so we can clear the search box when an option is selected
   @ViewChild(MatAutocompleteTrigger, { static: false }) autocompleteTrigger!: MatAutocompleteTrigger;
 
-  userId: number = 1;
+  userId?: number;
 
   constructor(
     private inventoryService: InventoryService,
     private cartsService: CartsService,
     private usersService: UsersService,
+    public authService: AuthService,
     private router: Router
     ) {}
 
@@ -40,27 +42,18 @@ export class ProductSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUserId();
-    
     this.resetSearchResults();
-  }
-
-  /** Get the current user's id. */
-  getUserId() {
-    const currentUser = this.usersService.getCurrentUser().getValue();
-
-    if (currentUser) {
-      this.userId = currentUser.userId;
-    } else {
-      console.error('No user logged in!! This shouldn\'t happen');
-    }
   }
 
   /** Clear the search box when an option is selected. */
   onOptionSelected(event: MatAutocompleteSelectedEvent, searchBox: HTMLInputElement): void {
     searchBox.value = ''; // Clear the search box
     event.option.deselect() // Deselect the option to prevent the checkbox icon from appearing
-    this.router.navigate([`/catalog/${event.option.value.sku}`]); // Navigate to the product page
+    if (this.authService.getIsAdmin())
+      this.router.navigate([`/edit-product/${event.option.value.sku}`]);
+    else
+      this.router.navigate([`/catalog/${event.option.value.sku}`]);
+      
     this.resetSearchResults(); // Reset the search results
   }
 
@@ -83,8 +76,7 @@ export class ProductSearchComponent implements OnInit {
   addToCart(product: Product, event: MouseEvent, searchBox: HTMLInputElement) {
     event.stopPropagation(); // Stop event propagation to prevent the underlying option from being selected
 
-    console.log(`userId: ${this.userId}, sku: ${product.sku}`);
-    this.cartsService.addProductToCart(this.userId, product.sku, 1, true).subscribe({
+    this.cartsService.addProductToCart(product.sku, 1, true).subscribe({
       next: (response) => {
         if (response) {
           console.log('Product added to cart');

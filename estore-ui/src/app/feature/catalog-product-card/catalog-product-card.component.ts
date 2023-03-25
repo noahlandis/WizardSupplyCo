@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Product } from 'src/app/model/product.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { CartsService } from '../../services/carts.service';
-import { UsersService } from '../../services/users.service';
 @Component({
   selector: 'app-catalog-product-card',
   templateUrl: './catalog-product-card.component.html',
@@ -18,27 +16,16 @@ export class CatalogProductCardComponent implements OnInit {
 
   constructor(
     private cartsService: CartsService,
-    private usersService: UsersService
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.getUserId();
-  }
-
-  getUserId() {
-    const currentUser = this.usersService.getCurrentUser().getValue();
-
-    if (currentUser) {
-      this.userId = currentUser.userId;
-    } else {
-      console.error("No user logged in!! This shouldn't happen");
-    }
   }
 
   // add the selected product to the cart
   addToCart(sku: number) {
     console.log(`userId: ${this.userId}, sku: ${sku}`);
-    this.cartsService.addProductToCart(this.userId, sku, 1, true).subscribe({
+    this.cartsService.addProductToCart(sku, 1, true).subscribe({
       next: (response) => {
         if (response) {
           console.log('Product added to cart');

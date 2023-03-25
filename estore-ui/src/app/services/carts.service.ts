@@ -6,6 +6,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Cart } from '../model/cart.model';
 import { MessageService } from './message.service';
 import { UpdateService } from './update.service';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +22,9 @@ export class CartsService {
   constructor(
     private http: HttpClient,
     private messageService: MessageService,
-    private updateService: UpdateService
+    private updateService: UpdateService,
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   /** Log a CartsService message with the MessageService */
@@ -40,7 +44,15 @@ export class CartsService {
   }
 
   /** PUT: add a quantity of a product to a user's cart on the server */
-  addProductToCart(userId: number, sku: number, quantity: number, triggerUpdate?: boolean): Observable<Cart> {
+  addProductToCart(sku: number, quantity: number, triggerUpdate?: boolean): Observable<Cart | null> {
+    const userId = this.authService.getUserId();
+
+    // if the user is not logged in, do not add the product to the cart and redirect to login page
+    if (!userId) {
+      this.log(`user is not logged in, redirecting to login page`);
+      this.authService.redirectToLogin();
+      return of(null);
+    }
     const url = `${this.cartsUrl}/${userId}/products/${sku}?quantity=${quantity}`;
     this.log(`adding product w/ sku=${sku} and quantity=${quantity} to cart w/ userId=${userId} ...`);
 
