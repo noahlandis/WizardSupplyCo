@@ -59,7 +59,7 @@ export class CartProductCardComponent implements OnInit {
   increaseQuantity() {
     console.log('increasing quantity');
 
-    this.cartsService.addProductToCart(this.userId, this.sku, 1).subscribe({
+    this.cartsService.addProductToCart(this.sku, 1).subscribe({
       next: (response) => {
         if (response) {
           console.log('Product quantity increased');
