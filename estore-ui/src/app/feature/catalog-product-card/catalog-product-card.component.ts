@@ -12,8 +12,7 @@ export class CatalogProductCardComponent implements OnInit {
   @Input() description = '';
   @Input() image = '';
   @Input() sku = 0;
-  userId: any;
-
+  
   constructor(
     private cartsService: CartsService,
     public authService: AuthService
@@ -24,7 +23,6 @@ export class CatalogProductCardComponent implements OnInit {
 
   // add the selected product to the cart
   addToCart(sku: number) {
-    console.log(`userId: ${this.userId}, sku: ${sku}`);
     this.cartsService.addProductToCart(sku, 1, true).subscribe({
       next: (response) => {
         if (response) {

@@ -9,6 +9,7 @@ import { Product } from 'src/app/model/product.model';
 })
 export class TestCatalogComponent {
   products : Product[] = [];
+  placeholder: string = 'https://i.imgur.com/gJZTkgt.png';
 
   constructor(private inventoryService: InventoryService) {}
 
@@ -17,6 +18,9 @@ export class TestCatalogComponent {
   }
 
   getProducts(): void {
-    this.inventoryService.getProducts().subscribe(products => { this.products = products });
+    this.inventoryService.getProducts().subscribe(products => { 
+      this.products = products 
+      console.log(JSON.stringify(products));
+    });
   }
 }

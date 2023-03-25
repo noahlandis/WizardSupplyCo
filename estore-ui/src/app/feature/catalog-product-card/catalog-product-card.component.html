@@ -1,27 +1,32 @@
 <mat-card class="card">
-  <mat-card-header>
-    <mat-card-title>{{ name }}</mat-card-title>
-    <mat-card-subtitle>{{ price }}</mat-card-subtitle>
-  </mat-card-header>
-  <img mat-card-image />
-  <mat-card-content>
-    <!-- image rendering -->
-    <img
-      [src]="image"
-      [alt]="['Image of ', name]"
-      style="width: 100%; height: 100%; object-fit: contain"
-    />
-    {{ description }}
-  </mat-card-content>
+  <div class="content">
+    <mat-card-header>
+      <mat-card-title>{{ name }}</mat-card-title>
+      <mat-card-subtitle>${{ price }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <img *ngIf="image"
+        [src]="image"
+        [alt]="['Image of ', name]"
+        class="product-image"
+      />
+      {{ description | slice:0:100 }}{{ description.length > 100 ? '...' : '' }}
+    </mat-card-content>
+  </div>
   <mat-card-actions align="end">
-    <ng-container *ngIf="!(authService.getIsAdmin() | async)">
-      <button
-        mat-button
-        style="background-color: #673ab7; color: white"
-        (click)="addToCart(sku)"
-      >
-        Add To Cart
-      </button>
-    </ng-container>
+    <button
+      mat-button
+      color="primary"
+      [routerLink]="['/catalog/', sku]"
+    >
+      Details
+    </button>
+    <button
+      mat-button
+      color="primary"
+      (click)="addToCart(sku)"
+    >
+      Add To Cart
+    </button>
   </mat-card-actions>
 </mat-card>

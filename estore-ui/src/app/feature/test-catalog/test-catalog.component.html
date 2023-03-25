@@ -1,15 +1,15 @@
 <div>
     <h1>Browse Through the Magic!</h1>
-</div>
-<div class="catalog">
-    <mat-grid-list cols="4" rowHeight="250px">
-        <mat-grid-tile  *ngFor="let product of products">
-        <app-catalog-product-card 
-            [name]="product.name"
-            [price]="product.price"
-            [description]="product.description.summary"
-            [sku]="product.sku">
-        </app-catalog-product-card>
-        </mat-grid-tile>
-    </mat-grid-list>
-</div>
+  </div>
+  <div class="catalog">
+    <div class="product-grid">
+      <app-catalog-product-card *ngFor="let product of products"
+        [name]="product.name"
+        [price]="product.price"
+        [description]="product.description.summary"
+        [sku]="product.sku"
+        [image]="(product.images && product.images.length > 0) ? product.images[0] : placeholder">
+      </app-catalog-product-card>
+    </div>
+  </div>
+  

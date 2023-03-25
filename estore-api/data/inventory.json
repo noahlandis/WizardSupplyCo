@@ -1,4 +1,14 @@
 [ {
+  "sku" : 10,
+  "name" : "Phoenix Ashes",
+  "price" : 499.99,
+  "stockQuantity" : 3,
+  "images" : [ "https://i.imgur.com/aM0slHu.png" ],
+  "description" : {
+    "summary" : "Welcome a mythical companion into your life with our Phoenix Ashes. Experience the awe of witnessing your very own phoenix rise from its ashes to form a majestic, fiery creature. While the rebirth timeframe may vary, the magic of this enchanting bond will last a lifetime.",
+    "tags" : [ "phoenix", "companion", "ashes", "fire", "rebirth" ]
+  }
+}, {
   "sku" : 11,
   "name" : "Soulstone Catalysts (4 Pack)",
   "price" : 3.99,
@@ -117,15 +127,5 @@
   "description" : {
     "summary" : "Discover the unspoken with a single-use vial of Truth Serum. One drop will have anyone revealing their deepest secrets and sincerest truths.",
     "tags" : [ "potion", "truth", "serum" ]
-  }
-}, {
-  "sku" : 24,
-  "name" : "Phoenix Ashes",
-  "price" : 499.99,
-  "stockQuantity" : 3,
-  "images" : [ "https://i.imgur.com/aM0slHu.png" ],
-  "description" : {
-    "summary" : "Welcome a mythical companion into your life with our Phoenix Ashes. Experience the awe of witnessing your very own phoenix rise from its ashes to form a majestic, fiery creature. While the rebirth timeframe may vary, the magic of this enchanting bond will last a lifetime.",
-    "tags" : [ "phoenix", "companion", "ashes", "fire", "rebirth" ]
   }
 } ]
