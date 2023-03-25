@@ -10,6 +10,7 @@
   />
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event, searchBox)">
     <mat-option *ngFor="let product of products$ | async" [value]="product">
+      
       <ng-container *ngIf="(authService.getIsAdmin() | async); else elseBlock">
         <mat-icon>edit</mat-icon>
       </ng-container>
