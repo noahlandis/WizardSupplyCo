@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { User } from '../model/user.model';
 import { UsersService } from './users.service';
 import { MessageService } from './message.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class AuthService {
 
   constructor(
     private usersService: UsersService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) { this.loadCurrentUserFromLocalStorage(); }
 
   /** Log an AuthService message with the MessageService */
@@ -112,6 +114,15 @@ export class AuthService {
     return this.isLoggedIn;
   }
 
+  /** Returns the userId for the current user */
+  getUserId(): number | null {
+    const currentUser = this.usersService.getCurrentUser().getValue();
+    if (currentUser) {
+      return currentUser.userId;
+    }
+    return null;
+  }
+
   /** Load the current user from local storage */
   loadCurrentUserFromLocalStorage(): void {
     const storedUser = localStorage.getItem('currentUser');
@@ -132,5 +143,10 @@ export class AuthService {
       this.log(`removing localStorage key 'currentUser'`)
       localStorage.removeItem('currentUser');
     }
+  }
+
+  /** Redirect to the login page */
+  redirectToLogin(): void {
+    this.router.navigate(['/auth']);
   }
 }
