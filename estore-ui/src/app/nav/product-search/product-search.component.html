@@ -10,16 +10,23 @@
   />
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event, searchBox)">
     <mat-option *ngFor="let product of products$ | async" [value]="product">
-      <a routerLink="/catalog">
+      
+      <ng-container *ngIf="(authService.getIsAdmin() | async); else elseBlock">
+        <mat-icon>edit</mat-icon>
+      </ng-container>
+      <a>
         <span>{{ product.name }}</span> |
         <small>${{ product.price }}</small>
       </a>
-      <button
-        mat-icon-button
-        aria-label="Add to cart"
-        (click)="addToCart(product, $event, searchBox)">
-        <mat-icon>add_shopping_cart</mat-icon>
-      </button>
+      <ng-template #elseBlock>
+        <button
+          mat-icon-button
+          aria-label="Add to cart"
+          (click)="addToCart(product, $event, searchBox)">
+          <mat-icon>add_shopping_cart</mat-icon>
+        </button>
+      </ng-template>
+      
     </mat-option>
   </mat-autocomplete>
 </div>
