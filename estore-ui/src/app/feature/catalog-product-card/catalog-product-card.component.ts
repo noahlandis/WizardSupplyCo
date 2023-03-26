@@ -9,11 +9,9 @@ import { CartsService } from '../../services/carts.service';
 export class CatalogProductCardComponent implements OnInit {
   @Input() name = '';
   @Input() price = 0;
-  @Input() description = '';
   @Input() image = '';
   @Input() sku = 0;
-  userId: any;
-
+  
   constructor(
     private cartsService: CartsService,
     public authService: AuthService
@@ -24,7 +22,6 @@ export class CatalogProductCardComponent implements OnInit {
 
   // add the selected product to the cart
   addToCart(sku: number) {
-    console.log(`userId: ${this.userId}, sku: ${sku}`);
     this.cartsService.addProductToCart(sku, 1, true).subscribe({
       next: (response) => {
         if (response) {
@@ -37,5 +34,11 @@ export class CatalogProductCardComponent implements OnInit {
         console.error(err);
       },
     });
+  }
+
+  getRandomInt(min: number, max: number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 }
