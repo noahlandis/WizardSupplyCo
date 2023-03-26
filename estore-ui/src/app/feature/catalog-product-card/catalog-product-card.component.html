@@ -1,16 +1,21 @@
 <mat-card class="card">
   <mat-card-header>
     <mat-card-title>{{ name }}</mat-card-title>
+    <mat-chip class="stock-label">
+      <mat-icon class="status-icon" [ngClass]="{
+        'green': stockStatus==='In Stock',
+        'orange': stockStatus==='Low Stock', 
+        'red': stockStatus==='Out Of Stock'}"
+        ></mat-icon>
+      {{stockStatus}}
+    </mat-chip>
     <mat-card-subtitle>{{ price }}</mat-card-subtitle>
   </mat-card-header>
   <img mat-card-image />
   <mat-card-content>{{ description }}</mat-card-content>
-  <mat-card-actions align="end">
-    <button
-      mat-button
-      style="background-color: #673ab7; color: white"
-      (click)="addToCart(sku)"
-    >
+  <mat-card-actions align="end" class="footer">
+    <button mat-raised-button color="primary"
+    (click)="addToCart(sku)" [disabled]="stockStatus==='Out Of Stock'">
       Add To Cart
     </button>
   </mat-card-actions>

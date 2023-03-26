@@ -1,0 +1,57 @@
+.card {
+  max-width: 400px;
+  margin: 2%;
+}
+
+.stock-label {
+  position: absolute;
+  right: 15px;
+
+}
+
+.status-icon{ 
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid #000000; 
+}
+
+/**
+Creates a radial gradient background with vendor prefixes for various browsers.
+@param {string} $start-gradient - The starting color of the gradient.
+@param {string} $mid-gradient - The middle color of the gradient.
+@param {string} $end-gradient - The ending color of the gradient.
+@example
+@include radial-gradient(#fff, #ccc, #999);
+*/
+@mixin radial-gradient($start-gradient, $mid-gradient, $end-gradient) {
+  background: -moz-radial-gradient(center, ellipse cover, $start-gradient, $mid-gradient, $end-gradient);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, $start-gradient), color-stop(40%, $mid-gradient), color-stop(100%, $end-gradient));
+  background: -webkit-radial-gradient(center, ellipse cover, $start-gradient, $mid-gradient, $end-gradient);
+  background: -o-radial-gradient(center, ellipse cover, $start-gradient, $mid-gradient, $end-gradient);
+  background: -ms-radial-gradient(center, ellipse cover, $start-gradient, $mid-gradient, $end-gradient);
+  background: radial-gradient(ellipse at center, $start-gradient, $mid-gradient, $end-gradient);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start-gradient}', endColorstr='#{$end-gradient}', GradientType=1);
+}
+
+.status-icon.green {
+  $start-green: #87fd89 0%;
+  $mid-green: #4bf14e 40%;
+  $end-green: #07e10b 100%;
+  @include radial-gradient($start-green, $mid-green, $end-green)
+} 
+
+.status-icon.orange {
+  $start-orange: #ffb347 0%;
+  $mid-orange: #ff9f1a 40%;
+  $end-orange: #ff7f00 100%;
+  @include radial-gradient($start-orange, $mid-orange, $end-orange)
+}
+    
+.status-icon.red {
+  $start-red: #fd8787 0%;
+  $mid-red: #f14e4b 40%;
+  $end-red: #e10704 100%;
+  @include radial-gradient($start-red, $mid-red, $end-red)
+}
+
