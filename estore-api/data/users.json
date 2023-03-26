@@ -19,4 +19,32 @@
   "username" : "Rincewind",
   "loggedIn" : false,
   "isAdmin" : false
+}, {
+  "type" : "customer",
+  "admin" : false,
+  "userId" : 3,
+  "username" : "ryan",
+  "loggedIn" : true,
+  "isAdmin" : false
+}, {
+  "type" : "customer",
+  "admin" : false,
+  "userId" : 4,
+  "username" : "priyank",
+  "loggedIn" : false,
+  "isAdmin" : false
+}, {
+  "type" : "customer",
+  "admin" : false,
+  "userId" : 5,
+  "username" : "kanisha",
+  "loggedIn" : false,
+  "isAdmin" : false
+}, {
+  "type" : "customer",
+  "admin" : false,
+  "userId" : 6,
+  "username" : "noah",
+  "loggedIn" : false,
+  "isAdmin" : false
 } ]

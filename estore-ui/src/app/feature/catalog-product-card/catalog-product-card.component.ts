@@ -9,7 +9,6 @@ import { CartsService } from '../../services/carts.service';
 export class CatalogProductCardComponent implements OnInit {
   @Input() name = '';
   @Input() price = 0;
-  @Input() description = '';
   @Input() image = '';
   @Input() sku = 0;
   
@@ -35,5 +34,11 @@ export class CatalogProductCardComponent implements OnInit {
         console.error(err);
       },
     });
+  }
+
+  getRandomInt(min: number, max: number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 }

@@ -1,32 +1,21 @@
-<mat-card class="card">
-  <div class="content">
-    <mat-card-header>
-      <mat-card-title>{{ name }}</mat-card-title>
-      <mat-card-subtitle>${{ price }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <img *ngIf="image"
-        [src]="image"
-        [alt]="['Image of ', name]"
-        class="product-image"
-      />
-      {{ description | slice:0:100 }}{{ description.length > 100 ? '...' : '' }}
-    </mat-card-content>
-  </div>
-  <mat-card-actions align="end">
-    <button
-      mat-button
-      color="primary"
-      [routerLink]="['/catalog/', sku]"
-    >
-      Details
-    </button>
-    <button
-      mat-button
-      color="primary"
-      (click)="addToCart(sku)"
-    >
-      Add To Cart
-    </button>
-  </mat-card-actions>
+<mat-card class="card" [routerLink]="['/catalog/', sku]">
+  <mat-card-content class="content">
+    <img *ngIf="image"
+      [src]="image"
+      [alt]="['Image of ', name]"
+      class="product-image"
+    />
+    <mat-card-title class="product-name">{{ name }}</mat-card-title>
+    <div class="stars-container">
+      <ng-container *ngFor="let i of [1, 2, 3, 4, 5]">
+        <mat-icon class="star-icon" color="accent">star</mat-icon>
+      </ng-container>
+      <span class="reviews">10</span>
+    </div>
+    <div style="font-size: 1.2rem;">$<span style="display: inline; padding-left: 2px;" class="price">{{ price }}</span></div>
+    
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="addToCart(sku); $event.stopPropagation()">Add to Cart</button>
+    </mat-card-actions>
+  </mat-card-content>
 </mat-card>

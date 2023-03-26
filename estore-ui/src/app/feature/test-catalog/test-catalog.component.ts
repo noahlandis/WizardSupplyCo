@@ -20,7 +20,6 @@ export class TestCatalogComponent {
   getProducts(): void {
     this.inventoryService.getProducts().subscribe(products => { 
       this.products = products 
-      console.log(JSON.stringify(products));
     });
   }
 }
