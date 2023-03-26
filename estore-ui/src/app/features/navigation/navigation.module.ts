@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from 'src/app/app-routing.module';
+import { RouterModule } from '@angular/router';
 
 import { MaterialModule } from 'src/app/material.module';
 
@@ -17,6 +18,7 @@ import { SideNavComponent } from './side-nav/side-nav.component';
     BrowserAnimationsModule,
     CommonModule,
     AppRoutingModule,
+    RouterModule,
     MaterialModule,
   ],
   exports: [
