@@ -70,7 +70,7 @@ A simple magic shop website that allows users to search, select, add to cart and
 ​
 This section describes the application domain.
 ​
-![Domain Model](DomainModelSprint2.png)
+![Domain Model](domain-model-sprint-2.png)
 
 The major relationships in this are admin- dashboard - inventory, which represents the relationship between the admin and how the admin manages the inventory. Another one is customer-admin-user, which shows the heirarchy of users. We added order, wishlist, product review.
 ​
@@ -155,7 +155,7 @@ Persistence is provided by the `CartsDAO` interface, and its concrete implementa
 Dependency inversion (D in SOLID) is adhered to in this project because we rely on abstraction interfaces instead of low-level concrete implementations for data storage. For data storage, we will use a Data Access Object (DAO) abstract interface, which multiple data access classes will implement. This way, at instantiation, we can directly inject the data access method we would like to use into the modules which depend only on the DAO abstraction. 
 In a more complicated eStore, the dependency inversion principle could be used to create abstractions for modules handling authentication and authorization, as well as for payment handling. We could also apply dependency inversion to make a logger interface, which is injected into modules that utilize a logger. This makes implementing different types of loggers easier.
 
-![Diagram for Dependency Inversion](dependency-inversion.png)
+![Diagram for Dependency Inversion](depencency-inversion.png)
 
 ### Dependency Injection
 Our application relies heavily on dependency injection in all tiers. In the controller tier, Spring Boot injects the InventoryFileDAO into the InventoryController class. This allows the InventoryController to use the InventoryFileDAO to access the data in the inventory. In the model tier, the InventoryFileDAO is injected into the Product class. This allows the Product class to use the InventoryFileDAO to access the data in the inventory. In the angular front-end, we use dependency injection for the services. We have a service for each of the REST API resources, a service for authentication, as well as a service to handle updating of components when their contents change. The services are injected into the components that need them. For example, we inject the InventoryService into components that need to fetch data from the inventory resource. This allows us to easily swap out the implementation of the service without having to change the components that use it.
