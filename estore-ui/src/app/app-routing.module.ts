@@ -1,24 +1,23 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { authCustomerGuard } from './auth-customer.guard';
-import { authAdminGuard } from './auth-admin.guard';
-import { noAuthGuard } from './auth-none.guard';
+import { authCustomerGuard } from './core/guards/auth-customer.guard'; 
+import { authAdminGuard } from './core/guards/auth-admin.guard';
+import { noAuthGuard } from './core/guards/auth-none.guard';
 
-import { TestCatalogComponent } from './feature/test-catalog/test-catalog.component';
-import { TestCartComponent } from './feature/test-cart/test-cart.component';
-import { LoginRegistrationComponent } from './feature/login-registration/login-registration.component';
-import { TestAdminDashboardComponent } from './feature/test-admin-dashboard/test-admin-dashboard.component';
-import { EditProductComponent } from './feature/edit-product/edit-product.component';
-import { AdminDashboardComponent } from './feature/admin-dashboard/admin-dashboard.component';
-import { CreateProductComponent } from './feature/create-product/create-product.component';
-import { CartComponent } from './feature/cart/cart.component';
-import { CatalogProductCardComponent } from './feature/catalog-product-card/catalog-product-card.component';
+import { LoginRegistrationComponent } from './features/login-registration/login-registration.component';
+
+import { CatalogComponent } from './features/browse-catalog/catalog/catalog.component';
+import { CartComponent } from './features/order-processing/cart/cart.component';
+
+import { AdminDashboardComponent } from './features/admin/admin-dashboard/admin-dashboard.component';
+import { EditProductComponent } from './features/admin/edit-product/edit-product.component';
+import { CreateProductComponent } from './features/admin/create-product/create-product.component';
 
 const routes: Routes = [
-    {path:'', component:TestCatalogComponent},
-    {path:'catalog', component:TestCatalogComponent},
-    {path:'catalog/:sku', component:TestCatalogComponent},
+    {path:'', component:CatalogComponent},
+    {path:'catalog', component:CatalogComponent},
+    {path:'catalog/:sku', component:CatalogComponent},
     {
         path:'cart',
         component:CartComponent,
@@ -26,7 +25,7 @@ const routes: Routes = [
     },
     {
         path:'checkout',
-        component:TestCartComponent,
+        component:CartComponent,
         canActivate: [authCustomerGuard]
     },
     {

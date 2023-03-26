@@ -3,29 +3,24 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
-
-import { MaterialModule } from './material.module';
 import { AppRoutingModule } from './app-routing.module';
-import { NavModule } from './nav/nav.module';
-import { FeatureModule } from './feature/feature.module';
-import { MessagesComponent } from './messages/messages.component';
+
+import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
+import { FeaturesModule } from './features/features.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    MessagesComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    MaterialModule,
-    NavModule,
-    FeatureModule
+    CoreModule,
+    SharedModule,
+    FeaturesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
