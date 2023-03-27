@@ -4,25 +4,16 @@
 }
 
 .stock-label {
-  position: absolute;
-  right: 20px;
-  top: 3px; /* adjust as needed */
-  font-size: 0.6em; /* adjust as needed */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  height: 10px;
-  width: 65px;
-  right: 30x;
-  padding-left: 4px;
-  // padding-top: 5px;
-  // padding-bottom: 4px;
-  bottom: 2px;
+  position: relative;
+  width: 130px;
+  margin-top: 1px;
+  padding-left: 17px;
+  background-color: white;
 }
 
 .status-icon{ 
-  width: 4px;
-  height: 4px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   border: 1px solid #000000;
   position: absolute;
