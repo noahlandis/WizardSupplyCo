@@ -63,15 +63,8 @@ Creates a radial gradient background with vendor prefixes for various browsers.
 }
 
 :host {
-  min-width: 250px;
-}
-
-.card:hover {
-  cursor: pointer;
-}
-
-.card:hover .product-image {
-  transform: scale(1.05);
+  min-width: 260px;
+  max-width: 260px;
 }
 
 .content {
@@ -133,8 +126,4 @@ mat-card-actions {
   justify-content: center;
   align-items: center;
   margin-top: auto;
-}
-
-mat-card-actions button {
-  font-size: 1rem;
 }

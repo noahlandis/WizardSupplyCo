@@ -1,4 +1,5 @@
-<h1>Admin Dashboard</h1>
+<div>
+    <h1>Admin Dashboard</h1>
     <nav>
         <button routerLink="/create-product" mat-raised-button color="accent" class="add-product">Add Product 
             <mat-icon>
@@ -6,15 +7,16 @@
             </mat-icon>
         </button>
     </nav>
-<div class="admin-dashboard">
-    <mat-grid-list cols="4" rowHeight="250px">
-        <mat-grid-tile  *ngFor="let product of products">
-            <app-admin-product-card
+    <div class="dashboard">
+        <div class="product-grid">
+            <app-admin-product-card *ngFor="let product of products"
                 [name]="product.name"
                 [price]="product.price"
                 [description]="product.description.summary"
-                [sku]="product.sku">
+                [sku]="product.sku"
+                [image]="(product.images && product.images.length > 0) ? product.images[0] : placeholder"
+                [stock]="product.stockQuantity">
             </app-admin-product-card>
-        </mat-grid-tile>
-    </mat-grid-list>
+        </div>
+    <div>
 </div>

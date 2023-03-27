@@ -1,0 +1,54 @@
+
+h1{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 40px;
+  padding: 10px 10px;
+  text-align: center;
+  color: #673ab7;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px; /* You can adjust this value to set the gap between cards */
+}
+
+app-dashboard-product-card {
+  flex: 1 1 calc(16.6666% - 16px); /* 25% for 4 items per row, adjust the 16px to match the gap value */
+  max-width: calc(16.6666% - 16px); /* Adjust the 16px to match the gap value */
+}
+
+@media (max-width: 1200px) {
+  app-dashboard-product-card {
+    flex: 1 1 calc(20% - 16px);
+    max-width: calc(20% - 16px);
+  }
+}
+
+@media (max-width: 900px) {
+  app-dashboard-product-card {
+    flex: 1 1 calc(33.3333% - 16px);
+    max-width: calc(33.3333% - 16px);
+  }
+}
+
+@media (max-width: 600px) {
+  app-dashboard-product-card {
+    flex: 1 1 calc(50% - 16px);
+    max-width: calc(50% - 16px);
+  }
+}
+
+@media (max-width: 400px) {
+  app-dashboard-product-card {
+    flex: 1 1 calc(100% - 16px);
+    max-width: calc(100% - 16px);
+  }
+}
