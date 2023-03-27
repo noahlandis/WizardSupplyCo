@@ -7,8 +7,10 @@
         [name]="product.name"
         [price]="product.price"
         [sku]="product.sku"
-        [image]="(product.images && product.images.length > 0) ? product.images[0] : placeholder">
+        [image]="(product.images && product.images.length > 0) ? product.images[0] : placeholder"
+        [stock]="product.stockQuantity">
       </app-catalog-product-card>
     </div>
   </div>
+
   
