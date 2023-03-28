@@ -10,7 +10,7 @@
   "admin" : false,
   "userId" : 1,
   "username" : "bobly",
-  "loggedIn" : false,
+  "loggedIn" : true,
   "isAdmin" : false
 }, {
   "type" : "customer",

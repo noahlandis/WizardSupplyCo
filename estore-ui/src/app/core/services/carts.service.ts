@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 import { Cart } from '../model/cart.model';
 import { MessageService } from './message.service';
@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class CartsService {
+  private numberOfProductsInCart: Observable<number> = of(0);
   private cartsUrl = 'http://localhost:8080/carts'; // URL to estore-api carts endpoint
 
   httpOptions = {
@@ -60,6 +61,8 @@ export class CartsService {
       tap(_ => {
         this.log(`product added to cart successfully`)
         if (triggerUpdate) this.updateService.updateCart();
+        this.updateNumberOfProductsInCart(userId);
+
       }),
       catchError(this.handleError<Cart>('addProductToCart'))
     );
@@ -82,6 +85,7 @@ export class CartsService {
           this.log(`successfully removed product from cart`)
           this.updateService.updateCart();
         }
+        this.updateNumberOfProductsInCart(userId);
       }),
       catchError(this.handleError<Cart>('removeProductFromCart'))
     );
@@ -96,12 +100,35 @@ export class CartsService {
       tap(_ => {
         this.log(`cart cleared successfully`)
         this.updateService.updateCart();
+        this.updateNumberOfProductsInCart(userId);
+
       }),
       catchError(this.handleError<Cart>('clearCart'))
     );
   }
 
-  /**
+  /** Update total product count for the current user cart */
+  updateNumberOfProductsInCart(userId: number): void {
+    this.getCart(userId).pipe(
+    map((cart) => {
+      if (cart) {
+        let cartMap = cart.productsMap;
+        let sum = Object.values(cartMap).reduce((acc, value) => acc + value, 0);
+        this.numberOfProductsInCart = sum; 
+      } else {
+        this.numberOfProductsInCart = of(0);
+      }
+    }),
+    catchError((err) => {
+      console.error(err);
+      return of(0);
+    })
+  );
+}
+getNumberOfProductsInCart(): Observable<number> {
+  return this.numberOfProductsInCart;
+}
+      /**
    * Handle Http operation that failed.
    * Let the app continue.
    *
