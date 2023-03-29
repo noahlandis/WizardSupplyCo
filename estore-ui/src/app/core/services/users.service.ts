@@ -5,6 +5,7 @@ import { catchError, tap } from 'rxjs/operators';
 
 import { User } from '../model/user.model';
 import { MessageService } from './message.service';
+import { CartsService } from './carts.service';
 
 @Injectable({
   providedIn: 'root'
@@ -59,7 +60,8 @@ export class UsersService {
   /** POST: login the user on the server */
   loginUser(username: String): Observable<User | { success: boolean; message: string }> {
     return this.http.put<User>(`${this.usersUrl}/login/${username}`, this.httpOptions).pipe(
-      tap((newUser: User) => this.log(`logging in user w/ userId=${newUser.userId} username=${newUser.username}`)),
+      tap((newUser: User) => 
+        this.log(`logging in user w/ userId=${newUser.userId} username=${newUser.username}`)),
       catchError((error) => {
         if (error.status === HttpStatusCode.NotFound) {
           this.log(`user w/ username=${username} does not exist`);

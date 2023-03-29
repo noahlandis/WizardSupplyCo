@@ -22,7 +22,7 @@
             </ng-container>
             <ng-container *ngIf="!(authService.getIsAdmin() | async)">
                 <button routerLink="/cart" mat-icon-button color="accent">
-                    <mat-icon  [matBadge]= "cartsService.getNumberOfProductsInCart() | async" matBadgeColor="warn" >shopping_cart </mat-icon>
+                    <mat-icon [matBadge]= "cartsService.getNumberOfProductsInCart() | async" matBadgeColor="warn" > shopping_cart </mat-icon>
                 </button>
             </ng-container>
             <button (click)="onLogout()" mat-icon-button color="accent">

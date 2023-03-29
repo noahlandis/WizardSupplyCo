@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
@@ -13,8 +13,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class CartsService {
-  private numberOfProductsInCart: Observable<number> = of(0);
-  private cartsUrl = 'http://localhost:8080/carts'; // URL to estore-api carts endpoint
+private numberOfProductsInCart: BehaviorSubject<number> = new BehaviorSubject<number>(0);  private cartsUrl = 'http://localhost:8080/carts'; // URL to estore-api carts endpoint
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -114,16 +113,16 @@ export class CartsService {
       if (cart) {
         let cartMap = cart.productsMap;
         let sum = Object.values(cartMap).reduce((acc, value) => acc + value, 0);
-        this.numberOfProductsInCart = sum; 
+        this.numberOfProductsInCart.next(sum); 
       } else {
-        this.numberOfProductsInCart = of(0);
+        this.numberOfProductsInCart.next(0);
       }
     }),
     catchError((err) => {
       console.error(err);
       return of(0);
     })
-  );
+  ).subscribe();
 }
 getNumberOfProductsInCart(): Observable<number> {
   return this.numberOfProductsInCart;
