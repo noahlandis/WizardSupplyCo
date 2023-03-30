@@ -14,31 +14,31 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Review {
     private static final Logger LOG = Logger.getLogger(Review.class.getName());
 
-    private final String STRING_FORMAT = "Review [reiewId=%d, userId=%d, productId=%d, rating=%d, description=%s]";
+    private final String STRING_FORMAT = "Review [reiewId=%d, userId=%d, sku=%d, rating=%d, comment=%s]";
     
     @JsonProperty("reviewId") private int reviewId;
     @JsonProperty("userId") private int userId;
-    @JsonProperty("productId") private int productId;
+    @JsonProperty("sku") private int sku;
     @JsonProperty("rating") private int rating;
-    @JsonProperty("description") private String description;
+    @JsonProperty("comment") private String comment;
     
     /**
-     * Create a Review with the given userID, productID, rating and review
+     * Create a Review with the given userID, sku, rating and review
      * @param userId The User ID of the user
-     * @param productId The Product ID of the product
+     * @param sku The Product ID of the product
      * @param rating The rating of the product
-     * @param description The review of the product
+     * @param comment The review of the product
      */
     @JsonCreator
     public Review(
         @JsonProperty("userId") int userId,
-        @JsonProperty("productId") int productId,
+        @JsonProperty("sku") int sku,
         @JsonProperty("rating") int rating,
-        @JsonProperty("description") String description) {
+        @JsonProperty("comment") String comment) {
         this.userId = userId;
-        this.productId = productId;
+        this.sku = sku;
         this.rating = rating;
-        this.description = description;
+        this.comment = comment;
     }
 
     /**
@@ -74,19 +74,19 @@ public class Review {
     }
 
     /**
-     * Get the Product ID of the review
-     * @return The Product ID of the review
+     * Get the sku of the product 
+     * @return sku of the review
      */
-    public int getProductId() {
-        return productId;
+    public int getSku() {
+        return sku;
     }
 
     /**
-     * Get the product ID of the review
-     * @param productId
+     * Get the sku of the review
+     * @param sku
      */
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setsku(int sku) {
+        this.sku = sku;
     }
 
     /**
@@ -106,19 +106,19 @@ public class Review {
     }
 
     /**
-     * Get the review description of the review
-     * @return The description of the review
+     * Get the review comment of the review
+     * @return The comment of the review
      */
-    public String getDescription() {
-        return description;
+    public String getComment() {
+        return comment;
     }
 
     /**
-     * Set the description description of the review
-     * @param description The description of the review
+     * Set the review comment of the review
+     * @param comment The comment of the review
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
         
     /**
@@ -126,6 +126,6 @@ public class Review {
      */
     @Override
     public String toString() {
-        return String.format(STRING_FORMAT, reviewId, userId, productId, rating, description);
+        return String.format(STRING_FORMAT, reviewId, userId, sku, rating, comment);
     }
 }
