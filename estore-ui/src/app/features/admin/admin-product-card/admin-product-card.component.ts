@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { ComponentType } from '@angular/cdk/portal';
+import { Component, Input, TemplateRef } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { InventoryService } from 'src/app/core/services/inventory.service';
 
 
@@ -22,10 +24,18 @@ export class AdminProductCardComponent {
 
   constructor(
     private inventoryService: InventoryService,
+    public dialog: MatDialog
     ) { }
 
   ngOnInit(): void {
     this.setStockStatus();
+  }
+  
+  // oppens the
+  openDialog(templateRef: TemplateRef<any>) {
+    const dialogRef = this.dialog.open(templateRef, {
+      width: '350px'
+    });
   }
 
   onDeleteProduct() {
