@@ -1,11 +1,35 @@
 <div class="container">
-    <h1 class="text-center">Shopping Cart</h1>
+  <h1 class="text-center">Shopping Cart</h1>
+  <div class="cart-content">
     <ng-container *ngIf="cartEntries.length > 0; else emptyCart">
-      <app-cart-product-card *ngFor="let entry of cartEntries"
-        [sku]="entry.sku"
-        [quantity]="entry.quantity"
-        [userId]="userId">
-      </app-cart-product-card>
+      <div class="cart-items">
+        <app-cart-product-card *ngFor="let entry of cartEntries"
+          [sku]="entry.sku"
+          [quantity]="entry.quantity"
+          [userId]="userId">
+        </app-cart-product-card>
+      </div>
+      <div class="cart-summary">
+        <h2>Order Summary</h2>
+        <div class="summary-item">
+          <span>Subtotal</span>
+          <span>{{ subtotal | currency }}</span>
+        </div>
+        <div class="summary-item">
+          <span>Tax</span>
+          <span>{{ tax | currency }}</span>
+        </div>
+        <div class="summary-item">
+          <span>Shipping</span>
+          <span>{{ shipping | currency }}</span>
+        </div>
+        <hr>
+        <div class="summary-item total">
+          <span>Total</span>
+          <span>{{ totalPrice | currency }}</span>
+        </div>
+        <button mat-raised-button color="primary">Proceed to Checkout</button>
+      </div>
     </ng-container>
     <ng-template #emptyCart>
       <div class="empty-cart-message">
@@ -13,4 +37,6 @@
         <button mat-raised-button color="primary" routerLink="/catalog">Explore</button>
       </div>
     </ng-template>
+  </div>
 </div>
+

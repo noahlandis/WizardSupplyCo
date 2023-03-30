@@ -19,6 +19,9 @@ export class CartComponent implements OnInit, OnDestroy {
   userId: number = 1;
   cartEntries: CartMapEntry[] = [];
   cartCount: number = 0;
+  subtotal: number = 0;
+  tax: number = 0;
+  shipping: number = 15;
   totalPrice: number = 0;
 
   constructor(private usersService: UsersService,
@@ -61,7 +64,9 @@ export class CartComponent implements OnInit, OnDestroy {
           const items = Object.entries(cart.productsMap);
           this.cartEntries = items.map(([sku, quantity]) => new CartMapEntry(Number(sku), Number(quantity)));
           this.cartCount = Number(cart.count);
-          this.totalPrice = Number(cart.totalPrice);
+          this.subtotal = Number(cart.totalPrice);
+          this.calculateTax();
+          this.calculateTotalPrice();
         } else {
           console.log('No cart found');
         }
@@ -70,5 +75,16 @@ export class CartComponent implements OnInit, OnDestroy {
         console.error(err);
       }
     });
+  }
+
+  /** Calculate New York state tax. */
+  calculateTax() {
+    const newYorkStateTaxRate = 0.08875; // New York state tax rate: 8.875%
+    this.tax = this.subtotal * newYorkStateTaxRate;
+  }
+
+  /** Calculate total price including tax and shipping. */
+  calculateTotalPrice() {
+    this.totalPrice = this.subtotal + this.tax + this.shipping;
   }
 }
