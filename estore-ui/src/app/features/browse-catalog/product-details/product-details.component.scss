@@ -1,0 +1,147 @@
+.product-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 2cm;
+  flex: 6;
+}
+
+.product-image img {
+  height: 400px;
+  width: 400px;
+}
+
+.product-details {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  padding-left: 100px;
+}
+
+.product-title {
+  font-size: 40px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.product-sku {
+  font-size: 16px;
+  color: #666666;
+  margin-top: -4px;
+}
+
+.stars-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  margin-top: 10px;
+}
+
+.stars-container .star-icon {
+  font-size: 1rem;
+  margin-right: -0.5rem;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.add-to-cart-container {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  height: 44px; /* set a fixed height */
+}
+
+.add-to-cart-btn {
+  font-size: 16px;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-left: 60px;
+  cursor: pointer;
+  width: 300px;
+}
+
+.description-container {
+  border-top: 1px solid #dddddd;
+  margin-top: 20px;
+  margin-left: 20px;
+  padding: 0.4cm;
+}
+
+.description-summary {
+  font-size: 20px;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.description-tags {
+  font-size: 16px;
+  color: #666666;
+  text-align: left;
+}
+
+.stock-label {
+  position: relative;
+  width: 230px;
+  margin-top: -10px;
+  padding-left: 20px;
+  font-size: 15px;
+}
+
+.status-icon{ 
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid #000000;
+  position: absolute;
+  top: 50%;
+  left: 9px;
+  transform: translate(-50%, -50%); /* use translate to center the icon */
+
+}
+
+/**
+Creates a radial gradient background with vendor prefixes for various browsers.
+@param {string} $start-gradient - The starting color of the gradient.
+@param {string} $mid-gradient - The middle color of the gradient.
+@param {string} $end-gradient - The ending color of the gradient.
+@example
+@include radial-gradient(#fff, #ccc, #999);
+*/
+@mixin radial-gradient($start-gradient, $mid-gradient, $end-gradient) {
+  background: -moz-radial-gradient(center, ellipse cover, $start-gradient, $mid-gradient, $end-gradient);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, $start-gradient), color-stop(40%, $mid-gradient), color-stop(100%, $end-gradient));
+  background: -webkit-radial-gradient(center, ellipse cover, $start-gradient, $mid-gradient, $end-gradient);
+  background: -o-radial-gradient(center, ellipse cover, $start-gradient, $mid-gradient, $end-gradient);
+  background: -ms-radial-gradient(center, ellipse cover, $start-gradient, $mid-gradient, $end-gradient);
+  background: radial-gradient(ellipse at center, $start-gradient, $mid-gradient, $end-gradient);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start-gradient}', endColorstr='#{$end-gradient}', GradientType=1);
+}
+
+.status-icon.green {
+  $start-green: #87fd89 0%;
+  $mid-green: #4bf14e 40%;
+  $end-green: #07e10b 100%;
+  @include radial-gradient($start-green, $mid-green, $end-green)
+} 
+
+.status-icon.orange {
+  $start-orange: #ffb347 0%;
+  $mid-orange: #ff9f1a 40%;
+  $end-orange: #ff7f00 100%;
+  @include radial-gradient($start-orange, $mid-orange, $end-orange)
+}
+    
+.status-icon.red {
+  $start-red: #fd8787 0%;
+  $mid-red: #f14e4b 40%;
+  $end-red: #e10704 100%;
+  @include radial-gradient($start-red, $mid-red, $end-red)
+}

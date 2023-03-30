@@ -1,0 +1,36 @@
+<div class="product-container">
+  <div class="product-image">
+    <img src={{image}} alt="Product Image">
+  </div>
+  <div class="product-details">
+    <h1 class="product-title">{{name}}</h1>
+    <label class="stock-label">
+      <mat-icon class="status-icon" [ngClass]="{
+        'green': stockStatus==='In Stock',
+        'orange': stockStatus==='Low Stock', 
+        'red': stockStatus==='Out Of Stock'}"
+        ></mat-icon>
+      {{stockStatus}}
+    </label>
+    <div class="add-to-cart-container">
+      <p style="font-size: 1.2rem; margin: 0;" >$<span style="display: inline; padding-left: 2px; margin-top: 0;" class="price">{{ price }}</span></p>
+
+      <button class ="add-to-cart-btn" mat-raised-button color="primary">Add to Cart</button>
+    </div>
+    <div class="stars-container">
+      <i class="star-icon fas fa-star"></i>
+      <i class="star-icon fas fa-star"></i>
+      <i class="star-icon fas fa-star"></i>
+      <i class="star-icon fas fa-star"></i>
+      <i class="star-icon far fa-star"></i>
+    </div>
+  </div>
+</div>
+<div class="description-container">
+  <p class="product-sku">SKU: {{sku}}</p>
+
+  <p class="description-summary">{{summary}}</p>
+  <p class="description-tags">Tags: 
+    <span *ngFor="let tag of tags; let isLast = last">{{tag}}{{isLast ? '' : ', '}}</span>
+  </p>
+</div>
