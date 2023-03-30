@@ -85,7 +85,7 @@ public class Review {
      * Get the sku of the review
      * @param sku
      */
-    public void setsku(int sku) {
+    public void setSku(int sku) {
         this.sku = sku;
     }
 
