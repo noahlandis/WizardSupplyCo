@@ -4,60 +4,62 @@
   align-items: flex-start;
   padding: 2cm;
   flex: 6;
-}
-
-.product-image img {
-  height: 400px;
-  width: 400px;
-}
-
-.product-details {
+  }
+  
+  .product-image img {
+  height: 500px;
+  width: 500px;
+  }
+  
+  .product-details {
   flex: 2;
   display: flex;
   flex-direction: column;
   justify-content: left;
   padding-left: 100px;
-}
-
-.product-title {
+  }
+  
+  .product-title {
   font-size: 40px;
   font-weight: bold;
   text-align: left;
-}
-
-.product-sku {
+  margin-bottom: 0;
+  }
+  
+  .product-sku {
   font-size: 16px;
   color: #666666;
-  margin-top: -4px;
-}
-
-.stars-container {
+  margin-top: 0;
+  font-weight: 200;
+  }
+  
+  .stars-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: left;
   margin-top: 10px;
-}
-
-.stars-container .star-icon {
+  }
+  
+  .stars-container .star-icon {
   font-size: 1rem;
   margin-right: -0.5rem;
-}
-
-.price {
+  }
+  
+  .price {
   font-size: 24px;
   font-weight: bold;
   margin-top: 10px;
-}
-
-.add-to-cart-container {
+  }
+  
+  .add-to-cart-container {
   display: flex;
   align-items: center;
   margin-top: 30px;
   height: 44px; /* set a fixed height */
-}
-
-.add-to-cart-btn {
+  }
+  
+  .add-to-cart-btn {
   font-size: 16px;
   color: #ffffff;
   border: none;
@@ -66,36 +68,39 @@
   margin-left: 60px;
   cursor: pointer;
   width: 300px;
-}
-
-.description-container {
-  border-top: 1px solid #dddddd;
-  margin-top: 20px;
-  margin-left: 20px;
-  padding: 0.4cm;
-}
-
-.description-summary {
+  }
+  
+  .description-container {
+    display: flex;
+    flex-direction: column;
+    padding: 2cm;
+    margin-top: -440px;
+    margin-left: 600px;
+    flex: 6;
+    
+  }
+  
+  .description-summary {
   font-size: 20px;
   text-align: left;
   margin-bottom: 10px;
-}
-
-.description-tags {
+  }
+  
+  .description-tags {
   font-size: 16px;
   color: #666666;
   text-align: left;
-}
-
-.stock-label {
+  }
+  
+  .stock-label {
   position: relative;
   width: 230px;
-  margin-top: -10px;
+  margin-top: -1px;
   padding-left: 20px;
   font-size: 15px;
-}
-
-.status-icon{ 
+  }
+  
+  .status-icon{
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -104,8 +109,7 @@
   top: 50%;
   left: 9px;
   transform: translate(-50%, -50%); /* use translate to center the icon */
-
-}
+  }
 
 /**
 Creates a radial gradient background with vendor prefixes for various browsers.

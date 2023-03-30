@@ -3,7 +3,9 @@
     <img src={{image}} alt="Product Image">
   </div>
   <div class="product-details">
-    <h1 class="product-title">{{name}}</h1>
+
+    <h1 class="product-title">{{name}} <span class="product-sku">SKU: {{sku}}</span></h1>
+
     <label class="stock-label">
       <mat-icon class="status-icon" [ngClass]="{
         'green': stockStatus==='In Stock',
@@ -27,7 +29,6 @@
   </div>
 </div>
 <div class="description-container">
-  <p class="product-sku">SKU: {{sku}}</p>
 
   <p class="description-summary">{{summary}}</p>
   <p class="description-tags">Tags: 
