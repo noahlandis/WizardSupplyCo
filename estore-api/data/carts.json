@@ -18,7 +18,9 @@
   "totalPrice" : 0.0
 }, {
   "userId" : 3,
-  "productsMap" : { },
-  "count" : 0,
-  "totalPrice" : 0.0
+  "productsMap" : {
+    "10" : 1
+  },
+  "count" : 1,
+  "totalPrice" : 499.99
 } ]

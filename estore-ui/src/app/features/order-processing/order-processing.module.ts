@@ -6,9 +6,10 @@ import { MaterialModule } from 'src/app/material.module';
 
 import { CartComponent } from './cart/cart.component';
 import { CartProductCardComponent } from './cart-product-card/cart-product-card.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 @NgModule({
-  declarations: [CartComponent, CartProductCardComponent],
+  declarations: [CartComponent, CartProductCardComponent, CheckoutComponent],
   imports: [
     CommonModule,
     MaterialModule,

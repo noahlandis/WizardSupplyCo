@@ -2,7 +2,6 @@ import { Cart } from "./cart.model";
 
 export class BaseOrder {
   constructor(
-    public orderDate: Date = new Date(),
     public firstName: string,
     public lastName: string,
     public phoneNumber: string,
@@ -15,7 +14,6 @@ export class BaseOrder {
 export class Order extends BaseOrder {
   constructor(
     public orderNumber: number,
-    orderDate: Date,
     firstName: string,
     lastName: string,
     phoneNumber: string,
@@ -24,7 +22,6 @@ export class Order extends BaseOrder {
     cart: Cart
   ) {
     super(
-      orderDate,
       firstName,
       lastName,
       phoneNumber,

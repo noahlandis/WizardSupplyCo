@@ -43,6 +43,20 @@ export class CartsService {
     );
   }
 
+  /** GET cart for the current user */
+  getCurrentUserCart(): Observable<Cart | null> {
+    const userId = this.authService.getUserId();
+
+    // if the user is not logged in, do not fetch the cart and redirect to the login page
+    if (!userId) {
+      this.log(`user is not logged in, redirecting to login page`);
+      this.authService.redirectToLogin();
+      return of(null);
+    }
+
+    return this.getCart(userId);
+  }
+
   /** PUT: add a quantity of a product to a user's cart on the server */
   addProductToCart(sku: number, quantity: number, triggerUpdate?: boolean): Observable<Cart | null> {
     const userId = this.authService.getUserId();

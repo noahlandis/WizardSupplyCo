@@ -13,6 +13,7 @@ import { CartComponent } from './features/order-processing/cart/cart.component';
 import { AdminDashboardComponent } from './features/admin/admin-dashboard/admin-dashboard.component';
 import { EditProductComponent } from './features/admin/edit-product/edit-product.component';
 import { CreateProductComponent } from './features/admin/create-product/create-product.component';
+import { CheckoutComponent } from './features/order-processing/checkout/checkout.component';
 
 const routes: Routes = [
     {path:'', component:CatalogComponent},
@@ -25,7 +26,7 @@ const routes: Routes = [
     },
     {
         path:'checkout',
-        component:CartComponent,
+        component:CheckoutComponent,
         canActivate: [authCustomerGuard]
     },
     {

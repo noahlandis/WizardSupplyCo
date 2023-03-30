@@ -1,0 +1,142 @@
+<div class="container">
+  <mat-horizontal-stepper [linear]="isLinear">
+    <mat-step [stepControl]="contactForm">
+      <form [formGroup]="contactForm">
+        <ng-template matStepLabel>Contact</ng-template>
+        <div class="section-content">
+          <div class="form-fields">
+            <!-- Contact form fields -->
+            <mat-form-field appearance="fill">
+              <mat-label>First Name</mat-label>
+              <input matInput formControlName="firstName" required>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Last Name</mat-label>
+              <input matInput formControlName="lastName" required>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Phone Number</mat-label>
+              <input matInput formControlName="phoneNumber" required>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Email Address</mat-label>
+              <input matInput formControlName="emailAddress" type="email" required>
+            </mat-form-field>
+          </div>
+          <div class="button-container">
+            <button mat-button matStepperNext type="button">Next</button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="shippingAddressForm">
+      <form [formGroup]="shippingAddressForm">
+        <ng-template matStepLabel>Shipping</ng-template>
+        <div class="section-content">
+          <div class="form-fields">
+            <!-- Shipping address form fields -->
+            <mat-form-field appearance="fill">
+              <mat-label>Country</mat-label>
+              <input matInput formControlName="country" required>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>State</mat-label>
+              <input matInput formControlName="state" required>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>City</mat-label>
+              <input matInput formControlName="city" required>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Zip Code</mat-label>
+              <input matInput formControlName="zipCode" required>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Address Line 1</mat-label>
+              <input matInput formControlName="addressLine1" required>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Address Line 2</mat-label>
+              <input matInput formControlName="addressLine2">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Apartment Number</mat-label>
+              <input matInput formControlName="apartmentNumber">
+            </mat-form-field>
+          </div>
+          <div class="button-container">
+            <button mat-button matStepperPrevious type="button">Back</button>
+            <button mat-button matStepperNext type="button">Next</button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="paymentForm">
+      <form [formGroup]="paymentForm">
+        <ng-template matStepLabel>Payment</ng-template>
+        <div class="section-content">
+          <div class="form-fields">
+            <!-- Payment form fields -->
+            <mat-form-field appearance="fill">
+              <mat-label>Credit Card Number</mat-label>
+              <input matInput formControlName="creditCardNumber" required>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Name on Card</mat-label>
+              <input matInput formControlName="nameOnCard" required>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Expiration Date (MM/YY)</mat-label>
+              <input matInput formControlName="expiration" required>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>CVV Code</mat-label>
+              <input matInput formControlName="cvvCode" required>
+            </mat-form-field>
+          </div>
+          <div class="button-container">
+            <button mat-button matStepperPrevious type="button">Back</button>
+            <button mat-button matStepperNext type="button">Next</button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Review</ng-template>
+      <div class="section-content">
+        <div class="review-section" *ngIf="contactForm.valid && shippingAddressForm.valid && paymentForm.valid">
+          <!-- Review content -->
+          <h2>Contact Information</h2>
+          <p>Name: {{ contactForm.value.firstName }} {{ contactForm.value.lastName }}</p>
+          <p>Phone Number: {{ contactForm.value.phoneNumber }}</p>
+          <p>Email Address: {{ contactForm.value.emailAddress }}</p>
+    
+          <h2>Shipping Address</h2>
+          <p>{{ shippingAddressForm.value.addressLine1 }} {{ shippingAddressForm.value.addressLine2 ? shippingAddressForm.value.addressLine2 + ',' : '' }}</p>
+          <p>{{ shippingAddressForm.value.apartmentNumber ? shippingAddressForm.value.apartmentNumber + ',' : '' }} {{ shippingAddressForm.value.city }}, {{ shippingAddressForm.value.state }}, {{ shippingAddressForm.value.zipCode }}</p>
+          <p>{{ shippingAddressForm.value.country }}</p>
+    
+          <h2>Payment Information</h2>
+          <p>Card Number: **** **** **** {{ paymentForm.value.creditCardNumber.substr(-4) }}</p>
+          <p>Name on Card: {{ paymentForm.value.nameOnCard }}</p>
+          <p>Expiration Date: {{ paymentForm.value.expiration }}</p>
+    
+          <h2>Order Summary</h2>
+          <div *ngIf="cart">
+            <!-- <div *ngFor="let item of items">
+              <p>{{ product.name }} x{{ item.quantity }}: {{ item.product.price * item.quantity | currency }}</p>
+            </div>         -->
+            <p><strong>Total: {{ cart.totalPrice | currency }}</strong></p>
+          </div>
+        </div>
+        <div class="button-container">
+          <button mat-button matStepperPrevious type="button">Back</button>
+          <button mat-raised-button color="primary" (click)="onSubmit()" type="button">Place Order</button>
+          <div *ngIf="orderErrorMessage" class="error-message">
+            {{ orderErrorMessage }}
+          </div>
+        </div>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>
