@@ -31,9 +31,9 @@ export class AdminProductCardComponent {
     this.setStockStatus();
   }
   
-  // oppens the
-  openDialog(templateRef: TemplateRef<any>) {
-    const dialogRef = this.dialog.open(templateRef, {
+  // opens the delete product confirmation popup
+  openDialog(deleteProductConfirmation: TemplateRef<any>) {
+    const dialogRef = this.dialog.open(deleteProductConfirmation, {
       width: '350px'
     });
   }
