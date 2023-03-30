@@ -3,7 +3,7 @@
   "admin" : true,
   "userId" : 0,
   "username" : "admin",
-  "loggedIn" : true,
+  "loggedIn" : false,
   "isAdmin" : true
 }, {
   "type" : "customer",
@@ -24,27 +24,6 @@
   "admin" : false,
   "userId" : 3,
   "username" : "ryan",
-  "loggedIn" : false,
-  "isAdmin" : false
-}, {
-  "type" : "customer",
-  "admin" : false,
-  "userId" : 4,
-  "username" : "priyank",
-  "loggedIn" : false,
-  "isAdmin" : false
-}, {
-  "type" : "customer",
-  "admin" : false,
-  "userId" : 5,
-  "username" : "kanisha",
-  "loggedIn" : false,
-  "isAdmin" : false
-}, {
-  "type" : "customer",
-  "admin" : false,
-  "userId" : 6,
-  "username" : "noah",
-  "loggedIn" : false,
+  "loggedIn" : true,
   "isAdmin" : false
 } ]
