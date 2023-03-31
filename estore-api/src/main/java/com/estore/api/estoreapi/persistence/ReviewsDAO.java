@@ -10,15 +10,6 @@ import com.estore.api.estoreapi.model.Review;
  */
 public interface ReviewsDAO {
     /**
-     * Retrieves all {@linkplain Review[][] reviews}
-     * 
-     * @return An array of {@link Review review} objects, may be empty
-     * 
-     * @throws IOException if an issue with underlying storage
-     */
-    Review[][] getReviews() throws IOException;
-
-    /**
      * Retrieves all {@linkplain Review[] reviews} with the given sku
      * 
      * @param sku The sku of the {@link Review review} to get

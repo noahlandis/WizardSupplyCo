@@ -1,0 +1,66 @@
+[
+  {
+    "reviewId": 1,
+    "userId": 3,
+    "sku": 1,
+    "rating": 5,
+    "comment": "Worked great for my potion. I'll be back for more!"
+  },
+  {
+    "reviewId": 2,
+    "userId": 7,
+    "sku": 2,
+    "rating": 4,
+    "comment": "This product was good, but I wish it had come in a bigger size."
+  },
+  {
+    "reviewId": 3,
+    "userId": 5,
+    "sku": 4,
+    "rating": 2,
+    "comment": "I was really disappointed with this product. It didn't work as advertised."
+  },
+  {
+    "reviewId": 4,
+    "userId": 10,
+    "sku": 3,
+    "rating": 5,
+    "comment": "This is the best product I've ever used. I recommend it to everyone!"
+  },
+  {
+    "reviewId": 5,
+    "userId": 2,
+    "sku": 1,
+    "rating": 3,
+    "comment": "Not the best, but it got the job done."
+  },
+  {
+    "reviewId": 6,
+    "userId": 9,
+    "sku": 2,
+    "rating": 2,
+    "comment": "I wouldn't buy this again, it was a waste of money."
+  },
+  {
+    "reviewId": 7,
+    "userId": 4,
+    "sku": 4,
+    "rating": 5,
+    "comment": "I was skeptical at first, but this product exceeded my expectations."
+  },
+  {
+    "reviewId": 8,
+    "userId": 1,
+    "sku": 3,
+    "rating": 4,
+    "comment": "Pretty good, but there are better options out there."
+  },
+  {
+    "reviewId": 9,
+    "userId": 8,
+    "sku": 2,
+    "rating": 1,
+    "comment": "This product was a complete waste of money. I'm never buying from this brand again."
+  }
+]
+   

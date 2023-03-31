@@ -3,17 +3,25 @@ package com.estore.api.estoreapi.persistence;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.estore.api.estoreapi.model.Review;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+/**
+ * Implements the functionality for JSON file-based peristance for Reviews
+ * 
+ * {@literal @}Component Spring annotation instantiates a single instance of this
+ * class and injects the instance into other classes as needed
+ * 
+ * @author Priyank Patel
+ */
 @Repository
 public class ReviewsFileDAO implements ReviewsDAO {
     private static final Logger LOG = Logger.getLogger(ReviewsFileDAO.class.getName());
@@ -55,7 +63,7 @@ public class ReviewsFileDAO implements ReviewsDAO {
         Review[] reviewArray = objectMapper.readValue(new File(filename), Review[].class);
 
         for (Review review : reviewArray) {
-            reviews.put(review.getReviewId(),reviewArray);
+            reviews.put(review.getReviewId(), review);
             if(review.getReviewId() > nextReviewId) {
                 nextReviewId = review.getReviewId();
             }
@@ -75,16 +83,27 @@ public class ReviewsFileDAO implements ReviewsDAO {
     private boolean save() throws IOException {
         LOG.info("Saving reviews to the file: " + filename);
         // Serialize the reviews map into an array of Review objects
-        Review[] reviewArray = getReviewsArray();
+        Review[] reviewArray = getReviews();
         // Write the array of Review objects to the file as JSON objects
         objectMapper.writeValue(new File(filename), reviewArray);
         return true;
     }
     
-    @Override
-    public Review[][] getReviews() throws IOException {
-        // TODO Auto-generated method stub
-        return null;
+    /**
+     * Generates an array of {@linkplain Review reviews} from the map
+     * 
+     * @return an array of {@link Review reviews}
+     * 
+     * @throws IOException
+    */
+    private Review[] getReviews() throws IOException {
+        ArrayList<Review> reviewArrayList = new ArrayList<>();
+        for(Review review : reviews.values()) {
+            reviewArrayList.add(review);
+        }
+        Review[] reviewsArray = new Review[reviewArrayList.size()];
+        reviewsArray = reviewArrayList.toArray(reviewsArray);
+        return reviewsArray;
     }
 
     @Override
@@ -95,7 +114,6 @@ public class ReviewsFileDAO implements ReviewsDAO {
                 reviewArrayList.add(review);
             }
         }
-
         Review[] reviewsArray = new Review[reviewArrayList.size()];
         reviewsArray = reviewArrayList.toArray(reviewsArray);
         return reviewsArray;
@@ -103,33 +121,87 @@ public class ReviewsFileDAO implements ReviewsDAO {
 
     @Override
     public Review getReview(int sku, int userId) throws IOException {
-        // TODO Auto-generated method stub
+        Review[] reviewsArray = getReviews(sku);
+        for(Review review : reviewsArray) {
+            if(review.getUserId() == userId) {
+                return review;
+            }
+        }
         return null;
     }
 
     @Override
     public Review[] getReviewsByUser(int userId) throws IOException {
-        // TODO Auto-generated method stub
-        return null;
+        ArrayList<Review> reviewArrayList = new ArrayList<>();
+        for(Review review : reviews.values()) {
+            if(review.getUserId() == userId) {
+                reviewArrayList.add(review);
+            }
+        }
+
+        Review[] reviewsArray = new Review[reviewArrayList.size()];
+        reviewsArray = reviewArrayList.toArray(reviewsArray);
+        return reviewsArray;
     }
 
     @Override
     public Review createReview(Review review) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createReview'");
+        synchronized(reviews) {
+            //Check if the user already has a review for the same product
+            for(Review existingReview : reviews.values()) {
+                if(existingReview.getSku() == review.getSku() && existingReview.getUserId() == review.getUserId()) {
+                    return null;
+                }
+            }
+        }
+        Review newReview = new Review(
+            nextReviewId,
+            review.getSku(),
+            review.getUserId(),
+            review.getRating(),
+            review.getComment()
+        );
+        reviews.put(newReview.getReviewId(), newReview);
+        save();
+        return newReview;
     }
 
     @Override
     public Review updateReview(Review review) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateReview'");
+        synchronized(reviews) {
+            if(reviews.containsKey(review.getReviewId()) == false) {
+                return null;
+            }
+                reviews.put(review.getReviewId(), review);
+                save();
+                return review;
+        }
     }
 
     @Override
     public boolean deleteReview(int productId, int userId) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteReview'");
+        synchronized(reviews) {
+            Review reviewToDelete = getReview(productId, userId);
+            if(reviewToDelete != null) {
+                reviews.remove(reviewToDelete.getReviewId());
+                save();
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
     }
 
-    
+    /**
+     * Get average rating for a partiuclar product
+     */
+    public double getAverageRating(int sku) throws IOException {
+        Review[] reviewsArray = getReviews(sku);
+        double totalRating = 0;
+        for(Review review : reviewsArray) {
+            totalRating += review.getRating();
+        }
+        return totalRating / reviewsArray.length;
+    }
 }

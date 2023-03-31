@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Review {
     private static final Logger LOG = Logger.getLogger(Review.class.getName());
 
-    private final String STRING_FORMAT = "Review [reiewId=%d, userId=%d, sku=%d, rating=%d, comment=%s]";
+    private final String STRING_FORMAT = "Review [reviewId=%d, userId=%d, sku=%d, rating=%d, comment=%s]";
     
     @JsonProperty("reviewId") private int reviewId;
     @JsonProperty("userId") private int userId;
@@ -24,6 +24,7 @@ public class Review {
     
     /**
      * Create a Review with the given userID, sku, rating and review
+     * @param reviewId The review ID of the review
      * @param userId The User ID of the user
      * @param sku The Product ID of the product
      * @param rating The rating of the product
@@ -31,14 +32,36 @@ public class Review {
      */
     @JsonCreator
     public Review(
-        @JsonProperty("userId") int userId,
-        @JsonProperty("sku") int sku,
-        @JsonProperty("rating") int rating,
-        @JsonProperty("comment") String comment) {
+        int reviewId,
+        int userId,
+        int sku,
+        int rating,
+        String comment
+    ) {
         this.userId = userId;
         this.sku = sku;
         this.rating = rating;
         this.comment = comment;
+    }
+
+    /**
+     * Create a Review with the given userID, sku, rating, without 
+     * comment
+     * @param reviewId The review ID of the review
+     * @param userId The User ID of the user
+     * @param sku The Product ID of the product
+     * @param rating The rating of the product
+     */
+    public Review(
+        int reviewId,
+        int userId,
+        int sku,
+        int rating
+    ){
+        this.reviewId = reviewId;
+        this.userId = userId;
+        this.sku = sku;
+        this.rating = rating;
     }
 
     /**
@@ -102,6 +125,8 @@ public class Review {
      * @param rating The rating of the review
      */
     public void setRating(int rating) {
+        if( rating > 5 || rating < 0)
+            throw new IllegalArgumentException("Rating must be between 0 and 5");
         this.rating = rating;
     }
 
@@ -118,6 +143,8 @@ public class Review {
      * @param comment The comment of the review
      */
     public void setComment(String comment) {
+        if( comment == null || comment.isEmpty() )
+            throw new IllegalArgumentException("Comment cannot be empty");
         this.comment = comment;
     }
         
