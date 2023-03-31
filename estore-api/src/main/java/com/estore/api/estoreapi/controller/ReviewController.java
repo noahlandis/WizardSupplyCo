@@ -78,11 +78,39 @@ public class ReviewController {
      * GET http://localhost:8080/reviews/1
      */
     @GetMapping("/{sku}")
-    public ResponseEntity<Review[]> getReview(@PathVariable("sku") int sku) {
+    public ResponseEntity<Review[]> getReviewsForProduct(@PathVariable("sku") int sku) {
         LOG.info("GET /reviews/" + sku + "");
         
         try {
             Review[] review = reviewsDao.getReviews(sku);
+            if (review != null) {
+                return new ResponseEntity<>(review, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "Error getting review", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Responds to the GET request for a {@linkplain Review reviews} for the given userId
+     * 
+     * @param userid
+     * 
+     * @return ResponseEntity with {@link Review review} object and HTTP status of OK if found<br>
+     * ResponseEntity with HTTP status of NOT_FOUND if not found<br>
+     * 
+     * Example: Get review with userid 1
+     * GET http://localhost:8080/reviews/user/1
+     */
+    @GetMapping("/user/{userid}")
+    public ResponseEntity<Review[]> getReveiwsByUser(@PathVariable("userid") int userid) {
+        LOG.info("GET /reviews/user/" + userid + "");
+        
+        try {
+            Review[] review = reviewsDao.getReviewsByUser(userid);
             if (review != null) {
                 return new ResponseEntity<>(review, HttpStatus.OK);
             } else {
