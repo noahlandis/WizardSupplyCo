@@ -23,7 +23,16 @@
     <div style="font-size: 1.2rem;">$<span style="display: inline; padding-left: 2px;" class="price">{{ price }}</span></div>
     
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="addToCart(sku); $event.stopPropagation()" [disabled]="stockStatus==='Out Of Stock'">Add to Cart</button>
+      <ng-container *ngIf="(authService.getIsLoggedIn() | async) && !(authService.getIsAdmin() | async)">
+        <button
+          mat-raised-button 
+          color="primary" 
+          (click)="addToCart(sku); $event.stopPropagation()" 
+          [disabled]="stockStatus==='Out Of Stock'"
+        >
+          Add to Cart
+        </button>
+      </ng-container>
     </mat-card-actions>
   </mat-card-content>
 </mat-card>

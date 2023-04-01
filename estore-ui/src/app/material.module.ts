@@ -17,6 +17,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatBadgeModule} from '@angular/material/badge';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [],
@@ -37,8 +38,8 @@ import {MatBadgeModule} from '@angular/material/badge';
     MatGridListModule,
     MatMenuModule,
     MatChipsModule,
-    MatBadgeModule       
-    
+    MatBadgeModule,
+    MatDialogModule
   ],
   exports:[
     MatIconModule,
@@ -56,7 +57,8 @@ import {MatBadgeModule} from '@angular/material/badge';
     MatGridListModule,
     MatMenuModule,
     MatChipsModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatDialogModule
   ]
 })
 export class MaterialModule { }
