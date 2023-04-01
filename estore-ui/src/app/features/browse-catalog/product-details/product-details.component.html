@@ -25,6 +25,7 @@
         color="primary"
         class="add-to-cart-button"
         (click)="addToCart(sku)"
+        [disabled]="stockStatus==='Out Of Stock'"
       >
         Add to Cart
       </button>
