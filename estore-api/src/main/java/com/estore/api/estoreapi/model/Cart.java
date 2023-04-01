@@ -38,7 +38,21 @@ public class Cart {
     public void setInventoryDao(InventoryDAO inventoryDao) {
         this.inventoryDao = inventoryDao;
     }
-
+    
+    /**
+     * Creates an array to get the skus of theproducts in the cart
+     * @return the skus of the products in the cart
+     */
+    public int[] getSkuArray() {
+        int[] skus = new int[productsMap.size()];
+        int i = 0;
+        for (Map.Entry<Integer, Integer> entry : productsMap.entrySet()) {
+            skus[i] = entry.getKey();
+            i++;
+        }
+        return skus;
+    }
+    
     /**
      * Creates a cart with the given products
      * @param productsMap The products in the cart
@@ -87,6 +101,7 @@ public class Cart {
     public int getProductCount(int sku) {
         return productsMap.getOrDefault(sku, 0);
     }
+
 
     /**
      * Adds a product to the cart

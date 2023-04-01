@@ -2,8 +2,6 @@ package com.estore.api.estoreapi.model;
 import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 /**
  * This class is to store shipping address of a customer
@@ -80,7 +78,61 @@ public class ShippingAddress {
         this.apartmentNumber = apartmentNumber;
     }
 
+     /**
+     * Retrieves the country of the shipping address
+     * @return The country of the shipping adress
+     */
+    public String getCountry(){
+        return country;
+    }
 
+    /**
+     * Retrieves the state of the shipping address
+     * @return The state of the shipping adress
+     */
+    public String getState(){
+        return state;
+    }
+
+    /**
+     * Retrieves the city of the shipping address
+     * @return The city of the shipping adress
+     */
+    public String getCity(){
+        return city;
+    }
+
+    /**
+     * Retrieves the zipcode of the shipping address
+     * @return The zipcode of the shipping adress
+     */
+    public int getZipCode(){
+        return zipCode;
+    }
+
+    /**
+     * Retrieves the addressline1 of the shipping address
+     * @return The addressline1 of the shipping adress
+     */
+    public String getAddressLine1(){
+        return addressLine1;
+    }
+
+    /**
+     * Retrieves the addressline2 of the shipping address
+     * @return The addressline2 of the shipping adress
+     */
+    public String getAddressLine2(){
+        return addressLine2;
+    }
+
+    /**
+     * Retrieves the apartmentnumber of the shipping address
+     * @return The apartmentnumber of the shipping adress
+     */
+    public String getApartmentNumber(){
+        return apartmentNumber;
+    }
     /**
      * {@inheritDoc}
      */
