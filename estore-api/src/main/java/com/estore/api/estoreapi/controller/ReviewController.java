@@ -141,7 +141,7 @@ public class ReviewController {
 
         try {
             if(reviewsDao.deleteReview(sku, userid)){
-                return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -175,8 +175,7 @@ public class ReviewController {
             if(createdReview != null){
                 return new ResponseEntity<>(createdReview, HttpStatus.CREATED);
             }
-            return new ResponseEntity<>(HttpStatus.CONFLICT)
-            ;
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Error creating review", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
