@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 
 import { InventoryService } from 'src/app/core/services/inventory.service';
 import { Description, Product } from 'src/app/core/model/product.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-edit-product',
@@ -23,6 +24,7 @@ export class EditProductComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private inventoryService: InventoryService,
+    private snackBar: MatSnackBar,
     ) {
       this.editProductForm = this.fb.group({
         name: ['', [Validators.required]],
@@ -81,8 +83,10 @@ export class EditProductComponent implements OnInit {
       next: async (updateSuccess) => {
         if (updateSuccess) {
           console.log('Product updated successfully');
+          this.displaySnackBar('Product updated successfully', 'Close', 3000);
         } else {
           console.log('Product update failed');
+          this.displaySnackBar('Product update failed', 'Close', 3000, true);
         }
         this.showSubmitFeedback(updateSuccess);
       },
@@ -101,5 +105,13 @@ export class EditProductComponent implements OnInit {
     await new Promise(resolve => setTimeout(resolve, 1000));
     this.isSuccess = false;
     this.saveButtonText.nativeElement.textContent = 'Save';
+  }
+
+  /** Display snackbar notification */
+  displaySnackBar(message: string, action: string, duration: number, error?: boolean) {
+    this.snackBar.open(message, action, {
+      duration: duration,
+      // panelClass: error ? ['snackbar-error'] : ['snackbar-success']
+    });
   }
 }

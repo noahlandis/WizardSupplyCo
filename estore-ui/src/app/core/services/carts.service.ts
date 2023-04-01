@@ -8,6 +8,7 @@ import { MessageService } from './message.service';
 import { UpdateService } from './update.service';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ private numberOfProductsInCart: BehaviorSubject<number> = new BehaviorSubject<nu
     private messageService: MessageService,
     private updateService: UpdateService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   /** Log a CartsService message with the MessageService */
@@ -62,6 +64,8 @@ private numberOfProductsInCart: BehaviorSubject<number> = new BehaviorSubject<nu
         if (triggerUpdate) this.updateService.updateCart();
         this.updateNumberOfProductsInCart(userId);
 
+        // Display snackbar notification
+        this.displaySnackBar('Item added to cart', 'Dismiss', 3000, true);
       }),
       catchError(this.handleError<Cart>('addProductToCart'))
     );
@@ -137,6 +141,9 @@ getNumberOfProductsInCart(): Observable<number> {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
+      // Display snackbar notification
+      this.displaySnackBar('Unable to add item to cart', 'Dismiss', 3000, true);
+
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 
@@ -146,5 +153,13 @@ getNumberOfProductsInCart(): Observable<number> {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+
+  /** Display snackbar notification */
+  displaySnackBar(message: string, action: string, duration: number, error?: boolean) {
+    this.snackBar.open(message, action, {
+      duration: duration,
+      // panelClass: error ? ['snackbar-error'] : ['snackbar-success']
+    });
   }
 }
