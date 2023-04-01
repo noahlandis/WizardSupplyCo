@@ -43,7 +43,7 @@ export class ProductSearchComponent implements OnInit {
   onOptionSelected(event: MatAutocompleteSelectedEvent, searchBox: HTMLInputElement): void {
     searchBox.value = ''; // Clear the search box
     event.option.deselect() // Deselect the option to prevent the checkbox icon from appearing
-    if (this.authService.getIsAdmin())
+    if (this.authService.getIsAdmin().getValue())
       this.router.navigate([`/edit-product/${event.option.value.sku}`]);
     else
       this.router.navigate([`/catalog/${event.option.value.sku}`]);
