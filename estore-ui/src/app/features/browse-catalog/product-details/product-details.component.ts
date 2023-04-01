@@ -11,15 +11,16 @@ import { InventoryService } from 'src/app/core/services/inventory.service';
 export class ProductDetailsComponent implements OnInit, OnDestroy {
   sku = 0;
   name!: string;
-    summary!: string;
-    image = '';
-    stock = 0
-    stockStatus: string | undefined
-    price = 0
-    tags: string[] = []
+  summary!: string;
+  image = '';
+  stock = 0
+  stockStatus: string | undefined
+  price = 0
+  tags: string[] = []
+  placeholder: string = 'https://i.imgur.com/gJZTkgt.png';
 
-    private readonly QUANTITY_LOW_STOCK = 10;
-    private readonly QUANTITY_OUT_OF_STOCK = 0; 
+  private readonly QUANTITY_LOW_STOCK = 10;
+  private readonly QUANTITY_OUT_OF_STOCK = 0; 
   private routeSubscription!: Subscription;
 
   constructor(
@@ -33,12 +34,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       this.inventoryService.getProduct(sku).subscribe((product) => {
         this.sku = product.sku;
         this.name = product.name;
-              this.summary = product.description.summary
-              this.image = product.images[0]
-              this.stock = product.stockQuantity
-              this.setStockStatus()
-              this.price = product.price
-              this.tags = product.description.tags;
+        this.summary = product.description.summary
+        this.image = (product.images && product.images.length > 0) ? product.images[0] : this.placeholder
+        this.stock = product.stockQuantity
+        this.setStockStatus()
+        this.price = product.price
+        this.tags = product.description.tags;
       });
     });
   }
