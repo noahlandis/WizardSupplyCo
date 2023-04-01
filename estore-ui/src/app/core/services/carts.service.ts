@@ -67,7 +67,11 @@ private numberOfProductsInCart: BehaviorSubject<number> = new BehaviorSubject<nu
         // Display snackbar notification
         this.displaySnackBar('Item added to cart', 'Dismiss', 3000, true);
       }),
-      catchError(this.handleError<Cart>('addProductToCart'))
+      catchError((err) => {
+        this.handleError<Cart>('addProductToCart');
+        this.displaySnackBar('Error adding item to cart', 'Dismiss', 3000, false);
+        return of(err);
+      })
     );
   }
 
@@ -113,25 +117,27 @@ private numberOfProductsInCart: BehaviorSubject<number> = new BehaviorSubject<nu
   /** Update total product count for the current user cart */
   updateNumberOfProductsInCart(userId: number): void {
     this.getCart(userId).pipe(
-    map((cart) => {
-      if (cart) {
-        let cartMap = cart.productsMap;
-        let sum = Object.values(cartMap).reduce((acc, value) => acc + value, 0);
-        this.numberOfProductsInCart.next(sum); 
-      } else {
-        this.numberOfProductsInCart.next(0);
-      }
-    }),
-    catchError((err) => {
-      console.error(err);
-      return of(0);
-    })
-  ).subscribe();
-}
-getNumberOfProductsInCart(): Observable<number> {
-  return this.numberOfProductsInCart;
-}
-      /**
+      map((cart) => {
+        if (cart) {
+          let cartMap = cart.productsMap;
+          let sum = Object.values(cartMap).reduce((acc, value) => acc + value, 0);
+          this.numberOfProductsInCart.next(sum); 
+        } else {
+          this.numberOfProductsInCart.next(0);
+        }
+      }),
+      catchError((err) => {
+        console.error(err);
+        return of(0);
+      })
+    ).subscribe();
+  }
+
+  getNumberOfProductsInCart(): Observable<number> {
+    return this.numberOfProductsInCart;
+  }
+
+  /**
    * Handle Http operation that failed.
    * Let the app continue.
    *
@@ -140,9 +146,6 @@ getNumberOfProductsInCart(): Observable<number> {
   */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
-      // Display snackbar notification
-      this.displaySnackBar('Unable to add item to cart', 'Dismiss', 3000, true);
 
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
