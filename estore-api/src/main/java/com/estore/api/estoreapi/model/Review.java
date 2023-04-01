@@ -15,6 +15,10 @@ public class Review {
     private static final Logger LOG = Logger.getLogger(Review.class.getName());
 
     private final String STRING_FORMAT = "Review [reviewId=%d, userId=%d, sku=%d, rating=%d, comment=%s]";
+
+    private final int MIN_RATING = 1;
+    private final int MAX_RATING = 5;
+
     
     @JsonProperty("reviewId") private int reviewId;
     @JsonProperty("userId") private int userId;
@@ -125,8 +129,8 @@ public class Review {
      * @param rating The rating of the review
      */
     public void setRating(int rating) {
-        if( rating > 5 || rating < 0)
-            throw new IllegalArgumentException("Rating must be between 0 and 5");
+        if( rating > MAX_RATING || rating < MIN_RATING)
+            throw new IllegalArgumentException("Rating must be between 1 and 5");
         this.rating = rating;
     }
 

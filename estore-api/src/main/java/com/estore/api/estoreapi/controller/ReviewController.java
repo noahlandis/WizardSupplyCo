@@ -106,7 +106,7 @@ public class ReviewController {
      * GET http://localhost:8080/reviews/user/1
      */
     @GetMapping("/user/{userid}")
-    public ResponseEntity<Review[]> getReveiwsByUser(@PathVariable("userid") int userid) {
+    public ResponseEntity<Review[]> getReviewsByUser(@PathVariable("userid") int userid) {
         LOG.info("GET /reviews/user/" + userid + "");
         
         try {
@@ -140,8 +140,11 @@ public class ReviewController {
         LOG.info("DELETE /reviews/" + sku + "/" + userid);
 
         try {
-            reviewsDao.deleteReview(sku, userid);
-            return new ResponseEntity<>(HttpStatus.OK);
+            if(reviewsDao.deleteReview(sku, userid)){
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Error deleting review", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

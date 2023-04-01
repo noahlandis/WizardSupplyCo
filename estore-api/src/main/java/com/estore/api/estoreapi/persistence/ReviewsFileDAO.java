@@ -3,8 +3,8 @@ package com.estore.api.estoreapi.persistence;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 public class ReviewsFileDAO implements ReviewsDAO {
     private static final Logger LOG = Logger.getLogger(ReviewsFileDAO.class.getName());
 
-    Map<Integer, Review> reviews; // Map of product ID to reviews cached here 
+    private Map<Integer, Review> reviews; // Map of product ID to reviews cached here 
                                     // so no repeated reads from file
     private ObjectMapper objectMapper; // Provides JSON Object to/from Java Object serialization and deserialization
     private String filename; // Filename to read from and write to
@@ -55,7 +55,7 @@ public class ReviewsFileDAO implements ReviewsDAO {
      */
     private boolean load() throws IOException {
         LOG.info("Loading reviews from the file: " + filename);
-        reviews = new TreeMap<>();
+        reviews = new HashMap<>();
         nextReviewId = 0;
 
         // Deserialize the JSON text from the file into an array of Review objects
