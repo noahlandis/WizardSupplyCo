@@ -14,7 +14,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root'
 })
 export class CartsService {
-private numberOfProductsInCart: BehaviorSubject<number> = new BehaviorSubject<number>(0);  private cartsUrl = 'http://localhost:8080/carts'; // URL to estore-api carts endpoint
+  private cartsUrl = 'http://localhost:8080/carts'; // URL to estore-api carts endpoint
+  private numberOfProductsInCart: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
