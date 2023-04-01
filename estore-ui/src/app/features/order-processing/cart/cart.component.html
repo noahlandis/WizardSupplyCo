@@ -1,13 +1,17 @@
 <div class="container">
-  <h1 class="text-center">Shopping Cart</h1>
+  <h1 class="text-center">Shopping Cart ({{cartCount}} items)</h1>
   <div class="cart-content">
     <ng-container *ngIf="cartEntries.length > 0; else emptyCart">
       <div class="cart-items">
         <app-cart-product-card *ngFor="let entry of cartEntries"
           [sku]="entry.sku"
+          [name]="entry.name"
+          [price]="entry.price"
           [quantity]="entry.quantity"
-          [userId]="userId">
+          [userId]="userId"
+          (quantityChanged)="onQuantityChanged()">
         </app-cart-product-card>
+
       </div>
       <div class="cart-summary">
         <h2>Order Summary</h2>

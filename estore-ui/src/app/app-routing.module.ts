@@ -14,11 +14,12 @@ import { AdminDashboardComponent } from './features/admin/admin-dashboard/admin-
 import { EditProductComponent } from './features/admin/edit-product/edit-product.component';
 import { CreateProductComponent } from './features/admin/create-product/create-product.component';
 import { CheckoutComponent } from './features/order-processing/checkout/checkout.component';
+import { TestProductDetailsComponent } from './features/browse-catalog/test-product-details/test-product-details.component';
 
 const routes: Routes = [
     {path:'', component:CatalogComponent},
     {path:'catalog', component:CatalogComponent},
-    {path:'catalog/:sku', component:CatalogComponent},
+    {path:'catalog/:sku', component:TestProductDetailsComponent},
     {
         path:'cart',
         component:CartComponent,
