@@ -36,12 +36,13 @@ public class Review {
      */
     @JsonCreator
     public Review(
-        int reviewId,
-        int userId,
-        int sku,
-        int rating,
-        String comment
+        @JsonProperty("reviewId") int reviewId,
+        @JsonProperty("userId") int userId,
+        @JsonProperty("sku") int sku,
+        @JsonProperty("rating") int rating,
+        @JsonProperty("comment") String comment
     ) {
+        this.reviewId = reviewId;
         this.userId = userId;
         this.sku = sku;
         this.rating = rating;
@@ -57,10 +58,10 @@ public class Review {
      * @param rating The rating of the product
      */
     public Review(
-        int reviewId,
-        int userId,
-        int sku,
-        int rating
+        @JsonProperty("reviewId") int reviewId,
+        @JsonProperty("userId") int userId,
+        @JsonProperty("sku") int sku,
+        @JsonProperty("rating") int rating
     ){
         this.reviewId = reviewId;
         this.userId = userId;

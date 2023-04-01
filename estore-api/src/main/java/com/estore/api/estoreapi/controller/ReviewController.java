@@ -164,11 +164,11 @@ public class ReviewController {
      * ResponseEntity with HTTP status of CONFLICT if not added<br>
      * 
      * Example: Add review with sku 1 and userid 1
-     * POST http://localhost:8080/reviews/1/1
+     * POST http://localhost:8080/reviews
      */
-    @PostMapping("/{sku}/{userid}")
+    @PostMapping("")
     public ResponseEntity<Review> createReview(@RequestBody Review review) {
-        LOG.info("POST /reviews/" + review.getSku() + "/" + review.getUserId());
+        LOG.info("POST /reviews/" + review);
         
         try {
             Review createdReview = reviewsDao.createReview(review);
@@ -197,9 +197,9 @@ public class ReviewController {
      * Example: Update review with sku 1 and userid 1
      * PUT http://localhost:8080/reviews/1/1
      */
-    @PutMapping("/{sku}/{userid}")
+    @PutMapping("")
     public ResponseEntity<Review> updateReview(@RequestBody Review review) {
-        LOG.info("PUT /reviews/" + review.getSku() + "/" + review.getUserId());
+        LOG.info("PUT /reviews/" + review);
         
         try {
             Review updatedReview = reviewsDao.updateReview(review);
