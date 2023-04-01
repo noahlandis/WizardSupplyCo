@@ -20,7 +20,14 @@
     </div>
     <div class="price-container">
       <div style="font-size: 1.2rem;">$<span class="price">{{ price }}</span></div>
-      <button mat-raised-button color="primary" class="add-to-cart-button">Add to Cart</button>
+      <button *ngIf="(authService.getIsLoggedIn() | async) && !(authService.getIsAdmin() | async)"
+        mat-raised-button
+        color="primary"
+        class="add-to-cart-button"
+        (click)="addToCart(sku)"
+      >
+        Add to Cart
+      </button>
     </div>
     <div class="description-container">
       <p class="description-summary">{{ summary }}</p>

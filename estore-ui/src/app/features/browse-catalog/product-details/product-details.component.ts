@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { CartsService } from 'src/app/core/services/carts.service';
 import { InventoryService } from 'src/app/core/services/inventory.service';
 
 @Component({
@@ -25,7 +27,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private inventoryService: InventoryService
+    private inventoryService: InventoryService,
+    private cartsService: CartsService,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -51,15 +55,31 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
 
 
-setStockStatus(): void {
-      if (this.stock == this.QUANTITY_OUT_OF_STOCK) {
-          this.stockStatus = "Out Of Stock";
-      }
-      else if (this.stock <= this.QUANTITY_LOW_STOCK) {
-          this.stockStatus = "Low Stock";
-      }
-      else {
-          this.stockStatus = "In Stock";
-      }
-}
+  setStockStatus(): void {
+    if (this.stock == this.QUANTITY_OUT_OF_STOCK) {
+        this.stockStatus = "Out Of Stock";
+    }
+    else if (this.stock <= this.QUANTITY_LOW_STOCK) {
+        this.stockStatus = "Low Stock";
+    }
+    else {
+        this.stockStatus = "In Stock";
+    }
+  }
+
+  // add the selected product to the cart
+  addToCart(sku: number) {
+    this.cartsService.addProductToCart(sku, 1, true).subscribe({
+      next: (response) => {
+        if (response) {
+          console.log('Product added to cart');
+        } else {
+          console.log('Failed to add product to cart');
+        }
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+  }
 }
