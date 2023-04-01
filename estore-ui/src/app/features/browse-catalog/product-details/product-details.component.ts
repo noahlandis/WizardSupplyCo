@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { InventoryService } from 'src/app/core/services/inventory.service';
 import { Product } from 'src/app/core/model/product.model';
+import { InventoryService } from 'src/app/core/services/inventory.service';
+
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -9,6 +10,8 @@ import { Product } from 'src/app/core/model/product.model';
 })
 
 export class ProductDetailsComponent implements OnInit {
+
+
   product: Product | undefined;
   name!: string;
   summary!: string;
@@ -57,5 +60,3 @@ export class ProductDetailsComponent implements OnInit {
     }
   }
 }
-
-
