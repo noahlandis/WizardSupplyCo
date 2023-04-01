@@ -8,12 +8,12 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
-  styleUrls: ['./admin-dashboard.component.css']
+  styleUrls: ['./admin-dashboard.component.scss']
 })
 export class AdminDashboardComponent implements OnInit {
   private dashboardUpdateSubscription?: Subscription;
   products : Product[] = [];
-
+  placeholder: string = 'https://i.imgur.com/gJZTkgt.png';
 
   constructor(private router: Router, private inventoryService: InventoryService, private updateService: UpdateService) {} 
   
