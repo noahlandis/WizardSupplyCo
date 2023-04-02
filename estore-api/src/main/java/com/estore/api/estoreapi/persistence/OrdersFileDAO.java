@@ -26,7 +26,7 @@ import com.estore.api.estoreapi.model.InsufficientStockException;
  * 
  * @author Kanisha Agrawal
  */
-
+@Repository
 public class OrdersFileDAO implements OrdersDAO{
 
     private static final Logger LOG = Logger.getLogger(OrdersFileDAO.class.getName());
