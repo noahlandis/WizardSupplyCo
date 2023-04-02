@@ -243,7 +243,18 @@ public class CartTest {
      */
     @Test
     public void testGetTotalPrice() {
+        // Setup
+        testCart.clear();
+        try {
+            testCart.addProduct(101, 5);
+            testCart.addProduct(102, 5);
+        } catch (InsufficientStockException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        int expectedTotalPrice = 5 * 15 + 5 * 20;
+        
         // Analyze
-        assertEquals(175f, testCart.getTotalPrice());
+        assertEquals(expectedTotalPrice, testCart.getTotalPrice());
     }
 }
