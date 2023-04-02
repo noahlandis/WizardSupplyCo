@@ -1,9 +1,9 @@
 [ {
   "sku" : 10,
   "name" : "Phoenix Ashes",
-  "price" : 499.99,
+  "price" : 1499.99,
   "stockQuantity" : 3,
-  "images" : [ "https://i.imgur.com/aM0slHu.png" ],
+  "images" : [ "https://i.imgur.com/EomCuBJ.png" ],
   "description" : {
     "summary" : "Welcome a mythical companion into your life with our Phoenix Ashes. Experience the awe of witnessing your very own phoenix rise from its ashes to form a majestic, fiery creature. While the rebirth timeframe may vary, the magic of this enchanting bond will last a lifetime.",
     "tags" : [ "phoenix", "companion", "ashes", "fire", "rebirth" ]
@@ -11,29 +11,29 @@
 }, {
   "sku" : 11,
   "name" : "Soulstone Catalysts (4 Pack)",
-  "price" : 3.99,
+  "price" : 2999.99,
   "stockQuantity" : 0,
-  "images" : [ ],
+  "images" : [ "https://i.imgur.com/b0IXVND.png" ],
   "description" : {
-    "summary" : "Unleash the power within! This 4-pack of Soulstone Catalysts will elevate your magical abilities to new heights.",
+    "summary" : "Unleash immortality! These Soulstone Catalysts are the critical ingredient for creating a Soulstone: a magical artifact that can be used to capture the soul of a living being and preserve it for eternity.",
     "tags" : [ "magic", "catalyst", "soulstone" ]
   }
 }, {
   "sku" : 12,
   "name" : "The Vruum Broom TM",
-  "price" : 199.99,
+  "price" : 349.99,
   "stockQuantity" : 10,
-  "images" : [ ],
+  "images" : ["https://i.imgur.com/nA0s0Tc.png"],
   "description" : {
-    "summary" : "Experience the freedom of the skies with The Vruum Broom™! Fly swiftly and comfortably with this cutting-edge magical transportation.",
+    "summary": "Experience the ultimate freedom of the skies with The Vruum Broom™. This cutting-edge magical transportation allows you to fly swiftly and comfortably with an unmatched level of convenience and style.",
     "tags" : [ "magic", "flight", "broom" ]
   }
 }, {
   "sku" : 13,
   "name" : "Nightmare Elyxir Flask",
-  "price" : 14.99,
+  "price" : 29.99,
   "stockQuantity" : 10,
-  "images" : [ ],
+  "images" : ["https://i.imgur.com/y6fMW6t.png"],
   "description" : {
     "summary" : "Dare to dream darkly with the Nightmare Elixir Flask. This potent potion will conjure up the most spine-chilling nightmares imaginable.",
     "tags" : [ "potion", "elixir", "nightmare" ]
@@ -41,9 +41,9 @@
 }, {
   "sku" : 14,
   "name" : "Binmus 2000 Racing Broom",
-  "price" : 999.99,
+  "price" : 799.99,
   "stockQuantity" : 10,
-  "images" : [ ],
+  "images" : ["https://i.imgur.com/GHU84Z2.png"],
   "description" : {
     "summary" : "Soar through the skies with unparalleled speed on the Binmus 2000 Racing Broom! Designed for professional racers seeking the ultimate competitive edge.",
     "tags" : [ "racing", "broom", "sport" ]
@@ -51,9 +51,9 @@
 }, {
   "sku" : 15,
   "name" : "Frostwing Dragon Egg",
-  "price" : 2499.99,
+  "price" : 3499.99,
   "stockQuantity" : 10,
-  "images" : [ ],
+  "images" : ["https://i.imgur.com/6qCcedZ.png"],
   "description" : {
     "summary" : "Witness the birth of majesty! The rare Frostwing Dragon Egg holds incredible magical potential, ready to unleash its icy power upon hatching.",
     "tags" : [ "magic", "egg", "dragon" ]
@@ -61,9 +61,9 @@
 }, {
   "sku" : 16,
   "name" : "Newt Lungs (10 pack)",
-  "price" : 3.99,
+  "price" : 24.99,
   "stockQuantity" : 10,
-  "images" : [ ],
+  "images" : ["https://i.imgur.com/kG7DwON.png"],
   "description" : {
     "summary" : "Breathe new life into your potions with this pack of 10 premium Newt Lungs, perfect for a variety of mystical concoctions.",
     "tags" : [ "newt", "lungs", "ingredients" ]
@@ -73,7 +73,7 @@
   "name" : "Starshot v3 Sports Broom",
   "price" : 1199.99,
   "stockQuantity" : 10,
-  "images" : [ ],
+  "images" : ["https://i.imgur.com/QIknr35.png"],
   "description" : {
     "summary" : "Reach for the stars with the Starshot v3! This advanced sports broom delivers extreme performance and unparalleled agility.",
     "tags" : [ "magic", "sports", "broom" ]
@@ -81,9 +81,9 @@
 }, {
   "sku" : 18,
   "name" : "Deathwart Stalks (10 pack)",
-  "price" : 4.99,
+  "price" : 14.99,
   "stockQuantity" : 10,
-  "images" : [ ],
+  "images" : ["https://i.imgur.com/oSLBQJj.png"],
   "description" : {
     "summary" : "Brew potions with a deadly touch using these 10 Deathwart Stalks. Ideal for potent concoctions and bewitching brews.",
     "tags" : [ "deathwart", "stalks", "ingredients" ]
@@ -91,9 +91,9 @@
 }, {
   "sku" : 19,
   "name" : "Frog Legs (100 Pack)",
-  "price" : 1.99,
+  "price" : 19.99,
   "stockQuantity" : 20,
-  "images" : [ ],
+  "images" : ["https://i.imgur.com/nSXqQGB.png"],
   "description" : {
     "summary" : "Leap into the magical realm with 100 versatile Frog Legs! Great for enchanting elixirs, creative cuisine, and whimsical witchcraft.",
     "tags" : [ "frog", "legs", "ingredients" ]
@@ -101,31 +101,109 @@
 }, {
   "sku" : 20,
   "name" : "Starshade Cloak",
-  "price" : 49.99,
+  "price" : 249.99,
   "stockQuantity" : 30,
-  "images" : [ ],
+  "images" : ["https://i.imgur.com/NLSY8Sq.png"],
   "description" : {
     "summary" : "Stay protected and stylish with the Starshade Cloak! This enchanting garment offers excellent defense against the elements and a touch of magic.",
     "tags" : [ "magic", "cloak", "protection" ]
   }
 }, {
-  "sku" : 22,
+  "sku" : 21,
   "name" : "Centipede Hearts (1000 Pack)",
-  "price" : 1.99,
+  "price" : 19.99,
   "stockQuantity" : 40,
-  "images" : [ ],
+  "images" : ["https://i.imgur.com/4qs0U2f.png"],
   "description" : {
     "summary" : "Fuel your spells with 1000 Centipede Hearts! These tiny treasures are the perfect potion and spell ingredients for any arcane endeavor.",
     "tags" : [ "hearts", "ingredients", "centipede" ]
   }
 }, {
-  "sku" : 23,
+  "sku" : 22,
   "name" : "Truth Serum Vial",
   "price" : 79.99,
   "stockQuantity" : 50,
-  "images" : [ ],
+  "images" : ["https://i.imgur.com/ADsptm9.png"],
   "description" : {
     "summary" : "Discover the unspoken with a single-use vial of Truth Serum. One drop will have anyone revealing their deepest secrets and sincerest truths.",
     "tags" : [ "potion", "truth", "serum" ]
   }
-} ]
+},
+{
+  "sku": 26,
+  "name": "Cleansweep 11",
+  "price": 299.99,
+  "stockQuantity": 8,
+  "images": ["https://i.imgur.com/nA0s0Tc.png"],
+  "description": {
+    "summary": "The latest installment in the Cleansweep series, the Cleansweep 11's simple yet effective design makes it a reliable choice for anyone in need of an affordable broom. This broom offers consistent performance for various tasks and casual flights. The Cleansweep 11's timeless design ensures its continued popularity among thrifty witches and wizards.",
+    "tags": ["broom", "classic", "reliable"]
+  }
+},
+{
+  "sku": 27,
+  "name": "Moontrimmer",
+  "price": 449.99,
+  "stockQuantity": 12,
+  "images": ["https://i.imgur.com/QIknr35.png"],
+  "description": {
+    "summary": "The Moontrimmer, with its curved shape and responsive handling, is a broom that's perfect for night flights and fast turns. It offers excellent maneuverability, making it ideal for navigating tight spaces and challenging environments. The Moontrimmer's unique design sets it apart from other brooms, ensuring an unforgettable flying experience. Whether for leisurely nighttime rides or high-speed races, this broom is a versatile and delightful choice.",
+    "tags": ["broom", "night", "maneuverability"]
+  }
+},
+{
+  "sku": 28,
+  "name": "Thunderbolt",
+  "price": 999.99,
+  "stockQuantity": 7,
+  "images": ["https://i.imgur.com/pOZoCJD.png"],
+  "description": {
+    "summary": "The Thunderbolt is a legendary broom renowned for its unmatched speed and power, making it the ultimate choice for professional flyers and Quidditch players. The superior construction and advanced magical engineering ensure an extraordinary flying experience with precise control and agility. This high-performance broom is perfect for those seeking to push the limits of their flying capabilities. Experience the pinnacle of magical transportation with the iconic Thunderbolt broom.",
+    "tags": ["broom", "Thunderbolt", "legendary"]
+  }
+},
+{
+  "sku": 31,
+  "name": "Enchanter's Toolkit",
+  "price": 119.99,
+  "stockQuantity": 15,
+  "images": ["https://i.imgur.com/zWBPYUZ.png"],
+  "description": {
+    "summary": "The Enchanter's Toolkit is a comprehensive set of tools and implements for enchanting and imbuing objects with magical properties. It includes a wide array of gems, crystals, and other magical components and tools, allowing you to create powerful enchanted items. Whether you're a seasoned enchanter or just starting your magical journey, this toolkit provides everything you need to hone your skills. Discover the endless possibilities of enchanting with the Enchanter's Toolkit.",
+    "tags": ["enchanting", "toolkit", "magic"]
+  }
+},
+{
+  "sku": 32,
+  "name": "Healing Ointment",
+  "price": 24.99,
+  "stockQuantity": 20,
+  "images": ["https://i.imgur.com/V3wJbom.png"],
+  "description": {
+    "summary": "Healing Ointment is a magical salve that can be applied to wounds to accelerate healing and prevent infection. This powerful formula harnesses the properties of rare herbs and magical essences to mend injuries rapidly and effectively. Ideal for adventurers and healers alike, this ointment is an essential item for any magical first aid kit. Experience the wonders of magical healing with our potent Healing Ointment.",
+    "tags": ["healing", "ointment", "magic"]
+  }
+},
+{
+  "sku": 33,
+  "name": "Mage's Magnifying Glass",
+  "price": 49.99,
+  "stockQuantity": 10,
+  "images": ["https://i.imgur.com/y3o1m7d.png"],
+  "description": {
+    "summary": "The Mage's Magnifying Glass is a powerful tool that can reveal hidden enchantments and magical properties in objects. With its finely crafted lens and enchanted handle, this magnifying glass allows you to uncover the secrets of the magical world around you. It's an essential tool for mages, enchanters, and researchers seeking to understand and analyze magical items. Unlock the hidden world of magic with the Mage's Magnifying Glass.",
+    "tags": ["magnifying glass", "magic", "enchantments"]
+  }
+},
+{
+  "sku": 34,
+  "name": "Brewing Cauldron (40L)",
+  "price": 79.99,
+  "stockQuantity": 8,
+  "images": ["https://i.imgur.com/O80Ibwm.png"],
+  "description": {
+    "summary": "The 40-liter Brewing Cauldron is an all-purpose vessel designed for brewing magical potions and poultices. Its durable construction and large capacity make it perfect for creating a wide range of concoctions, from simple elixirs to complex brews. Whether you're a master potion-maker or a beginner, this cauldron offers the perfect blend of functionality and versatility. Enhance your potion-making skills with the Brewing Cauldron.",
+    "tags": ["cauldron", "brewing", "magic"]
+  }
+}
+]
