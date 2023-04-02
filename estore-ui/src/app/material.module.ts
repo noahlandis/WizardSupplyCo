@@ -16,6 +16,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatDialogModule} from '@angular/material/dialog';
 import { MatStepperModule } from '@angular/material/stepper';
 
 @NgModule({
@@ -37,6 +38,7 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatGridListModule,
     MatMenuModule,
     MatChipsModule,
+    MatDialogModule,
     MatStepperModule,
   ],
   exports:[
@@ -55,6 +57,7 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatGridListModule,
     MatMenuModule,
     MatChipsModule,
+    MatDialogModule,
     MatStepperModule,
   ]
 })

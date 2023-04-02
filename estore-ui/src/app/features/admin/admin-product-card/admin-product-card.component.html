@@ -26,9 +26,19 @@
       <button mat-icon-button [routerLink]="['/edit-product/', sku]" class="edit-button">
         <mat-icon class="icon">edit</mat-icon>
       </button>
-      <button mat-icon-button color="warn" class="remove-button" aria-label="Remove" (click)="onDeleteProduct()">
+      <button mat-icon-button color="warn" class="remove-button" aria-label="Remove" (click)="openDialog(deleteProductConfirmation)">
         <mat-icon class="icon">delete_outline</mat-icon>
       </button>
     </mat-card-actions>
+    <ng-template #deleteProductConfirmation>
+      <h2 mat-dialog-title>Delete Product?</h2>
+      <mat-dialog-content>
+        <p>Are you sure you want to delete {{ name }}?</p>
+      </mat-dialog-content>
+      <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button mat-dialog-close color="warn" (click)="onDeleteProduct()">Confirm</button>
+      </mat-dialog-actions>
+    </ng-template>
   </mat-card-content>
 </mat-card>
