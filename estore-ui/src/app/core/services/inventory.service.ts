@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { BaseProduct, Product } from '../model/product.model';
 import { MessageService } from './message.service';
 import { UpdateService } from './update.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Injectable({
@@ -22,7 +23,8 @@ export class InventoryService {
   constructor(
     private http: HttpClient,
     private messageService: MessageService,
-    private updateService: UpdateService
+    private updateService: UpdateService,
+    private snackBar: MatSnackBar
   ) { }
 
   /** Log a InventoryService message with the MessageService */
@@ -55,7 +57,10 @@ export class InventoryService {
   updateProduct(product: Product): Observable<any> {
     this.log(`updating product: ${JSON.stringify(product)} ...`);
     return this.http.put(this.productsUrl, product, this.httpOptions).pipe(
-      tap(_ => this.log(`product updated successfully`)),
+      tap(_ => {
+        this.log(`product updated successfully`);
+        this.displaySnackBar(`Product updated successfully`, 'Dismiss', 3000);
+      }),
       catchError(this.handleError<any>('updateProduct'))
     );
   }
@@ -64,8 +69,15 @@ export class InventoryService {
   addProduct(product: BaseProduct): Observable<Product> {
     this.log(`adding product: ${JSON.stringify(product)} ...`);
     return this.http.post<Product>(this.productsUrl, product, this.httpOptions).pipe(
-      tap((newProduct: Product) => this.log(`product added successfully: ${JSON.stringify(newProduct)}`)),
-      catchError(this.handleError<Product>('addProduct'))
+      tap((newProduct: Product) => {
+        this.log(`product added successfully: ${JSON.stringify(newProduct)}`)
+        this.displaySnackBar(`Product added successfully`, 'Dismiss', 3000);
+      }),
+      catchError((err) => {
+        this.displaySnackBar(`Error adding product`, 'Dismiss', 3000);
+        this.handleError<Product>('addProduct');
+        return of(err);
+      })
     );
   }
 
@@ -77,9 +89,14 @@ export class InventoryService {
     return this.http.delete<Product>(url, this.httpOptions).pipe(
       tap(_ => {
         this.log(`deleted product w/ sku=${sku}`)
+        this.displaySnackBar(`Product deleted successfully`, 'Dismiss', 3000);
         this.updateService.updateDashboard()
       }),
-      catchError(this.handleError<Product>('deleteProduct'))
+      catchError((err) => {
+        this.displaySnackBar(`Error deleting product`, 'Dismiss', 3000);
+        this.handleError<Product>('deleteProduct');
+        return of(err);
+      })
     );
   }
 
@@ -118,5 +135,13 @@ export class InventoryService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+
+  /** Display snackbar notification */
+  displaySnackBar(message: string, action: string, duration: number, error?: boolean) {
+    this.snackBar.open(message, action, {
+      duration: duration,
+      // panelClass: error ? ['snackbar-error'] : ['snackbar-success']
+    });
   }
 }

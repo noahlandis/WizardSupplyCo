@@ -13,13 +13,13 @@ import { CartComponent } from './features/order-processing/cart/cart.component';
 import { AdminDashboardComponent } from './features/admin/admin-dashboard/admin-dashboard.component';
 import { EditProductComponent } from './features/admin/edit-product/edit-product.component';
 import { CreateProductComponent } from './features/admin/create-product/create-product.component';
+import { ProductDetailsComponent } from './features/browse-catalog/product-details/product-details.component';
 import { CheckoutComponent } from './features/order-processing/checkout/checkout.component';
-import { TestProductDetailsComponent } from './features/browse-catalog/test-product-details/test-product-details.component';
 
 const routes: Routes = [
     {path:'', component:CatalogComponent},
     {path:'catalog', component:CatalogComponent},
-    {path:'catalog/:sku', component:TestProductDetailsComponent},
+    {path:'catalog/:sku', component:ProductDetailsComponent},
     {
         path:'cart',
         component:CartComponent,

@@ -16,7 +16,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatBadgeModule} from '@angular/material/badge';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
 
 @NgModule({
@@ -38,8 +40,10 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatGridListModule,
     MatMenuModule,
     MatChipsModule,
+    MatBadgeModule,
     MatDialogModule,
-    MatStepperModule,
+    MatSnackBarModule,
+    MatStepperModule
   ],
   exports:[
     MatIconModule,
@@ -57,7 +61,9 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatGridListModule,
     MatMenuModule,
     MatChipsModule,
+    MatBadgeModule,
     MatDialogModule,
+    MatSnackBarModule,
     MatStepperModule,
   ]
 })
