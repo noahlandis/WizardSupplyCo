@@ -43,7 +43,7 @@ public class OrdersFileDAO implements OrdersDAO{
                                       // to the file
     private String filename;    // Filename to read from and write to
 
-    private static int nextorderNumber;  // The next order number to assign to a new order
+    private static int nextOrderNumber;  // The next order number to assign to a new order
     private InventoryDAO inventoryDao;
     private CartsDAO cartsDAO;
 
@@ -70,9 +70,9 @@ public class OrdersFileDAO implements OrdersDAO{
      * 
      * @return The next number
      */
-    private synchronized static int nextorderNumber() {
-        int orderNumber = nextorderNumber;
-        ++nextorderNumber;
+    private synchronized static int nextOrderNumber() {
+        int orderNumber = nextOrderNumber;
+        ++nextOrderNumber;
         return orderNumber;
     }
 
@@ -105,7 +105,7 @@ public class OrdersFileDAO implements OrdersDAO{
     private boolean load() throws IOException {
         LOG.info("Loading orders from file: " + filename);
         orders = new TreeMap<>();
-        nextorderNumber = 0;
+        nextOrderNumber = 0;
 
         // readValue will thrown an IOException if there is an issue
         // with the file or reading from the file
@@ -115,11 +115,11 @@ public class OrdersFileDAO implements OrdersDAO{
         for (Order order : ordersArray) {
             LOG.info("Loaded order for user: " + order.getOrderNumber());
             orders.put(order.getOrderNumber(), order);
-            if (order.getOrderNumber() > nextorderNumber)
-            nextorderNumber = order.getOrderNumber();
-    }
+            if (order.getOrderNumber() > nextOrderNumber)
+            nextOrderNumber = order.getOrderNumber();
+        }
         //increments the next order number
-        ++nextorderNumber;
+        ++nextOrderNumber;
         return true;
     }
 
@@ -164,7 +164,7 @@ public class OrdersFileDAO implements OrdersDAO{
         
         synchronized (orders) {
             // create new order with next orderNumber
-            Order newOrder = new Order(nextorderNumber(), order.getFirstName(), order.getLastName(),order.getPhoneNumber(), order.getEmailAddress(), order.getShippingAddress(), order.getCart());
+            Order newOrder = new Order(nextOrderNumber(), order.getFirstName(), order.getLastName(),order.getPhoneNumber(), order.getEmailAddress(), order.getShippingAddress(), order.getCart());
             
             //removing the product from stock
             int[] skus = order.getProductSkus();
