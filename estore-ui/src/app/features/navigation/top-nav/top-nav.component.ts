@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { CartsService } from 'src/app/core/services/carts.service';
+import { UsersService } from 'src/app/core/services/users.service';
 
 @Component({
   selector: 'app-top-nav',
@@ -10,13 +12,14 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class TopNavComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
 
+
   constructor(
     public authService: AuthService,
-    private router: Router
+    private router: Router,
+    public cartsService: CartsService
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {  }
 
   onLogout() {
     console.log('Logout clicked');

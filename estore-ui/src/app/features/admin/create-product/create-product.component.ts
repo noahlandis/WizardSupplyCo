@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { InventoryService } from 'src/app/core/services/inventory.service';
 import { BaseProduct, Description } from 'src/app/core/model/product.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-product',
@@ -20,6 +21,7 @@ export class CreateProductComponent {
   constructor(
     private fb: FormBuilder,
     private inventoryService: InventoryService,
+    private snackBar: MatSnackBar
     ) {
       this.createProductForm = this.fb.group({
         name: ['', [Validators.required]],
@@ -54,8 +56,10 @@ export class CreateProductComponent {
       next: async (updateSuccess) => {
         if (updateSuccess) {
           console.log('Product updated successfully');
+          this.displaySnackBar('Product created successfully', 'Dismiss', 3000);
         } else {
           console.log('Product update failed');
+          this.displaySnackBar('Product creation failed', 'Dismiss', 3000, true);
         }
         
         await this.showSubmitFeedback();
@@ -78,5 +82,13 @@ export class CreateProductComponent {
     await new Promise(resolve => setTimeout(resolve, 1000));
     this.isSuccess = false;
     this.createButtonText.nativeElement.textContent = 'Create';
+  }
+
+  /** Display snackbar notification */
+  displaySnackBar(message: string, action: string, duration: number, error?: boolean) {
+    this.snackBar.open(message, action, {
+      duration: duration,
+      // panelClass: error ? ['snackbar-error'] : ['snackbar-success']
+    });
   }
 }

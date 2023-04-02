@@ -1,4 +1,5 @@
 interface ProductMap {
+  forEach: any;
   [sku: number]: number;
 }
 export class Cart {

@@ -6,11 +6,11 @@
 }, {
   "userId" : 1,
   "productsMap" : {
-    "13" : 1,
-    "14" : 1
+    "12" : 1,
+    "13" : 1
   },
-  "totalPrice" : 1014.98,
-  "count" : 2
+  "count" : 2,
+  "totalPrice" : 214.98
 }, {
   "userId" : 2,
   "productsMap" : { },

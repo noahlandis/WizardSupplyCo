@@ -1,6 +1,7 @@
 import { ComponentType } from '@angular/cdk/portal';
 import { Component, Input, TemplateRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { InventoryService } from 'src/app/core/services/inventory.service';
 
 
@@ -24,7 +25,8 @@ export class AdminProductCardComponent {
 
   constructor(
     private inventoryService: InventoryService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
     ) { }
 
   ngOnInit(): void {
@@ -44,10 +46,12 @@ export class AdminProductCardComponent {
       next: (deleteSuccess) => {
         if (deleteSuccess) {
           console.log('Deletion successful');
+          this.displaySnackBar('Product deleted successfully', 'Dismiss', 3000);
         }
       },
       error: (e) => {
-        console.log('Register failed with error:', e);
+        console.log('Delete failed with error:', e);
+        this.displaySnackBar('Product deletion failed', 'Dismiss', 3000, true);
       }
     });
   }
@@ -65,6 +69,14 @@ export class AdminProductCardComponent {
     else {
         this.stockStatus = "In Stock";
     }
+  }
+
+  /** Display snackbar notification */
+  displaySnackBar(message: string, action: string, duration: number, error?: boolean) {
+    this.snackBar.open(message, action, {
+      duration: duration,
+      // panelClass: error ? ['snackbar-error'] : ['snackbar-success']
+    });
   }
 }
 
