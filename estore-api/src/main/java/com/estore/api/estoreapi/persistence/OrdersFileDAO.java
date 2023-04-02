@@ -149,10 +149,12 @@ public class OrdersFileDAO implements OrdersDAO{
     @Override
     public Order createOrder(Order order) throws IOException{
         
+        //check if the product in cart exists
         if(order.getProductSkus().length == 0){
             return null;
         }
 
+        //check if there is suffiecient stock
         int userId = order.getUserId();
         for(int sku:  order.getProductSkus()){
             if(!(inventoryDao.getProduct(sku).hasEnoughStockFor(order.getCart().getProductCount(sku)))){
@@ -160,9 +162,15 @@ public class OrdersFileDAO implements OrdersDAO{
             }
             
         }
+
+        
         synchronized (orders) {
+            //create new order with next orderNumber
             Order newOrder = new Order(nextorderNumber(), order.getFirstName(), order.getLastName(),order.getPhoneNumber(), order.getEmailAddress(), order.getShippingAddress(), order.getCart());
+            
             int[] skus = order.getProductSkus();
+            
+            //removing the product from stock
             for(int sku: skus){
               Product product = inventoryDao.getProduct(sku);
               product.getStock().removeStock(order.getCart().getProductCount(sku));
@@ -172,7 +180,9 @@ public class OrdersFileDAO implements OrdersDAO{
             
         //TODO make sure to update purchased productMap for users to update 
 
+            //clering the cart
             cartsDAO.clearCart(userId);
+            //adding to the map
             orders.put(newOrder.getOrderNumber(), newOrder);
             try {
                 save();
