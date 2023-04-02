@@ -162,7 +162,7 @@ public class CartsFileDAOTest {
     }
 
     @Test
-    public void testRemoveProductFromCart() {
+    public void testRemoveProductFromCart() throws IOException {
         try{
             // Setup
             cartsFileDao.addProductToCart(1, 101, 10);
@@ -200,7 +200,7 @@ public class CartsFileDAOTest {
     }
 
     @Test
-    public void testRemoveProductFromCartNull() {
+    public void testRemoveProductFromCartNull() throws IOException {
         try{
             // Setup
             Cart cart = cartsFileDao.removeProductFromCart(4, 101, 10);
@@ -214,7 +214,7 @@ public class CartsFileDAOTest {
     }
 
     @Test
-    public void testRemoveAllProductsFromCartNull() {
+    public void testRemoveAllProductsFromCartNull() throws IOException {
         try{
             // Setup
             Cart cart = cartsFileDao.removeProductFromCart(4,101);
@@ -228,7 +228,7 @@ public class CartsFileDAOTest {
     }
 
     @Test
-    public void testRemoveAllProductsFromCartInvalid() {
+    public void testRemoveAllProductsFromCartInvalid() throws IOException {
         try{
             // Setup
             Cart cart = cartsFileDao.removeProductFromCart(3,1011);
@@ -242,7 +242,7 @@ public class CartsFileDAOTest {
     }
 
     @Test
-    public void testRemoveProductFromCartNoQuantity() {
+    public void testRemoveProductFromCartNoQuantity() throws IOException {
         try{
         // Setup
         cartsFileDao.addProductToCart(1, 101, 10);
@@ -262,7 +262,7 @@ public class CartsFileDAOTest {
     }
 
     @Test
-    public void testRemoveProductFromCartNotFound() {
+    public void testRemoveProductFromCartNotFound() throws IOException {
         // Invoke
         Cart cart = cartsFileDao.removeProductFromCart(1, 104, 1);
 
