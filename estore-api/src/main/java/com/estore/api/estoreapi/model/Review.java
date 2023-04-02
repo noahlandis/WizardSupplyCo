@@ -78,14 +78,6 @@ public class Review {
     }
 
     /**
-     * Set the review ID of the review
-     * @param reviewId The review ID of the review
-     */
-    public void setReviewId(int reviewId) {
-        this.reviewId = reviewId;
-    }
-
-    /**
      * Get the User ID of the review
      * @return The User ID of the review
      */
