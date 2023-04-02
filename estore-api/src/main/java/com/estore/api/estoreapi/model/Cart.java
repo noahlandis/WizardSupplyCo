@@ -19,6 +19,7 @@ public class Cart {
     private static final Logger LOG = Logger.getLogger(Cart.class.getName());
     @JsonProperty("userId") private int userId;
     @JsonProperty("productsMap") private Map<Integer, Integer> productsMap;
+    @JsonProperty("totalPrice") private float totalPrice;
 
     private InventoryDAO inventoryDao;
 
@@ -43,6 +44,7 @@ public class Cart {
      * Creates an array to get the skus of theproducts in the cart
      * @return the skus of the products in the cart
      */
+    @JsonIgnore
     public int[] getSkuArray() {
         int[] skus = new int[productsMap.size()];
         int i = 0;
@@ -82,6 +84,12 @@ public class Cart {
      */
     @JsonProperty("count")
     public int getCount() { return productsMap.size(); }
+
+    /**
+     * Retrieves the total price of the products in the cart
+     * @return The total price of the products in the cart
+     */
+    public float getTotalPrice() { return totalPrice; }
 
     /**
      * Checks if the product with the given sku is in the cart
@@ -131,6 +139,9 @@ public class Cart {
             
             productsMap.put(sku, newQuantity);
             LOG.info("Product with sku " + sku + " added to cart for user " + userId);
+
+            updateTotalPrice();
+
             return true;
 
         } catch (IOException e) {
@@ -145,8 +156,9 @@ public class Cart {
      * @param quantity The quantity of the product to remove
      * 
      * @return true if the product was removed from the cart, false if the sku is not found in the inventory
+     * @throws IOException
      */
-    public boolean removeProduct(int sku, int quantity) {
+    public boolean removeProduct(int sku, int quantity) throws IOException {
         LOG.info("Removing " + quantity + " of product with sku " + sku + " from cart for user " + userId);
 
         // If the product is not in the cart, return false
@@ -168,6 +180,8 @@ public class Cart {
             LOG.info("Product with sku " + sku + " quantity reduced to " + newQuantity + " in cart for user " + userId);
         }
 
+        updateTotalPrice();
+
         return true;
     }
 
@@ -177,7 +191,7 @@ public class Cart {
      * 
      * @return true if the product was removed from the cart, false if the sku is not found in the inventory
      */
-    public boolean removeProduct(int sku) {
+    public boolean removeProduct(int sku) throws IOException {
         LOG.info("Removing all of product with sku " + sku + " from cart for user " + userId);
 
         return removeProduct(sku, getProductCount(sku));
@@ -198,8 +212,7 @@ public class Cart {
      * @return The total price of the cart
      * @throws IOException If there is an error reading from the inventory
      */
-    @JsonProperty("totalPrice")
-    public float getTotalPrice() throws IOException {
+    public void updateTotalPrice() throws IOException {
         float total = 0;
 
         // Iterate through the products in the cart and calculate the total
@@ -218,6 +231,6 @@ public class Cart {
         total = (float) Math.round(total * 100) / 100;
 
         LOG.info("Total price for cart for user " + userId + " is " + total);
-        return total;
+        this.totalPrice = total;
     }
 }

@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.estore.api.estoreapi.persistence.OrdersDAO;
+import com.estore.api.estoreapi.model.InsufficientStockException;
 import com.estore.api.estoreapi.model.Order;
 
 /**
@@ -28,8 +29,6 @@ import com.estore.api.estoreapi.model.Order;
 @RestController
 @RequestMapping("orders")
 public class OrdersController {
-
-
     private static final Logger LOG = Logger.getLogger(OrdersController.class.getName());
     private OrdersDAO ordersDao;
 
@@ -65,7 +64,6 @@ public class OrdersController {
             if (order == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-
 
             return new ResponseEntity<Order>(order, HttpStatus.OK);
         }
@@ -112,7 +110,7 @@ public class OrdersController {
      * POST http://localhost:8080/order/
      * Body: order object to create
      */
-    @PostMapping(value = "", consumes = "application/json")
+    @PostMapping("")
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         LOG.info("POST /orders " + order);
 
@@ -125,6 +123,10 @@ public class OrdersController {
                 
             // Throw conflict since order already exists
             return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        catch(InsufficientStockException e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         catch(IOException e) {
             LOG.log(Level.SEVERE,e.getLocalizedMessage());

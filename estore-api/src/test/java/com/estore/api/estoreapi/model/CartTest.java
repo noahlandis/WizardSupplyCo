@@ -152,7 +152,7 @@ public class CartTest {
      * Test the removeProduct method that takes a quantity
      */
     @Test
-    public void testRemoveProductQuantity() {
+    public void testRemoveProductQuantity() throws IOException {
         // Invoke
         testCart.removeProduct(101, 3);
         
@@ -162,7 +162,7 @@ public class CartTest {
     }
 
     @Test
-    public void testRemoveExactProductQuantity() {
+    public void testRemoveExactProductQuantity() throws IOException {
         // Invoke
         testCart.removeProduct(101, 5);
         
@@ -173,9 +173,10 @@ public class CartTest {
     /**
      * Test the removeProduct method that takes a quantity, passing in a quantity
      * that is greater than the quantity in the cart
+     * @throws IOException
      */
     @Test
-    public void testRemoveProductQuantityGreaterThanCartQuantity() {
+    public void testRemoveProductQuantityGreaterThanCartQuantity() throws IOException {
         // Invoke
         testCart.removeProduct(101, 6);
         
@@ -185,9 +186,10 @@ public class CartTest {
 
     /**
      * Test the removeProduct method that does not take a quantity
+     * @throws IOException
      */
     @Test
-    public void testRemoveProduct() {
+    public void testRemoveProduct() throws IOException {
         // Invoke
         testCart.removeProduct(101);
         
@@ -197,9 +199,10 @@ public class CartTest {
 
     /**
      * Test the removeProduct method, passing in an invalid sku
+     * @throws IOException
      */
     @Test
-    public void testRemoveProductInvalidSku() {
+    public void testRemoveProductInvalidSku() throws IOException {
         // Analyze
         assertFalse(testCart.removeProduct(104));
         assertFalse(testCart.containsProduct(104));
@@ -242,7 +245,7 @@ public class CartTest {
     public void testGetTotalPrice() {
         // Analyze
         try {
-            assertEquals(175f, testCart.getTotalPrice());
+            assertEquals(175f, testCart.updateTotalPrice());
         } catch (IOException e) {
             LOG.severe("Error getting inventory while testing. Weird, because it's mocked.");
         }

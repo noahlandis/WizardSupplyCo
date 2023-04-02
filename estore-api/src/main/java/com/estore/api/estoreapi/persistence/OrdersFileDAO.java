@@ -147,8 +147,8 @@ public class OrdersFileDAO implements OrdersDAO{
      * {@inheritDoc}
      */
     @Override
-    public Order createOrder(Order order) throws IOException{
-        
+    public Order createOrder(Order order) throws IOException, InsufficientStockException {
+
         //check if the product in cart exists
         if(order.getProductSkus().length == 0){
             return null;
@@ -158,30 +158,27 @@ public class OrdersFileDAO implements OrdersDAO{
         int userId = order.getUserId();
         for(int sku:  order.getProductSkus()){
             if(!(inventoryDao.getProduct(sku).hasEnoughStockFor(order.getCart().getProductCount(sku)))){
-                return InsufficientStockException;
-            }
-            
+                throw new InsufficientStockException(sku, order.getCart().getProductCount(sku));
+            } 
         }
-
         
         synchronized (orders) {
-            //create new order with next orderNumber
+            // create new order with next orderNumber
             Order newOrder = new Order(nextorderNumber(), order.getFirstName(), order.getLastName(),order.getPhoneNumber(), order.getEmailAddress(), order.getShippingAddress(), order.getCart());
             
-            int[] skus = order.getProductSkus();
-            
             //removing the product from stock
+            int[] skus = order.getProductSkus();
             for(int sku: skus){
               Product product = inventoryDao.getProduct(sku);
               product.getStock().removeStock(order.getCart().getProductCount(sku));
               inventoryDao.updateProduct(product); 
-             
             }
             
-        //TODO make sure to update purchased productMap for users to update 
+            //TODO: make sure to update purchased productMap for users to update 
 
-            //clering the cart
+            //clearing the cart
             cartsDAO.clearCart(userId);
+
             //adding to the map
             orders.put(newOrder.getOrderNumber(), newOrder);
             try {

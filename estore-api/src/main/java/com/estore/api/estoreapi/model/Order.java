@@ -2,35 +2,38 @@ package com.estore.api.estoreapi.model;
 
 import java.util.logging.Logger;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * This class is to store order of a customer
  * 
  * @author Kanisha Agrawal
  */
-
+@JsonPropertyOrder({"orderNumber", "firstName", "lastName", "phoneNumber", "emailAddress", "shippingAddress", "cart"})
 public class Order {
 
     private static final Logger LOG = Logger.getLogger(Order.class.getName());
 
     // Package private for tests
-    static final String STRING_FORMAT = "Order [orderNumber=%d, firstname=%s, lastname=%s, phoneNumber=%s, emailAddress=%s]";
+    static final String STRING_FORMAT = "Order [orderNumber=%d, firstName=%s, lastName=%s, phoneNumber=%s, emailAddress=%s]";
 
     @JsonProperty("orderNumber") private int orderNumber;
-    @JsonProperty("firstname") private String firstname;
-    @JsonProperty("lastname") private String lastname;
+    @JsonProperty("firstName") private String firstName;
+    @JsonProperty("lastName") private String lastName;
     @JsonProperty("phoneNumber") private String phoneNumber;
     @JsonProperty("emailAddress") private String emailAddress;
-    private ShippingAddress shippingAddress;
-    private Cart cart;
+    @JsonProperty("shippingAddress") private ShippingAddress shippingAddress;
+    @JsonProperty("cart")private Cart cart;
 
 
     /**
-     * JSON contructor to create an order with the given orderNumber, firstname, lastname, phoneNumber, emailAddress, shipping Address,cart quantity
+     * JSON contructor to create an order with the given orderNumber, first name, last name, phoneNumber, emailAddress, shipping Address, cart
      * @param orderNumber the number of the order
-     * @param firstname The firstname of the customer
-     * @param lastname The lastname of the customer
+     * @param firstName The first name of the customer
+     * @param lastName The last name of the customer
      * @param phoneNumber the phone number of the customer
      * @param emailAddress the email address of the customer
      * @param shippingAddress the shipping address object of the customer
@@ -41,10 +44,19 @@ public class Order {
      * is not provided in the JSON object, the Java field gets the default Java
      * value, i.e. 0 for int
      */
-    public Order( @JsonProperty("orderNumber") int orderNumber, @JsonProperty("firstname") String firstname, @JsonProperty("lastname") String lastname,  @JsonProperty("phoneNumber") String phoneNumber, @JsonProperty("emailAddress") String emailAddress, ShippingAddress shippingAddress, Cart cart){
+    @JsonCreator
+    public Order(
+        @JsonProperty("orderNumber") int orderNumber,
+        @JsonProperty("firstName") String firstName,
+        @JsonProperty("lastName") String lastName,
+        @JsonProperty("phoneNumber") String phoneNumber,
+        @JsonProperty("emailAddress") String emailAddress,
+        @JsonProperty("shippingAddress") ShippingAddress shippingAddress,
+        @JsonProperty("cart") Cart cart
+    ){
         this.orderNumber = orderNumber;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.shippingAddress = shippingAddress;
@@ -52,9 +64,9 @@ public class Order {
     }
 
     /**
-     * JSON contructor to create an order with the given firstname, lastname, phoneNumber, emailAddress, shipping Address,cart quantity
-     * @param firstname The firstname of the customer
-     * @param lastname The lastname of the customer
+     * JSON contructor to create an order with the given first name, last name, phoneNumber, emailAddress, shipping Address,cart quantity
+     * @param firstName The first name of the customer
+     * @param lastName The last name of the customer
      * @param phoneNumber the phone number of the customer
      * @param emailAddress the email address of the customer
      * @param shippingAddress the shipping address object of the customer
@@ -65,9 +77,16 @@ public class Order {
      * is not provided in the JSON object, the Java field gets the default Java
      * value, i.e. 0 for int
      */
-    public Order(@JsonProperty("firstname") String firstname, @JsonProperty("lastname") String lastname,  @JsonProperty("phoneNumber") String phoneNumber, @JsonProperty("emailAddress") String emailAddress, ShippingAddress shippingAddress, Cart cart){
-        this.firstname = firstname;
-        this.lastname = lastname;
+    public Order(
+        @JsonProperty("firstName") String firstName,
+        @JsonProperty("lastName") String lastName,
+        @JsonProperty("phoneNumber") String phoneNumber,
+        @JsonProperty("emailAddress") String emailAddress,
+        @JsonProperty("shippingAddress") ShippingAddress shippingAddress,
+        @JsonProperty("cart") Cart cart
+    ){
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.emailAddress = emailAddress;
         this.shippingAddress = shippingAddress;
@@ -76,11 +95,11 @@ public class Order {
 
     
     /**
-     * Retrieves the firstname of the person who placed the order
-     * @return The firstname of the person who placed theorder
+     * Retrieves the first name of the person who placed the order
+     * @return The first name of the person who placed theorder
      */
     public String getFirstName(){
-        return firstname;
+        return firstName;
     }
 
     /**
@@ -88,7 +107,7 @@ public class Order {
      * @return The lastname of the person who placed theorder
      */
     public String getLastName(){
-        return lastname;
+        return lastName;
     }
 
     /**
@@ -122,19 +141,12 @@ public class Order {
     public int getOrderNumber(){
         return orderNumber;
     }
-
-    /**
-     * Sets the orderNumber of the person who placed the order
-     * @param orderNumber sets orderNumber of the person who placed theorder
-     */
-    public void setOrderNumber(int orderNumber){
-        this.orderNumber = orderNumber;
-    }
     
     /**
      * Retrieves the userId of the order
      * @return The userId of the order
      */
+    @JsonIgnore
     public int getUserId(){
         return cart.getUserId();
     }
@@ -142,7 +154,8 @@ public class Order {
     /**
      * Retrieves the productSkus of the cart
      * @return The productSkus of the cart
-     */    
+     */
+    @JsonIgnore
     public int[] getProductSkus(){
         return cart.getSkuArray();
     }
@@ -159,7 +172,7 @@ public class Order {
      */
     @Override
     public String toString() {
-        return String.format(STRING_FORMAT,orderNumber, firstname,lastname,phoneNumber,emailAddress,shippingAddress, cart);
+        return String.format(STRING_FORMAT,orderNumber, firstName,lastName,phoneNumber,emailAddress,shippingAddress, cart);
     } 
 
 }

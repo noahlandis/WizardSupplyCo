@@ -107,9 +107,6 @@ public class OrdersFileDAOTest {
 
     @Test
     public void testCreateOrder() throws IOException, InsufficientStockException {
-       
-       
-        
         CartsFileDAO cartsDao =  mock(CartsFileDAO.class);
         Cart[] cart = new Cart[2];
         Map<Integer,Integer> productMap = new HashMap<>();

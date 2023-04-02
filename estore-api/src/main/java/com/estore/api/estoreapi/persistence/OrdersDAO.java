@@ -47,6 +47,6 @@ public interface OrdersDAO {
      * 
      * @throws IOException if an issue with underlying storage
      */
-    Order createOrder(Order order) throws IOException;
+    Order createOrder(Order order) throws IOException, InsufficientStockException;
 
 }
