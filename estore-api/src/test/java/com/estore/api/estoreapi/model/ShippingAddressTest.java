@@ -13,7 +13,28 @@ public class ShippingAddressTest {
         String expectedcity = "Rochester";
         int zipCode = 14623;
         String addressLine1 = "220 John Street";
-        String addressLine2 = "RIT";
+
+        // Invoke
+        ShippingAddress shippingAddress = new ShippingAddress(expectedcountry, expectedState, expectedcity, zipCode, addressLine1);
+
+        // Analyze
+        assertEquals(expectedcountry, shippingAddress.getCountry());
+        assertEquals(expectedState, shippingAddress.getState());
+        assertEquals(expectedcity, shippingAddress.getCity());
+        assertEquals(zipCode, shippingAddress.getZipCode());
+        assertEquals(addressLine1, shippingAddress.getAddressLine1());
+        assertEquals("", shippingAddress.getAddressLine2());
+    }
+
+    @Test
+    public void testConstructor2() {
+        // Setup
+        String expectedcountry = "United States of America";
+        String expectedState = "New York";
+        String expectedcity = "Rochester";
+        int zipCode = 14623;
+        String addressLine1 = "220 John Street";
+        String addressLine2 = "Apt 2";
 
         // Invoke
         ShippingAddress shippingAddress = new ShippingAddress(expectedcountry, expectedState, expectedcity, zipCode, addressLine1, addressLine2);
@@ -25,21 +46,22 @@ public class ShippingAddressTest {
         assertEquals(zipCode, shippingAddress.getZipCode());
         assertEquals(addressLine1, shippingAddress.getAddressLine1());
         assertEquals(addressLine2, shippingAddress.getAddressLine2());
+        assertEquals("", shippingAddress.getApartmentNumber());
     }
 
     @Test
-    public void testConstructor2() {
+    public void testConstructor3() {
         // Setup
         String expectedcountry = "United States of America";
         String expectedState = "New York";
         String expectedcity = "Rochester";
         int zipCode = 14623;
         String addressLine1 = "220 John Street";
-        String addressLine2 = "RIT";
-        String apartmentNumber = "13201";
+        String addressLine2 = "Apt 2";
+        String apartmentNumber = "2";
 
         // Invoke
-        ShippingAddress shippingAddress = new ShippingAddress(expectedcountry, expectedState, expectedcity, zipCode, addressLine1, addressLine2,apartmentNumber);
+        ShippingAddress shippingAddress = new ShippingAddress(expectedcountry, expectedState, expectedcity, zipCode, addressLine1, addressLine2, apartmentNumber);
 
         // Analyze
         assertEquals(expectedcountry, shippingAddress.getCountry());
