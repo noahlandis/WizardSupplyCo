@@ -9,8 +9,8 @@
     "12" : 1,
     "13" : 1
   },
-  "count" : 2,
-  "totalPrice" : 214.98
+  "totalPrice" : 214.98,
+  "count" : 2
 }, {
   "userId" : 2,
   "productsMap" : { },

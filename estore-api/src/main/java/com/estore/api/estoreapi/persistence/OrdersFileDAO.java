@@ -1,9 +1,6 @@
 package com.estore.api.estoreapi.persistence;
-import java.io.Console;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Logger;
@@ -30,15 +27,11 @@ import com.estore.api.estoreapi.model.InsufficientStockException;
 public class OrdersFileDAO implements OrdersDAO{
 
     private static final Logger LOG = Logger.getLogger(OrdersFileDAO.class.getName());
-
-
-    private static final Order InsufficientStockException = null;
-
     
-    private Map<Integer,Order> orders;   // Provides a local cache of the cart objects
+    private Map<Integer,Order> orders;   // Provides a local cache of the order objects
                                     // so that we don't need to read from the file
                                    // each time
-    private ObjectMapper objectMapper;  // Provides conversion between Cart
+    private ObjectMapper objectMapper;  // Provides conversion between Order
                                        // objects and JSON text format written
                                       // to the file
     private String filename;    // Filename to read from and write to
@@ -149,12 +142,12 @@ public class OrdersFileDAO implements OrdersDAO{
     @Override
     public Order createOrder(Order order) throws IOException, InsufficientStockException {
 
-        //check if the product in cart exists
+        //check if the order's cart is empty
         if(order.getProductSkus().length == 0){
             return null;
         }
 
-        //check if there is suffiecient stock
+        //check if there is sufficient stock
         int userId = order.getUserId();
         for(int sku:  order.getProductSkus()){
             if(!(inventoryDao.getProduct(sku).hasEnoughStockFor(order.getCart().getProductCount(sku)))){
@@ -187,7 +180,7 @@ public class OrdersFileDAO implements OrdersDAO{
                 LOG.warning("Failed to save cart for user " + order.getOrderNumber() + ". " + e.getMessage());
             }
 
-            return order;
+            return newOrder;
         }
     }
     
