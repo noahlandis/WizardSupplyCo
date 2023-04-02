@@ -3,13 +3,7 @@ package com.estore.api.estoreapi.persistence;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -17,8 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.naming.InsufficientResourcesException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.estore.api.estoreapi.model.ShippingAddress;
@@ -57,7 +49,7 @@ public class OrdersFileDAOTest {
         mockProducts[0] = new Product(101, "Newt Lungs (10 pack)", 14.99f, new Stock(100));
         mockProducts[1] = new Product(102, "Frostwing Dragon Egg", 20.99f, new Stock(100));
         mockProducts[2] = new Product(103, "Malachite Heartstones (3 pack)", 50.99f, new Stock(100));          
-                        // Mock the inventory dao methods
+        // Mock the inventory dao methods
         when(inventoryDao.getProducts()).thenReturn(mockProducts);
         when(inventoryDao.getProduct(101)).thenReturn(mockProducts[0]);
         when(inventoryDao.getProduct(102)).thenReturn(mockProducts[1]);

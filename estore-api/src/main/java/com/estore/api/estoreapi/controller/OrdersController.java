@@ -87,7 +87,7 @@ public class OrdersController {
      */
     @GetMapping("")
     public ResponseEntity<Order[]> getOrders() {
-        LOG.info("GET /order");
+        LOG.info("GET /orders");
 
         try {
             Order[] orders = ordersDao.getOrders();
@@ -112,9 +112,9 @@ public class OrdersController {
      * POST http://localhost:8080/order/
      * Body: order object to create
      */
-    @PostMapping("")
+    @PostMapping(value = "", consumes = "application/json")
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-        LOG.info("POST /order " + order);
+        LOG.info("POST /orders " + order);
 
         try {
             Order createdOrder = ordersDao.createOrder(order);

@@ -2,8 +2,6 @@ package com.estore.api.estoreapi.model;
 
 import java.util.logging.Logger;
 
-import javax.swing.event.CaretEvent;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
