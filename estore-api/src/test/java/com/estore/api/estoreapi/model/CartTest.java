@@ -244,10 +244,6 @@ public class CartTest {
     @Test
     public void testGetTotalPrice() {
         // Analyze
-        try {
-            assertEquals(175f, testCart.updateTotalPrice());
-        } catch (IOException e) {
-            LOG.severe("Error getting inventory while testing. Weird, because it's mocked.");
-        }
+        assertEquals(175f, testCart.getTotalPrice());
     }
 }
