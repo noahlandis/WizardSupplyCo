@@ -49,12 +49,9 @@ public class Review {
         this.userId = userId;
         this.sku = sku;
         this.rating = rating;
-        if(comment == null)
-            this.comment = "";
-        else
-            this.comment = comment;
+        this.comment = (comment==null) ? "" : comment;
     }
-
+    
     /**
      * Create a Review with the given userID, sku, rating, without 
      * comment
