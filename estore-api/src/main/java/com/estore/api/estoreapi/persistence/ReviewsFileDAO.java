@@ -194,7 +194,7 @@ public class ReviewsFileDAO implements ReviewsDAO {
     }
 
     /**
-     * Get average rating for a partiuclar product
+     * Get average rating for a particular product
      */
     public double getAverageRating(int sku) throws IOException {
         Review[] reviewsArray = getReviews(sku);

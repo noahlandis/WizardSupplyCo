@@ -94,4 +94,14 @@ public interface ReviewsDAO {
      */
     boolean deleteReview(int productId, int userId) throws IOException;
 
+    /**
+     * Calculates the average rating for a product
+     * 
+     * @param sku The sku of the {@link Review review} to get
+     * 
+     * @return average rating for the product
+     * 
+     * @throws IOException if an issue with underlying storage
+     */
+    double getAverageRating(int sku) throws IOException;
 }
