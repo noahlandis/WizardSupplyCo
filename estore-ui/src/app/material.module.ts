@@ -16,7 +16,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatGridListModule } from '@angular/material/grid-list';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatChipsModule} from '@angular/material/chips';
+import {MatBadgeModule} from '@angular/material/badge';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 @NgModule({
   declarations: [],
   imports: [
@@ -36,9 +39,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatGridListModule,
     MatMenuModule,
     MatChipsModule,
-    MatDialogModule
-        
-    
+    MatBadgeModule,
+    MatDialogModule,
+    MatSnackBarModule
   ],
   exports:[
     MatIconModule,
@@ -56,7 +59,9 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatGridListModule,
     MatMenuModule,
     MatChipsModule,
-    MatDialogModule
+    MatBadgeModule,
+    MatDialogModule,
+    MatSnackBarModule
   ]
 })
 export class MaterialModule { }
