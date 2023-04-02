@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 /**
@@ -11,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * 
  * @author Priyank Patel
  */
+
+@JsonPropertyOrder({"reviewId", "userId", "sku", "rating", "comment"})
 public class Review {
     private static final Logger LOG = Logger.getLogger(Review.class.getName());
 
@@ -46,7 +49,10 @@ public class Review {
         this.userId = userId;
         this.sku = sku;
         this.rating = rating;
-        this.comment = comment;
+        if(comment == null)
+            this.comment = "";
+        else
+            this.comment = comment;
     }
 
     /**

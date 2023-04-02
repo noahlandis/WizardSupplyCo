@@ -156,8 +156,8 @@ public class ReviewsFileDAO implements ReviewsDAO {
         }
         Review newReview = new Review(
             nextReviewId,
-            review.getSku(),
             review.getUserId(),
+            review.getSku(),            
             review.getRating(),
             review.getComment()
         );
