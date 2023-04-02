@@ -3,7 +3,6 @@ package com.estore.api.estoreapi.controller;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doThrow;
 
 
 import java.io.IOException;
