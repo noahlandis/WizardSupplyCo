@@ -170,7 +170,7 @@ public class CartsFileDAO implements CartsDAO {
      * {@inheritDoc}
      */
     @Override
-    public Cart removeProductFromCart(int userId, int sku, int quantity) {
+    public Cart removeProductFromCart(int userId, int sku, int quantity) throws IOException {
         synchronized (carts) {
             if (!carts.containsKey(userId)) {
                 LOG.warning("User with id " + userId + " does not have a cart!");
@@ -199,7 +199,7 @@ public class CartsFileDAO implements CartsDAO {
      * {@inheritDoc}
      */
     @Override
-    public Cart removeProductFromCart(int userId, int sku) {
+    public Cart removeProductFromCart(int userId, int sku) throws IOException {
         synchronized (carts) {
             if (!carts.containsKey(userId)) {
                 LOG.warning("User with id " + userId + " does not have a cart!");
