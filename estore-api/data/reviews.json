@@ -1,0 +1,30 @@
+[  
+    {
+        "reviewId": 1,
+        "userId": 3,
+        "sku": 1,
+        "rating": 5,
+        "comment": "Worked great for my potion. I'll be back for more!"  
+    },
+    {    
+        "reviewId": 2,    
+        "userId": 7,    
+        "sku": 2,    
+        "rating": 4,    
+        "comment": "This product was good, but I wish it had come in a bigger size."  
+    },    
+    {    
+        "reviewId": 3,    
+        "userId": 5,    
+        "sku": 4,    
+        "rating": 2,    
+        "comment": "I was really disappointed with this product. It didn't work as advertised."  
+    },  
+    {    
+        "reviewId": 4,    
+        "userId": 10,    
+        "sku": 3,   
+        "rating": 5,    
+        "comment": "This is the best product I've ever used. I recommend it to everyone!"  
+    }
+]

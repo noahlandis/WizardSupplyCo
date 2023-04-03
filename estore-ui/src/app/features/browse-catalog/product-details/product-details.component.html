@@ -1,0 +1,38 @@
+<div class="product-container">
+  <div class="product-image">
+    <img [src]="image" alt="Product Image">
+  </div>
+  <div class="product-details">
+    <h1 class="product-title">{{ name }} <span class="product-sku">SKU: {{ sku }}</span></h1>
+    <div class="stock-label">
+      <mat-icon class="status-icon" [ngClass]="{
+        'green': stockStatus==='In Stock',
+        'orange': stockStatus==='Low Stock', 
+        'red': stockStatus==='Out Of Stock'}"
+        ></mat-icon>
+      {{ stockStatus }}
+    </div>
+    <div class="stars-container">
+      <ng-container *ngFor="let i of [1, 2, 3, 4, 5]">
+        <mat-icon class="star-icon" color="accent">star</mat-icon>
+      </ng-container>
+      <span class="reviews">10</span>
+    </div>
+    <div class="price-container">
+      <div style="font-size: 1.2rem;">$<span class="price">{{ price }}</span></div>
+      <button *ngIf="(authService.getIsLoggedIn() | async) && !(authService.getIsAdmin() | async)"
+        mat-raised-button
+        color="primary"
+        class="add-to-cart-button"
+        (click)="addToCart(sku)"
+        [disabled]="stockStatus==='Out Of Stock'"
+      >
+        Add to Cart
+      </button>
+    </div>
+    <div class="description-container">
+      <p class="description-summary">{{ summary }}</p>
+      <p class="description-tags">Tags: <span *ngFor="let tag of tags; let isLast = last">{{ tag }}{{ isLast ? '' : ', ' }}</span></p>
+    </div>
+  </div>
+</div>
