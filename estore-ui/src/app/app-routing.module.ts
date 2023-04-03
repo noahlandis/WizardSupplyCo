@@ -15,6 +15,7 @@ import { EditProductComponent } from './features/admin/edit-product/edit-product
 import { CreateProductComponent } from './features/admin/create-product/create-product.component';
 import { ProductDetailsComponent } from './features/browse-catalog/product-details/product-details.component';
 import { CheckoutComponent } from './features/order-processing/checkout/checkout.component';
+import { authCheckoutGuard } from './core/guards/auth-checkout.guard';
 
 const routes: Routes = [
     {path:'', component:CatalogComponent},
@@ -28,7 +29,7 @@ const routes: Routes = [
     {
         path:'checkout',
         component:CheckoutComponent,
-        canActivate: [authCustomerGuard]
+        canActivate: [authCheckoutGuard]
     },
     {
         path:'auth',

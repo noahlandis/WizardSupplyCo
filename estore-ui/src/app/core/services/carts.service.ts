@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, forkJoin } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
-import { Cart } from '../model/cart.model';
+import { Cart, CartDetails, CartEntry } from '../model/cart.model';
 import { MessageService } from './message.service';
 import { UpdateService } from './update.service';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { InventoryService } from './inventory.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,13 +27,63 @@ export class CartsService {
     private messageService: MessageService,
     private updateService: UpdateService,
     private authService: AuthService,
-    private router: Router,
+    private inventoryService: InventoryService,
     private snackBar: MatSnackBar
   ) { }
 
   /** Log a CartsService message with the MessageService */
   private log(message: string) {
     this.messageService.add(`CartsService: ${message}`);
+  }
+
+  /** Get the cart entries for the current user. */
+  getCartDetails(userId: number): Observable<CartDetails | null> {
+    return this.getCart(userId).pipe(
+      switchMap((cart) => {
+        if (cart) {
+          const items = Object.entries(cart.productsMap);
+          if (items.length === 0) {
+            return of(null);
+          }
+
+          // Fetch all product details in parallel
+          const productRequests = items.map(([sku]) => this.inventoryService.getProduct(Number(sku)));
+          return forkJoin(productRequests).pipe(
+            map((products) => {
+              const cartEntries = products.map((product, index) => {
+                const [, quantity] = items[index];
+                return new CartEntry(product.sku, product.name, product.price, Number(quantity));
+              });
+              const cartCount = Number(cart.count);
+              const subtotal = Number(cart.totalPrice);
+              const tax = this.calculateTax(subtotal);
+              const shipping = 15;
+              const totalPrice = subtotal + tax + shipping;
+              const cartDetails = new CartDetails(userId, cartEntries, cartCount, subtotal, tax, shipping, totalPrice);
+              return cartDetails;
+            }),
+            catchError((err) => {
+              console.error(err);
+              return of(null);
+            })
+          );
+        } else {
+          console.log('No cart found');
+          return of(null);
+        }
+      }),
+      catchError((err) => {
+        console.error(err);
+        return of(null);
+      })
+    );
+  }
+
+  /** Calculate New York state tax. */
+  calculateTax(subtotal: number) {
+    const newYorkStateTaxRate = 0.08875; // New York state tax rate: 8.875%
+    const tax = subtotal * newYorkStateTaxRate;
+    return tax;
   }
 
   /** GET cart by user id from the server */

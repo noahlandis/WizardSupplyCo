@@ -1,9 +1,9 @@
 <div class="container">
-  <h1 class="text-center">Shopping Cart ({{cartCount}} items)</h1>
+  <h1 class="text-center">Shopping Cart{{ (cartDetails?.cartCount ?? 0) > 0 ? ' (' + cartDetails?.cartCount + ' items)' : '' }}</h1>
   <div class="cart-content">
-    <ng-container *ngIf="cartEntries.length > 0; else emptyCart">
+    <ng-container *ngIf="cartDetails as cd; else emptyCart">
       <div class="cart-items">
-        <app-cart-product-card *ngFor="let entry of cartEntries"
+        <app-cart-product-card *ngFor="let entry of cd.cartEntries"
           [sku]="entry.sku"
           [name]="entry.name"
           [price]="entry.price"
@@ -17,22 +17,22 @@
         <h2>Order Summary</h2>
         <div class="summary-item">
           <span>Subtotal</span>
-          <span>{{ subtotal | currency }}</span>
+          <span>{{ cd.subtotal | currency }}</span>
         </div>
         <div class="summary-item">
           <span>Tax</span>
-          <span>{{ tax | currency }}</span>
+          <span>{{ cd.tax | currency }}</span>
         </div>
         <div class="summary-item">
           <span>Shipping</span>
-          <span>{{ shipping | currency }}</span>
+          <span>{{ cd.shipping | currency }}</span>
         </div>
         <hr>
         <div class="summary-item total">
           <span>Total</span>
-          <span>{{ totalPrice | currency }}</span>
+          <span>{{ cd.totalPrice | currency }}</span>
         </div>
-        <button mat-raised-button color="primary" routerLink="/checkout">Proceed to Checkout</button>
+        <button mat-raised-button color="primary" (click)="onCheckout()">Proceed to Checkout</button>
       </div>
     </ng-container>
     <ng-template #emptyCart>
@@ -43,4 +43,3 @@
     </ng-template>
   </div>
 </div>
-

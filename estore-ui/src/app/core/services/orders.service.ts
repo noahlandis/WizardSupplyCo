@@ -5,8 +5,6 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { BaseOrder, Order } from '../model/order.model';
 import { MessageService } from './message.service';
 
-interface OrderResponse { success: boolean; order?: Order; errorMessage?: string }
-
 @Injectable({
   providedIn: 'root'
 })
@@ -28,18 +26,14 @@ export class OrdersService {
   }
 
   /** POST: place a new order on the server */
-  placeOrder(order: BaseOrder): Observable<OrderResponse> {
+  placeOrder(order: BaseOrder): Observable<Order> {
     this.log(`placing order...`);
 
-    return this.http.post<OrderResponse>(this.ordersUrl, order, this.httpOptions).pipe(
+    return this.http.post<Order>(this.ordersUrl, order, this.httpOptions).pipe(
       tap(response => {
-        if (response.success) {
-          this.log(`order placed successfully with orderId=${response.order?.orderNumber}`);
-        } else {
-          this.log(`order placement failed: ${response.errorMessage}`);
-        }
+        this.log(`order placed successfully with orderId=${response.orderNumber}`);
       }),
-      catchError(this.handleError<OrderResponse>('placeOrder'))
+      catchError(this.handleError<Order>('placeOrder'))
     );
   }
 
