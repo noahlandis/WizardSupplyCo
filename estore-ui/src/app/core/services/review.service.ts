@@ -4,7 +4,7 @@ import { MessageService } from './message.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { Review } from '../model/review.model';
+import { BaseReview, Review } from '../model/review.model';
 
 @Injectable({
   providedIn: 'root'
@@ -65,7 +65,7 @@ export class ReviewService {
   }
 
   /** POST: add a new review to the server */
-  createReview(review: Review): Observable<Review> {
+  createReview(review: BaseReview): Observable<Review> {
     this.log(`creating review: ${JSON.stringify(review)} ...`);
     return this.http.post<Review>(this.reviewsUrl, review, this.httpOptions).pipe(
       tap((newReview: Review) => {
