@@ -14,6 +14,9 @@ import { AdminDashboardComponent } from './features/admin/admin-dashboard/admin-
 import { EditProductComponent } from './features/admin/edit-product/edit-product.component';
 import { CreateProductComponent } from './features/admin/create-product/create-product.component';
 import { ProductDetailsComponent } from './features/browse-catalog/product-details/product-details.component';
+import { CheckoutComponent } from './features/order-processing/checkout/checkout.component';
+import { authCheckoutGuard } from './core/guards/auth-checkout.guard';
+
 const routes: Routes = [
     {path:'', component:CatalogComponent},
     {path:'catalog', component:CatalogComponent},
@@ -25,8 +28,8 @@ const routes: Routes = [
     },
     {
         path:'checkout',
-        component:CartComponent,
-        canActivate: [authCustomerGuard]
+        component:CheckoutComponent,
+        canActivate: [authCheckoutGuard]
     },
     {
         path:'auth',
