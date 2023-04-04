@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CartsService } from 'src/app/core/services/carts.service';
 import { InventoryService } from 'src/app/core/services/inventory.service';
+import { ReviewFormComponent } from '../../reviews/review-form/review-form.component';
 
 @Component({
   selector: 'app-product-details',
