@@ -20,7 +20,7 @@
     </div>
     <div class="price-container">
       <div style="font-size: 1.2rem;">$<span class="price">{{ price }}</span></div>
-      <button *ngIf="(authService.getIsLoggedIn() | async) && !(authService.getIsAdmin() | async)"
+      <button *ngIf="!(authService.getIsAdmin() | async)"
         mat-raised-button
         color="primary"
         class="add-to-cart-button"

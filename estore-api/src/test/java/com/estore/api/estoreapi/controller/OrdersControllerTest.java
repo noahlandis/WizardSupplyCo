@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import com.estore.api.estoreapi.persistence.OrdersDAO;
 import com.estore.api.estoreapi.model.Cart;
+import com.estore.api.estoreapi.model.InsufficientStockException;
 import com.estore.api.estoreapi.model.Order;
 import com.estore.api.estoreapi.model.ShippingAddress;
 
@@ -94,7 +95,12 @@ public class OrdersControllerTest {
           Order order = new Order(2,"Rince","Wind", "02734613","rince@gmail.com", new ShippingAddress("United States of America", "New York","Rochester", 14623,"220 John Street","RIT"), new Cart(1));
         // when createOrder is called, return true simulating successful
         // creation and save
-        when(mockOrdersDAO.createOrder(order)).thenReturn(order);
+        try {
+            when(mockOrdersDAO.createOrder(order)).thenReturn(order);
+        } catch (InsufficientStockException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         // Invoke
         ResponseEntity<Order> response = ordersController.createOrder(order);

@@ -23,7 +23,7 @@
     <div style="font-size: 1.2rem;">$<span style="display: inline; padding-left: 2px;" class="price">{{ price }}</span></div>
     
     <mat-card-actions>
-      <ng-container *ngIf="(authService.getIsLoggedIn() | async) && !(authService.getIsAdmin() | async)">
+      <ng-container *ngIf="!(authService.getIsAdmin() | async)">
         <button
           mat-raised-button 
           color="primary" 
