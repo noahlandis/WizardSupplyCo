@@ -2,9 +2,11 @@ package com.estore.api.estoreapi.persistence;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -61,7 +63,7 @@ public class InventoryFileDAOTest {
         // Analyze
         assertEquals(products.length,testProducts.length);
         for (int i = 0; i < testProducts.length;++i)
-            assertEquals(products[i],testProducts[i]);
+            assertEquals(testProducts[i], products[i]);
     }
 
     @Test
@@ -70,8 +72,8 @@ public class InventoryFileDAOTest {
         Product[] products = inventoryFileDAO.findProducts("Mal");
 
         // Analyze
-        assertEquals(products.length,1);
-        assertEquals(products[0],testProducts[2]);
+        assertEquals(1,products.length);
+        assertEquals(testProducts[2],products[0]);
     }
 
     @Test
@@ -80,7 +82,7 @@ public class InventoryFileDAOTest {
         Product product = inventoryFileDAO.getProduct(101);
 
         // Analzye
-        assertEquals(product,testProducts[0]);
+        assertEquals(testProducts[0], product);
     }
 
     @Test
@@ -90,12 +92,12 @@ public class InventoryFileDAOTest {
                             "Unexpected exception thrown");
 
         // Analzye
-        assertEquals(result,true);
+        assertTrue(result);
         // We check the internal tree map size against the length
         // of the test products array - 1 (because of the delete)
         // Because products attribute of InventoryFileDAO is package private
         // we can access it directly
-        assertEquals(inventoryFileDAO.products.size(),testProducts.length-1);
+        assertEquals(testProducts.length-1, inventoryFileDAO.products.size());
     }
 
     @Test
@@ -110,10 +112,10 @@ public class InventoryFileDAOTest {
         // Analyze
         assertNotNull(result);
         Product actual = inventoryFileDAO.getProduct(product.getSku());
-        assertEquals(actual.getSku(),product.getSku());
-        assertEquals(actual.getName(),product.getName());
-        assertEquals(actual.getPrice(),product.getPrice());
-        assertEquals(actual.getStock(),product.getStock());
+        assertEquals(product.getSku(), actual.getSku());
+        assertEquals(product.getName(), actual.getName());
+        assertEquals(product.getPrice(), actual.getPrice());
+        assertEquals(product.getStock(), actual.getStock());
     }
 
     @Test
@@ -128,7 +130,7 @@ public class InventoryFileDAOTest {
         // Analyze
         assertNotNull(result);
         Product actual = inventoryFileDAO.getProduct(product.getSku());
-        assertEquals(actual,product);
+        assertEquals(product, actual);
     }
 
     @Test
@@ -150,7 +152,7 @@ public class InventoryFileDAOTest {
         Product product = inventoryFileDAO.getProduct(98);
 
         // Analyze
-        assertEquals(product,null);
+        assertNull(product);
     }
 
     @Test
@@ -160,8 +162,8 @@ public class InventoryFileDAOTest {
                                                 "Unexpected exception thrown");
 
         // Analyze
-        assertEquals(result,false);
-        assertEquals(inventoryFileDAO.products.size(),testProducts.length);
+        assertFalse(result);
+        assertEquals(testProducts.length, inventoryFileDAO.products.size());
     }
 
     @Test
@@ -203,6 +205,6 @@ public class InventoryFileDAOTest {
         Product[] products = inventoryFileDAO.findProducts("doesnt exist");
 
         // Analyze
-        assertEquals(products.length, 0);
+        assertEquals(0, products.length);
     }
 }

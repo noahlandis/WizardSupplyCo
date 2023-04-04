@@ -243,11 +243,18 @@ public class CartTest {
      */
     @Test
     public void testGetTotalPrice() {
-        // Analyze
+        // Setup
+        testCart.clear();
         try {
-            assertEquals(175f, testCart.updateTotalPrice());
-        } catch (IOException e) {
-            LOG.severe("Error getting inventory while testing. Weird, because it's mocked.");
+            testCart.addProduct(101, 5);
+            testCart.addProduct(102, 5);
+        } catch (InsufficientStockException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+        int expectedTotalPrice = 5 * 15 + 5 * 20;
+        
+        // Analyze
+        assertEquals(expectedTotalPrice, testCart.getTotalPrice());
     }
 }

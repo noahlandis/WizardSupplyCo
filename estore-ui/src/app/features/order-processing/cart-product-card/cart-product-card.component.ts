@@ -10,31 +10,18 @@ import { InventoryService } from 'src/app/core/services/inventory.service';
 })
 export class CartProductCardComponent implements OnInit {
   @Input() sku: number = 0;
+  @Input() name: string = '';
+  @Input() price: number = 0;
   @Input() quantity: number = 0;
   @Input() userId: number = 0;
-  name: string = '';
-  price: number = 0;
 
   @Output() productRemoved = new EventEmitter<void>();
+  @Output() quantityChanged = new EventEmitter<void>();
 
-  constructor(private inventoryService: InventoryService, private cartsService: CartsService, private router: Router) { }
+  constructor(private cartsService: CartsService, private router: Router) { }
 
   ngOnInit(): void {
-    this.getDetails();
-  }
-
-  getDetails() {
-    this.inventoryService.getProduct(this.sku).subscribe({
-      next: (product) => {
-        if (product) {
-          this.name = product.name;
-          this.price = product.price;
-        }
-      },
-      error: (err) => {
-        console.error(err);
-      }
-    });
+    
   }
   
   /** Remove product from cart. */
@@ -64,6 +51,7 @@ export class CartProductCardComponent implements OnInit {
         if (response) {
           console.log('Product quantity increased');
           this.quantity++;
+          this.quantityChanged.emit();
         } else {
           console.log('Failed to increase product quantity');
         }
@@ -84,6 +72,7 @@ export class CartProductCardComponent implements OnInit {
           if (response) {
             console.log('Product quantity decreased');
             this.quantity--;
+            this.quantityChanged.emit();
           } else {
             console.log('Failed to decrease product quantity');
           }
