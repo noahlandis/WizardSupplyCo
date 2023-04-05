@@ -34,9 +34,11 @@
       <p class="description-summary">{{ summary }}</p>
       <p class="description-tags">Tags: <span *ngFor="let tag of tags; let isLast = last">{{ tag }}{{ isLast ? '' : ', ' }}</span></p>
     </div>
-    <div>
-      <app-review-form  *ngIf="(authService.getIsAdmin() | async) || (authService.getIsLoggedIn() | async) || reviewForm.userHasBoughtProduct()">
-      </app-review-form>
-    </div>
   </div>
-  </div>
+  <app-review-card-component 
+    [userId]="1"
+    [rating]="4"
+    [comment]="'This is a comment'"
+    [sku]="23"
+  />
+</div>
