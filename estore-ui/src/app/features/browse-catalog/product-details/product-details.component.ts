@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -25,12 +25,13 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   private readonly QUANTITY_LOW_STOCK = 10;
   private readonly QUANTITY_OUT_OF_STOCK = 0; 
   private routeSubscription!: Subscription;
+  @ViewChild(ReviewFormComponent, {static : false}) reviewForm!: ReviewFormComponent;
 
   constructor(
     private route: ActivatedRoute,
     private inventoryService: InventoryService,
     private cartsService: CartsService,
-    public authService: AuthService
+    public authService: AuthService,
   ) {}
 
   ngOnInit(): void {

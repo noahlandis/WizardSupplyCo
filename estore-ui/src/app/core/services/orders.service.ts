@@ -37,6 +37,17 @@ export class OrdersService {
     );
   }
 
+  /** GET: get all the products purchased by a user */
+  getProductsOrderedByUserId(userId: number): Observable<number[]> {
+    const url = `${this.ordersUrl}/user/${userId}`;
+    this.log(`fetching product skus ordered for userId=${userId}...`);
+
+    return this.http.get<number[]>(url).pipe(
+      tap(_ => this.log(`fetched orders for userId=${userId}`)),
+      catchError(this.handleError<number[]>('getOrdersByUserId', []))
+    );
+  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.

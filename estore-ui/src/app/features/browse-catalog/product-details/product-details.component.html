@@ -34,9 +34,9 @@
       <p class="description-summary">{{ summary }}</p>
       <p class="description-tags">Tags: <span *ngFor="let tag of tags; let isLast = last">{{ tag }}{{ isLast ? '' : ', ' }}</span></p>
     </div>
-    <div *ngIf="!(authService.getIsAdmin() | async)> <!-- If the product has been ordered by the user-->
-      <app-review-form>
-      </app-review-form> 
+    <div>
+      <app-review-form  *ngIf="(authService.getIsAdmin() | async) || (authService.getIsLoggedIn() | async) || reviewForm.userHasBoughtProduct()">
+      </app-review-form>
     </div>
   </div>
-</div>
+  </div>
