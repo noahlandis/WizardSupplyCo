@@ -8,16 +8,16 @@ import { CatalogProductCardComponent } from './catalog-product-card/catalog-prod
 import { ProductDetailsComponent } from './product-details/product-details.component';
 
 @NgModule({
-  declarations: [CatalogComponent, CatalogProductCardComponent, ProductDetailsComponent],
-  imports: [
-    CommonModule,
-    RouterModule,
-    MaterialModule,
+    declarations: [CatalogComponent, CatalogProductCardComponent, ProductDetailsComponent],
+    imports: [
+        CommonModule,
+        RouterModule,
+        MaterialModule,
   ],
   exports: [
     CatalogComponent,
     CatalogProductCardComponent,
     ProductDetailsComponent
-  ]
+    ]
 })
 export class BrowseCatalogModule { }

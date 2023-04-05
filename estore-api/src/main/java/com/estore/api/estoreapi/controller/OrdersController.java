@@ -134,6 +134,31 @@ public class OrdersController {
         }
     }
 
+    /**
+     * Gets the list of all {@linkplain Product products} purchased by the user with the given userId
+     * 
+     * @param userId The user id of the {@link User user} who owns the order
+     * 
+     * @return ResponseEntity with array of {@link Product product} objects (may be empty) and
+     * HTTP status of OK<br>
+     * ResponseEntity with HTTP status of INTERNAL_SERVER_ERROR otherwise
+     * 
+     * Example: Get all products purchased by user with user id 1
+     * GET http://localhost:8080/orders/user/1
+     */
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<int[]> getProductsPurchased(@PathVariable int userId) {
+        LOG.info("GET /orders/user/" + userId);
+
+        try {
+            int[] products = ordersDao.getProductsPurchased(userId);
+            return new ResponseEntity<int[]>(products, HttpStatus.OK);
+        }
+        catch(IOException e) {
+            LOG.log(Level.SEVERE, e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     
 
 }

@@ -1,6 +1,7 @@
 package com.estore.api.estoreapi.persistence;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Logger;
@@ -183,5 +184,22 @@ public class OrdersFileDAO implements OrdersDAO{
             return newOrder;
         }
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
+    public int[] getProductsPurchased(int userId) throws IOException {
+        Order[] ordersArray = getOrders();
+        HashSet <Integer> productsPurchased = new HashSet<Integer>();
+        int[] skus;
+        for(Order order: ordersArray){
+            if(order.getUserId() == userId){
+                skus = order.getProductSkus();
+                for(int sku: skus){
+                    productsPurchased.add(sku);
+                }
+            }
+        }
+        return productsPurchased.stream().mapToInt(Integer::intValue).toArray();
+    }    
 }
