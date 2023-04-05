@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from 'src/app/material.module';
-import { ReviewCardComponent } from './review-card/review-card.component';
 import { ReviewCardComponentComponent } from './review-card-component/review-card-component.component';
 
 
@@ -14,7 +13,11 @@ import { ReviewCardComponentComponent } from './review-card-component/review-car
     ReviewCardComponentComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MaterialModule
+  ],
+  exports: [
+    ReviewCardComponentComponent
   ]
 })
 export class ReviewsModule { }

@@ -6,6 +6,7 @@ import { MaterialModule } from 'src/app/material.module';
 import { CatalogComponent } from './catalog/catalog.component';
 import { CatalogProductCardComponent } from './catalog-product-card/catalog-product-card.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { ReviewsModule } from '../reviews/reviews.module';
 
 @NgModule({
   declarations: [CatalogComponent, CatalogProductCardComponent, ProductDetailsComponent],
@@ -13,6 +14,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
     CommonModule,
     RouterModule,
     MaterialModule,
+    ReviewsModule
   ],
   exports: [
     CatalogComponent,
