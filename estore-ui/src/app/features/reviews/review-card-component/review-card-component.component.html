@@ -1,0 +1,15 @@
+<mat-card class="card">
+    <mat-card-header>
+      <div class="card-content">
+        <mat-card-title>{{ rating }}</mat-card-title>
+      </div>
+      <div class="review">
+      <button  *ngIf="canRemove()" mat-icon-button color="warn" class="close-button" aria-label="Close" (click)="removeReview()">
+        <mat-icon class="icon">delete_outline</mat-icon>
+      </button>
+      </div>
+      <div class="card-content Comment">
+    </mat-card-header>
+    <mat-card-content>{{ comment }}</mat-card-content>
+    </div>
+  </mat-card>

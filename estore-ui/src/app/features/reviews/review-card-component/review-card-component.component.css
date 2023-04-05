@@ -1,0 +1,32 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.card .mat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card .card-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.close-button {
+  position: absolute;
+  top: -24px;
+  right: -24px;
+  background-color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.review {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 2rem;
+}
