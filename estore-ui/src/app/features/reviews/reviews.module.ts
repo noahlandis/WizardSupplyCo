@@ -5,11 +5,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from 'src/app/material.module';
 import { ReviewCardComponent } from './review-card/review-card.component';
+import { ReviewCardComponentComponent } from './review-card-component/review-card-component.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    ReviewCardComponentComponent
+  ],
   imports: [
     CommonModule
   ]
