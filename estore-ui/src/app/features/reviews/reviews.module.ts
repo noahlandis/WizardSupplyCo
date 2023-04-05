@@ -19,7 +19,8 @@ import { ReviewFormComponent } from './review-form/review-form.component';
     ReactiveFormsModule,
   ],
   exports: [
-    ReviewFormComponent
+    ReviewFormComponent,
+    ReviewCardComponentComponent
   ]
 })
 export class ReviewsModule { }
