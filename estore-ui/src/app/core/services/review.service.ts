@@ -36,7 +36,7 @@ export class ReviewService {
     return this.http.get<Review>(this.reviewsUrl)
       .pipe(
         tap(_ => this.log('fetched review w/ sku=${sku} and userId=${userId}')),
-        catchError(this.handleError<Review>('getReviews', []))
+        catchError(this.handleError<Review>('getReview' + sku + userId))
       );
   }
 

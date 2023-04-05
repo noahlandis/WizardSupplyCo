@@ -1,7 +1,7 @@
 <div class="container">
     <h1 class="text-center">Add a Review</h1>
     <form [formGroup]="reviewForm" (ngSubmit)="create()">
-        <div class="form-group">
+        <div class="form-group">            
             <mat-form-field appearance="outline">
                 <mat-label>Rating</mat-label>
                 <input matInput formControlName="rating" type="number" placeholder="Rating" required />
@@ -30,3 +30,4 @@
         </div>
     </form>
 </div>
+

@@ -8,6 +8,7 @@ import { AdminModule } from './admin/admin.module';
 import { BrowseCatalogModule } from './browse-catalog/browse-catalog.module';
 import { NavigationModule } from './navigation/navigation.module';
 import { OrderProcessingModule } from './order-processing/order-processing.module';
+import { ReviewsModule } from './reviews/reviews.module';
 
 
 
@@ -21,6 +22,7 @@ import { OrderProcessingModule } from './order-processing/order-processing.modul
     BrowseCatalogModule,
     NavigationModule,
     OrderProcessingModule,
+    ReviewsModule,
   ],
   exports: [
     LoginRegistrationComponent,
@@ -29,6 +31,7 @@ import { OrderProcessingModule } from './order-processing/order-processing.modul
     LoginRegistrationComponent,
     NavigationModule,
     OrderProcessingModule,
+    ReviewsModule,
   ]
 })
 export class FeaturesModule { }
