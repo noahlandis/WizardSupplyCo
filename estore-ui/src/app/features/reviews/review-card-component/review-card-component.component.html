@@ -1,7 +1,13 @@
 <mat-card class="card">
     <mat-card-header>
       <div class="card-content">
-        <mat-card-title>{{ rating }}</mat-card-title>
+        <div class="stars-container">
+        <mat-card-title>   
+            <ng-container *ngFor="let i range(rating+1)">
+              <mat-icon class="star-icon" color="accent">star</mat-icon>
+            </ng-container>
+          </mat-card-title>
+        </div>
       </div>
       <div class="review">
       <button  *ngIf="canRemove()" mat-icon-button color="warn" class="close-button" aria-label="Close" (click)="removeReview()">
