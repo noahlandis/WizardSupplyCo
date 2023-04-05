@@ -49,4 +49,17 @@ public interface OrdersDAO {
      */
     Order createOrder(Order order) throws IOException, InsufficientStockException;
 
+    /**
+     * Return an array of sku of all the products purchased by a user
+     * 
+     * @param userId
+     * 
+     * @return an array of sku of all products purchased by a user
+     * <br>
+     * null if no products purchased by a user
+     * 
+     * @throws IOException if an issue with underlying storage
+     */
+    int[] getProductsPurchased(int userId) throws IOException;
+
 }

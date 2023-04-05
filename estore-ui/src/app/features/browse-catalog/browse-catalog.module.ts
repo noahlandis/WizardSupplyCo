@@ -6,6 +6,7 @@ import { MaterialModule } from 'src/app/material.module';
 import { CatalogComponent } from './catalog/catalog.component';
 import { CatalogProductCardComponent } from './catalog-product-card/catalog-product-card.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { ReviewsModule } from '../reviews/reviews.module';
 import { ReviewCardComponentComponent } from '../reviews/review-card-component/review-card-component.component';
 
 @NgModule({
@@ -14,12 +15,13 @@ import { ReviewCardComponentComponent } from '../reviews/review-card-component/r
     CommonModule,
     RouterModule,
     MaterialModule,
-    ReviewCardComponentComponent
+    ReviewCardComponentComponent,
+    ReviewsModule
   ],
   exports: [
     CatalogComponent,
     CatalogProductCardComponent,
     ProductDetailsComponent
-  ]
+    ]
 })
 export class BrowseCatalogModule { }

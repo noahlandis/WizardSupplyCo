@@ -154,16 +154,22 @@ public class ReviewsFileDAO implements ReviewsDAO {
                 }
             }
         }
-        Review newReview = new Review(
-            nextReviewId,
-            review.getUserId(),
-            review.getSku(),            
-            review.getRating(),
-            review.getComment()
-        );
-        reviews.put(newReview.getReviewId(), newReview);
-        save();
-        return newReview;
+        try{
+            Review newReview = new Review(
+                nextReviewId,
+                review.getUserId(),
+                review.getSku(),            
+                review.getRating(),
+                review.getComment()
+            );
+            reviews.put(newReview.getReviewId(), newReview);
+            save();
+            return newReview;
+        }
+        catch(IOException e) {
+            LOG.info( "Error creating review" + e);
+            return null;
+        }
     }
 
     @Override
