@@ -232,4 +232,70 @@
   "sku" : 34,
   "rating" : 2,
   "comment" : "hi"
+}, {
+  "reviewId" : 40,
+  "userId" : 1,
+  "sku" : 10,
+  "rating" : 2,
+  "comment" : "Test"
+}, {
+  "reviewId" : 41,
+  "userId" : 1,
+  "sku" : 19,
+  "rating" : 2,
+  "comment" : "Nice legs"
+}, {
+  "reviewId" : 42,
+  "userId" : 1,
+  "sku" : 15,
+  "rating" : 2,
+  "comment" : "Niceee"
+}, {
+  "reviewId" : 43,
+  "userId" : 4,
+  "sku" : 15,
+  "rating" : 2,
+  "comment" : "Awesome product"
+}, {
+  "reviewId" : 44,
+  "userId" : 3,
+  "sku" : 18,
+  "rating" : 3,
+  "comment" : "Gut"
+}, {
+  "reviewId" : 45,
+  "userId" : 4,
+  "sku" : 31,
+  "rating" : 2,
+  "comment" : "Heals"
+}, {
+  "reviewId" : 46,
+  "userId" : 4,
+  "sku" : 10,
+  "rating" : 0,
+  "comment" : "Worst potion"
+}, {
+  "reviewId" : 47,
+  "userId" : 4,
+  "sku" : 19,
+  "rating" : 3,
+  "comment" : "Tasty"
+}, {
+  "reviewId" : 48,
+  "userId" : 4,
+  "sku" : 17,
+  "rating" : 1,
+  "comment" : "Malfoy had this"
+}, {
+  "reviewId" : 49,
+  "userId" : 4,
+  "sku" : 28,
+  "rating" : 5,
+  "comment" : "Potttter had this"
+}, {
+  "reviewId" : 50,
+  "userId" : 4,
+  "sku" : 13,
+  "rating" : 4,
+  "comment" : "Niiiice"
 } ]

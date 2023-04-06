@@ -38,7 +38,7 @@
 </div>
 
 <div>
-    <app-review-form  *ngIf="(authService.getIsAdmin() | async) || (authService.getIsLoggedIn() | async)"/>
+    <app-review-form  *ngIf="this.showReviewForm || (authService.getIsLoggedIn() | async) || this.hasUserReviewed()"/>
 </div>
 
 <div>
@@ -46,6 +46,5 @@
   <app-review-card-component *ngFor="let review of reviews"
   [rating]="review.rating"
   [comment]="review.comment">
-    <span *ngFor="let star of getStarArray(review.rating)" class="star"></span>
   </app-review-card-component>    
 </div>

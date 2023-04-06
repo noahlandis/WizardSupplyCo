@@ -1,72 +1,3 @@
-/* * {
-  padding: 0%;
-  margin: 0px;
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.card .mat-card-header {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.card .card-content {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  align-self: flex-start;
-  margin: 0px;
-  padding: 0px;
-}
-
-.close-button {
-  position: absolute;
-  top: -24px;
-  right: -24px;
-  background-color: white;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-}
-
-.review {
-  display: flex;
-  margin-top: 0.5rem;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 2rem;
-}
-
-.stars-container {
-  padding-top: 0;
-  padding-bottom: 0;
-  margin-bottom: 0;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: left;
-  width: 100%;
-}
-
-.comment {
-  padding-top: 0em;
-  margin-top: 0em;
-  text-align: left;
-}
-
-.stars-container .star-icon {
-  font-size: 1rem;
-  margin-right: -0.5rem;
-  padding-bottom: 0px;
-  margin-bottom: 0px;
-}
-.container {
-  display: flex;
-  align-items: center;
-  height: 300px; /* Set a height to the container so that you can see the effect */
 
 .container {
   display: flex;
@@ -75,7 +6,7 @@
 }
 
 .card {
-  width: 200px;
+  width: 400px;
   margin: 20px;
 }
 

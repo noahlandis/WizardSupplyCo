@@ -163,3 +163,39 @@ Creates a radial gradient background with vendor prefixes for various browsers.
   $end-red: #e10704 100%;
   @include radial-gradient($start-red, $mid-red, $end-red)
 }
+
+/* Style the review header */
+#reviewHeader {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin-top: 30px
+ }
+
+/* Style the review cards */
+app-review-card-component {
+  display: block;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+/* Style the rating and comment */
+app-review-card-component .rating {
+  font-size: 24px;
+  font-weight: bold;
+  color: #f90;
+  margin-bottom: 10px;
+}
+
+app-review-card-component .comment {
+  font-size: 16px;
+  color: #555;
+}

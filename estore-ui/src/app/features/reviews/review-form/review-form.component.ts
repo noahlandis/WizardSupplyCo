@@ -53,21 +53,12 @@ export class ReviewFormComponent {
     this.sku = Number(params.get('sku'));
     this.userId = this.authService.getUserId() || 0;
     this.ratingArr = [...this.stars];
-
-    this.checkIfSkuExists(this.userId).subscribe(
-      reviewExists => {
-        if (reviewExists) {
-          this.showForm = false;
-        }
-      },
-      error => {
-        console.log('Error checking if SKU exists for user:', error);
-      }
-    );
   });
+      this.productDetails.getReviews(this.sku, this.reviewService);
+
 }
 
-  async create() {
+   create() {
     if (!this.reviewForm.valid)
       return;
     const rating = this.rating;
@@ -81,17 +72,15 @@ export class ReviewFormComponent {
     console.log('Create review form submitted with review:', JSON.stringify(review));
 
     this.reviewService.createReview(review).subscribe({
-      next: async (createSuccess) => {
+      next: (createSuccess) => {
         if (createSuccess) {
-          this.productDetails.getReviews(this.sku);
           console.log('Review created successfully');
-          this.showForm = false;
           this.displaySnackBar('Review created successfully', 'Dismiss', 3000);
         } else {
           console.log('Review creation failed');
           this.displaySnackBar('Review creation failed', 'Dismiss', 3000);
         }
-      },
+        },
       error: (e) => {
         console.log('Review creation failed with error:', e);
         this.displaySnackBar('Review creation failed', 'Dismiss', 3000);
@@ -108,8 +97,8 @@ export class ReviewFormComponent {
 
   onClick(rating: number) {
     this.rating = rating;
-    this.ratingUpdated.emit(rating);
-    this.reviewForm.controls['rating'].setValue(rating);
+    this.ratingUpdated.emit(rating+1);
+    this.reviewForm.controls['rating'].setValue(rating+1);
     this.ratingSelected = true;
     return false;
   }
@@ -120,19 +109,6 @@ export class ReviewFormComponent {
     } else {
       return 'star_border';
     }
-  }
-
-  checkIfSkuExists(userId: number): Observable<boolean> {
-    return this.reviewService.getReviewsByUserId(userId).pipe(
-      map(reviews => {
-        for (const review of reviews) {
-          if (review.userId === userId) {
-            return true;
-          }
-        }
-        return false;
-      })
-    );
   }
 }
 

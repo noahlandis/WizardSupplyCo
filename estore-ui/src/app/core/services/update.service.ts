@@ -12,6 +12,9 @@ export class UpdateService {
   private dashboardUpdateSource = new BehaviorSubject<boolean>(false);
   dashboardUpdate$ = this.dashboardUpdateSource.asObservable();
 
+  private reviewsUpdateSource = new BehaviorSubject<boolean>(false);
+  reviewsUpdate$ = this.reviewsUpdateSource.asObservable();
+
   constructor(private messageService: MessageService) { }
 
   /** Log an UpdateService message with the MessageService */
@@ -27,5 +30,10 @@ export class UpdateService {
   updateDashboard() {
     this.dashboardUpdateSource.next(true);
     this.log('dashboard updated');
+  }
+
+  updateReviews() {
+    this.reviewsUpdateSource.next(true);
+    this.log('reviews updated');
   }
 }
