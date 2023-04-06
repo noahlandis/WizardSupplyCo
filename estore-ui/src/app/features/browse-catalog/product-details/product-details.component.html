@@ -38,7 +38,7 @@
 </div>
 
 <div>
-    <app-review-form  *ngIf="(authService.getIsAdmin() | async) || (authService.getIsLoggedIn() | async) || (this.reviewForm.showForm)"/>
+    <app-review-form  *ngIf="(authService.getIsAdmin() | async) || (authService.getIsLoggedIn() | async)"/>
 </div>
 
 <div>
