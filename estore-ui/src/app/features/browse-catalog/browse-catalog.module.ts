@@ -10,18 +10,16 @@ import { ReviewsModule } from '../reviews/reviews.module';
 import { ReviewCardComponentComponent } from '../reviews/review-card-component/review-card-component.component';
 
 @NgModule({
-  declarations: [CatalogComponent, CatalogProductCardComponent, ProductDetailsComponent],
-  imports: [
-    CommonModule,
-    RouterModule,
-    MaterialModule,
-    ReviewCardComponentComponent,
-    ReviewsModule
+  declarations: [
+    CatalogComponent,
+    CatalogProductCardComponent,
+    ProductDetailsComponent,
   ],
+  imports: [CommonModule, RouterModule, MaterialModule, ReviewsModule],
   exports: [
     CatalogComponent,
     CatalogProductCardComponent,
-    ProductDetailsComponent
-    ]
+    ProductDetailsComponent,
+  ],
 })
-export class BrowseCatalogModule { }
+export class BrowseCatalogModule {}
