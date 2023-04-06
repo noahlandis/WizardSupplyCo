@@ -40,6 +40,22 @@ export class ReviewCardComponentComponent implements OnInit {
     });
   }
 
+  range(stop: number, start: number = 1, step: number = 1): number[] {
+    const result = [];
+    if (step === 0) {
+      throw new Error('Step cannot be zero');
+    } else if (step > 0) {
+      for (let i = start; i < stop; i += step) {
+        result.push(i);
+      }
+    } else {
+      for (let i = start; i > stop; i += step) {
+        result.push(i);
+      }
+    }
+    return result;
+  }
+
   canRemove(): boolean {
     const currentUserId: number | null = this.authService.getUserId();
     if (currentUserId == null) {

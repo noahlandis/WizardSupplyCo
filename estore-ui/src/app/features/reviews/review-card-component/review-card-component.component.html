@@ -1,15 +1,30 @@
-<mat-card class="card">
-  <mat-card-header>
-    <div class="card-content">
-      <mat-card-title>{{ rating }}</mat-card-title>
+<div class="container">
+  <mat-card class="card">
+    <mat-card-header>
+      <div class="card-content">
+        <div class="stars-container">
+          <mat-card-title>
+            <ng-container *ngFor="let i of range(rating + 1)">
+              <mat-icon class="star-icon" color="accent">star</mat-icon>
+            </ng-container>
+          </mat-card-title>
+        </div>
+      </div>
+    </mat-card-header>
+    <div class="review">
+      <button
+        *ngIf="canRemove()"
+        mat-icon-button
+        color="warn"
+        class="close-button"
+        aria-label="Close"
+        (click)="removeReview()"
+      >
+        <mat-icon class="icon">delete_outline</mat-icon>
+      </button>
     </div>
-      <div class="review">
-        <button  *ngIf="canRemove()" mat-icon-button color="warn" class="close-button" aria-label="Close" (click)="removeReview()">
-          <mat-icon class="icon">delete_outline</mat-icon>
-        </button>
-      </div>
-      <div class="card-content Comment">
-        <mat-card-content>{{ comment }}</mat-card-content>
-      </div>
-  </mat-card-header>
-</mat-card>
+    <div class="card-content comment" style="padding-top: 0; margin-top: 0%;">
+      <mat-card-content>{{ comment }}</mat-card-content>
+    </div>
+  </mat-card>
+</div>
