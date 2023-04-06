@@ -138,6 +138,7 @@ public class ReviewsFileDAO implements ReviewsDAO {
                 return review;
             }
         }
+        LOG.info("No review found for product with SKU: " + sku + " and user with ID: " + userId);
         return null;
     }
 

@@ -97,6 +97,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  // TODO: kinda sus (talk about in sprint 4 or something)
   // Get all the review for this product
   public getReviews(sku: number, reviewService: ReviewService){
     console.log("SKU  " + sku);
@@ -113,4 +114,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     }
     return false;
   }  
+
+  public onReviewRemoved() {
+    console.log("Review removed event fired");
+    this.getReviews(this.sku, this.reviewService);
+  }
 }

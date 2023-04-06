@@ -38,7 +38,10 @@
 <div>
   <h1>Customer Reviews</h1>
   <app-review-card-component *ngFor="let review of reviews"
-  [rating]="review.rating"
-  [comment]="review.comment">
-  </app-review-card-component>    
+    [rating]="review.rating"
+    [comment]="review.comment"
+    [userId]="review.userId"
+    [sku]="review.sku"
+    (reviewRemoved)="onReviewRemoved()">
+  </app-review-card-component>
 </div>

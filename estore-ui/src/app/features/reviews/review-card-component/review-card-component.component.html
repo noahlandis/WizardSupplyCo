@@ -13,7 +13,7 @@
     </mat-card-header>
     <div class="review">
       <button
-        *ngIf="canRemove()"
+        *ngIf="canRemove() | async"
         mat-icon-button
         color="warn"
         class="close-button"

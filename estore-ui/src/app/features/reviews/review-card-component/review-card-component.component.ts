@@ -1,5 +1,6 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, of, switchMap } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ReviewService } from 'src/app/core/services/review.service';
 
@@ -25,20 +26,22 @@ export class ReviewCardComponentComponent implements OnInit {
 
   /** Remove review. */
   removeReview() {
-    this.reviewService.deleteReview(this.userId, this.sku).subscribe({
+    this.reviewService.deleteReview(this.sku, this.userId).subscribe({
       next: (response) => {
+        console.log(`Response: ${JSON.stringify(response)}`);
         if (response) {
-          this.reviewRemoved.emit();
           console.log('Review removed');
+          this.reviewRemoved.emit();
         } else {
           console.log('Failed to remove review');
+          this.reviewRemoved.emit(); // TODO: Fix the issue causinng us to put this here
         }
       },
       error: (err) => {
         console.error(err);
       },
     });
-  }
+  }  
 
   range(stop: number, start: number = 1, step: number = 1): number[] {
     const result = [];
@@ -56,19 +59,31 @@ export class ReviewCardComponentComponent implements OnInit {
     return result;
   }
 
-  canRemove(): boolean {
-    const currentUserId: number | null = this.authService.getUserId();
-    if (currentUserId == null) {
-      return false;
-    }
-    let result = false;
-    this.authService.getIsAdmin().subscribe((isAdmin) => {
-      if (isAdmin) {
-        result = true;
-      }
-    });
-
-    result = this.userId === this.authService.getUserId();
-    return result;
+  canRemove(): Observable<boolean> {
+    return this.authService.getIsLoggedIn().pipe(
+      switchMap((isLoggedIn) => {
+        if (!isLoggedIn) {
+          console.log('User not logged in');
+          return of(false);
+        }
+  
+        return this.authService.getIsAdmin().pipe(
+          switchMap((isAdmin) => {
+            if (isAdmin) {
+              console.log('User is admin');
+              return of(true);
+            }
+  
+            const currentUserId: number | null = this.authService.getUserId();
+            console.log(`Current user id: ${currentUserId}`);
+            const result = this.userId === currentUserId;
+            console.log(`Result: ${result}`);
+            return of(result);
+          })
+        );
+      })
+    );
   }
+  
+  
 }
