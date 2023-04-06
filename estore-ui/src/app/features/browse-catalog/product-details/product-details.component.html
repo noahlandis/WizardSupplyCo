@@ -12,12 +12,6 @@
         ></mat-icon>
       {{ stockStatus }}
     </div>
-    <div class="stars-container">
-      <ng-container *ngFor="let i of [1, 2, 3, 4, 5]">
-        <mat-icon class="star-icon" color="accent">star</mat-icon>
-      </ng-container>
-      <span class="reviews">10</span>
-    </div>
     <div class="price-container">
       <div style="font-size: 1.2rem;">$<span class="price">{{ price }}</span></div>
       <button *ngIf="!(authService.getIsAdmin() | async)"
@@ -38,7 +32,7 @@
 </div>
 
 <div>
-    <app-review-form  *ngIf="this.showReviewForm || (authService.getIsLoggedIn() | async) || this.hasUserReviewed()"/>
+    <app-review-form  *ngIf="!(this.hasUserReviewed() && (authService.getIsLoggedIn() | async) && !(authService.getIsAdmin()))"/>
 </div>
 
 <div>
