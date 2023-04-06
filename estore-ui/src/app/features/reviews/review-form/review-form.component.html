@@ -1,33 +1,31 @@
 <div class="container">
     <h1 class="text-center">Add a Review</h1>
     <form [formGroup]="reviewForm" (ngSubmit)="create()">
-        <div class="form-group">            
-            <mat-form-field appearance="outline">
-                <mat-label>Rating</mat-label>
-                <input matInput formControlName="rating" type="number" placeholder="Rating" required />
-                <mat-icon matPrefix>star</mat-icon>
-                <mat-hint>Rating from 1 to 5</mat-hint>
-                <mat-error *ngIf="reviewForm.controls['rating'].hasError('required')">Rating is required</mat-error>
-                <mat-error *ngIf="reviewForm.controls['rating'].hasError('pattern')">Rating must be a number</mat-error>
-            </mat-form-field>
+        <div class="form-group">
+            <button mat-icon-button [color]="color" *ngFor="let ratingId of stars; index as i" [id]="'star_'+i"
+                (click)="onClick(i)" [matTooltip]="(ratingId+1).toString()" matTooltipPosition="above">
+                <mat-icon>
+                    {{showIcon(i)}}
+                </mat-icon>
+            </button>
+            <mat-error *ngIf="starCount == null || starCount == 0">
+                Star count is <strong>required</strong> and cannot be zero
+            </mat-error>
+        </div>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Comment</mat-label>
-                <textarea matInput formControlName="comment"></textarea>
-                <mat-icon matPrefix>edit_note</mat-icon>
-                <mat-hint>Comment about this product</mat-hint>
-            </mat-form-field>
-
-            <button 
-                mat-raised-button 
-                class="submit-btn" 
-                color="primary" 
-                type="submit" 
-                [disabled]="!reviewForm.valid" 
-            >
-            <span>Post</span>
+        <div class="form-group">
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Comment</mat-label>
+                    <textarea matInput formControlName="comment"></textarea>
+                    <mat-icon matPrefix>edit_note</mat-icon>
+                    <mat-hint>Comment about this product</mat-hint>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button class="submit-btn" color="primary" type="submit"
+                [disabled]="!ratingSelected || rating < 0 || rating >5" (click)="create()">
+                <span>Post</span>
             </button>
         </div>
     </form>
 </div>
-

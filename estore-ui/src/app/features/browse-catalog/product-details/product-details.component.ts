@@ -5,6 +5,8 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { CartsService } from 'src/app/core/services/carts.service';
 import { InventoryService } from 'src/app/core/services/inventory.service';
 import { ReviewFormComponent } from '../../reviews/review-form/review-form.component';
+import { Review } from 'src/app/core/model/review.model';
+import { ReviewService } from 'src/app/core/services/review.service';
 
 @Component({
   selector: 'app-product-details',
@@ -26,12 +28,14 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   private readonly QUANTITY_OUT_OF_STOCK = 0; 
   private routeSubscription!: Subscription;
   @ViewChild(ReviewFormComponent, {static : false}) reviewForm!: ReviewFormComponent;
+  public reviews :Review[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private inventoryService: InventoryService,
     private cartsService: CartsService,
     public authService: AuthService,
+    private reviewService: ReviewService
   ) {}
 
   ngOnInit(): void {
@@ -46,8 +50,10 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         this.setStockStatus()
         this.price = product.price
         this.tags = product.description.tags;
+        this.getReviews(sku);
       });
     });
+    
   }
 
   ngOnDestroy(): void {
@@ -84,4 +90,17 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       },
     });
   }
+
+  // Get all the review for this product
+  public getReviews(sku: number) {
+    this.reviewService.getReviewsForProduct(sku).subscribe( reviews => {
+      this.reviews = reviews;
+    });
+  }
+
+  // returns star based on the numeric rating value
+  getStarArray(rating: number): number[] {
+  const starCount = Math.round(rating);
+  return Array(starCount).fill(0);
+}
 }
