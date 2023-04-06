@@ -114,7 +114,7 @@ public class UserTest {
         Admin admin = new Admin();
         
         //Analyze
-        assertEquals(admin.getUsername(), "admin");
+        assertEquals("admin",admin.getUsername() );
     }
 
     @Test

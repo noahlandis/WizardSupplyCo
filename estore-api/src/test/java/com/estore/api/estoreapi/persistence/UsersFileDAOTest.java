@@ -65,7 +65,7 @@ public class UsersFileDAOTest {
         User user = usersFileDAO.getUser(1);
 
         // Analyze
-        assertEquals(user.getUserId(), 1);
+        assertEquals(1,user.getUserId() );
     }
 
     @Test 
@@ -74,7 +74,7 @@ public class UsersFileDAOTest {
         User user = usersFileDAO.getUser(100);
 
         // Analyze
-        assertEquals(user, null);
+        assertNull(user);
     }
 
     @Test
@@ -83,7 +83,7 @@ public class UsersFileDAOTest {
         usersFileDAO.createUser("ethanHunt");
         
         // Analyze
-        assertEquals(usersFileDAO.getUser(4).getUsername(), "ethanHunt");
+        assertEquals("ethanHunt", usersFileDAO.getUser(4).getUsername());
     }
 
     @Test
