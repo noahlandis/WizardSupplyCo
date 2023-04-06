@@ -47,6 +47,17 @@ public class ReviewsFileDAO implements ReviewsDAO {
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         load(); // load the reviews from the file
     }
+
+    /**
+     * Generates the next review ID for a new {@linkplain Review review}
+     * 
+     * @return The next review ID
+     */
+    private synchronized static int nextReviewId() {
+        int reviewId = nextReviewId;
+        ++nextReviewId;
+        return reviewId;
+    }
     
     /**
      * Loads the reviews from the file
@@ -156,7 +167,7 @@ public class ReviewsFileDAO implements ReviewsDAO {
         }
         try{
             Review newReview = new Review(
-                nextReviewId,
+                nextReviewId(),
                 review.getUserId(),
                 review.getSku(),            
                 review.getRating(),

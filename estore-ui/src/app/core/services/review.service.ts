@@ -33,7 +33,7 @@ export class ReviewService {
     const url = `${this.reviewsUrl}/${sku}/${userId}`;
     this.log('fetching review w/ sku=${sku} and userId=${userId} ...');
 
-    return this.http.get<Review>(this.reviewsUrl)
+    return this.http.get<Review>(url)
       .pipe(
         tap(_ => this.log('fetched review w/ sku=${sku} and userId=${userId}')),
         catchError(this.handleError<Review>('getReview' + sku + userId))
@@ -45,7 +45,7 @@ export class ReviewService {
     const url = `${this.reviewsUrl}/user/${userId}`;
     this.log('fetching reviews w/ userId=${userId} ...');
 
-    return this.http.get<Review[]>(this.reviewsUrl)
+    return this.http.get<Review[]>(url)
       .pipe(
         tap(_ => this.log('fetched reviews w/ userId=${userId}')),
         catchError(this.handleError<Review[]>('getReviews', []))
@@ -57,7 +57,7 @@ export class ReviewService {
     const url = `${this.reviewsUrl}/${sku}`;
     this.log('fetching reviews w/ sku=${sku} ...');
 
-    return this.http.get<Review[]>(this.reviewsUrl)
+    return this.http.get<Review[]>(url)
       .pipe(
         tap(_ => this.log('fetched reviews w/ sku=${sku}')),
         catchError(this.handleError<Review[]>('getReviews', []))
