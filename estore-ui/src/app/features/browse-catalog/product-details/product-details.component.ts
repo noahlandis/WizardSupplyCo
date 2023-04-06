@@ -105,7 +105,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  public hasUserReviewed(){
+  public hasUserReviewed(): boolean {
     for(const review of this.reviews){
       if(review.userId == this.authService.getUserId()){
         return true;

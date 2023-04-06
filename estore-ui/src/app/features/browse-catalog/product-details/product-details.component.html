@@ -32,7 +32,7 @@
 </div>
 
 <div>
-    <app-review-form  *ngIf="!(this.hasUserReviewed() && (authService.getIsLoggedIn() | async) && !(authService.getIsAdmin()))"/>
+    <app-review-form  *ngIf="(authService.getIsLoggedIn() | async) && !(authService.getIsAdmin() | async) && !(this.hasUserReviewed())"/>
 </div>
 
 <div>
