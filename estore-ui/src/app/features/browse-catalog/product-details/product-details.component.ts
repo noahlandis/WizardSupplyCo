@@ -1,9 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { CartsService } from 'src/app/core/services/carts.service';
 import { InventoryService } from 'src/app/core/services/inventory.service';
+import { ReviewFormComponent } from '../../reviews/review-form/review-form.component';
+import { Review } from 'src/app/core/model/review.model';
+import { ReviewService } from 'src/app/core/services/review.service';
+import { UpdateService } from 'src/app/core/services/update.service';
 
 @Component({
   selector: 'app-product-details',
@@ -20,16 +24,22 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   price = 0
   tags: string[] = []
   placeholder: string = 'https://i.imgur.com/gJZTkgt.png';
+  public showReviewForm : boolean = false;
 
   private readonly QUANTITY_LOW_STOCK = 10;
   private readonly QUANTITY_OUT_OF_STOCK = 0; 
   private routeSubscription!: Subscription;
+  @ViewChild(ReviewFormComponent, {static : false}) reviewForm!: ReviewFormComponent;
+  public reviews :Review[] = [];
+  private reviewSubscription!: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private inventoryService: InventoryService,
     private cartsService: CartsService,
-    public authService: AuthService
+    public authService: AuthService,
+    private reviewService: ReviewService,
+    private updateService: UpdateService
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +54,11 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         this.setStockStatus()
         this.price = product.price
         this.tags = product.description.tags;
+        this.getReviews(sku, this.reviewService);
       });
+    });
+    this.reviewSubscription = this.updateService.reviewsUpdate$.subscribe( () => {
+      this.getReviews(this.sku, this.reviewService);
     });
   }
 
@@ -81,5 +95,28 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         console.error(err);
       },
     });
+  }
+
+  // TODO: kinda sus (talk about in sprint 4 or something)
+  // Get all the review for this product
+  public getReviews(sku: number, reviewService: ReviewService){
+    console.log("SKU  " + sku);
+    reviewService.getReviewsForProduct(sku).subscribe( reviews => {
+      this.reviews = reviews;
+    });
+  }
+
+  public hasUserReviewed(): boolean {
+    for(const review of this.reviews){
+      if(review.userId == this.authService.getUserId()){
+        return true;
+      }
+    }
+    return false;
+  }  
+
+  public onReviewRemoved() {
+    console.log("Review removed event fired");
+    this.getReviews(this.sku, this.reviewService);
   }
 }

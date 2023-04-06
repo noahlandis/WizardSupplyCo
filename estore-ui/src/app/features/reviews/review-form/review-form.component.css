@@ -1,0 +1,31 @@
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+button {
+  margin: 10px;
+  align-self: center;
+}
+
+textarea {
+  min-height: 100px;
+  width: 100%;
+}
+
+.submit-btn {
+  width: 100%;
+  max-width: 200px;
+  margin: 10px;
+}

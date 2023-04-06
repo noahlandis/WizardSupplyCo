@@ -47,6 +47,17 @@ public class ReviewsFileDAO implements ReviewsDAO {
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         load(); // load the reviews from the file
     }
+
+    /**
+     * Generates the next review ID for a new {@linkplain Review review}
+     * 
+     * @return The next review ID
+     */
+    private synchronized static int nextReviewId() {
+        int reviewId = nextReviewId;
+        ++nextReviewId;
+        return reviewId;
+    }
     
     /**
      * Loads the reviews from the file
@@ -127,6 +138,7 @@ public class ReviewsFileDAO implements ReviewsDAO {
                 return review;
             }
         }
+        LOG.info("No review found for product with SKU: " + sku + " and user with ID: " + userId);
         return null;
     }
 
@@ -154,16 +166,22 @@ public class ReviewsFileDAO implements ReviewsDAO {
                 }
             }
         }
-        Review newReview = new Review(
-            nextReviewId,
-            review.getUserId(),
-            review.getSku(),            
-            review.getRating(),
-            review.getComment()
-        );
-        reviews.put(newReview.getReviewId(), newReview);
-        save();
-        return newReview;
+        try{
+            Review newReview = new Review(
+                nextReviewId(),
+                review.getUserId(),
+                review.getSku(),            
+                review.getRating(),
+                review.getComment()
+            );
+            reviews.put(newReview.getReviewId(), newReview);
+            save();
+            return newReview;
+        }
+        catch(IOException e) {
+            LOG.info( "Error creating review" + e);
+            return null;
+        }
     }
 
     @Override

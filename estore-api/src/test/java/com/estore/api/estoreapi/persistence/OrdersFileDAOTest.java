@@ -71,7 +71,7 @@ public class OrdersFileDAOTest {
         testOrders[0] = new Order(2,"Rince","Wind", "02734613","rince@gmail.com", new ShippingAddress("United States of America", "New York","Rochester", 14623,"220 John Street","RIT"), new Cart(1));
         testOrders[1] = new Order(3,"Rince","Wind", "02734613","rince@gmail.com", new ShippingAddress("United States of America", "New York","Rochester", 14623,"220 John Street","RIT"), new Cart(2));
         testOrders[2] = new Order(1,"Rince","Wind", "02734613","rince@gmail.com", new ShippingAddress("United States of America", "New York","Rochester", 14623,"220 John Street","RIT"), new Cart(3));
-    
+
         // When the object mapper is supposed to read from the file
         // the mock object mapper will return the Order array above
         when(mockObjectMapper
@@ -119,8 +119,7 @@ public class OrdersFileDAOTest {
         when(cartsDao.getCart(1)).thenReturn(cart[0]);
         when(cartsDao.getCart(2)).thenReturn(cart[1]);
         // Setup
-        // Cart cart = new Cart(1, {103 : 1, 102 : 1});
-        // Cart cart = cartsDao.getCart(1);
+        
         Order order = new Order(4,"Rince","Wind", "02734613","rince@gmail.com", new ShippingAddress("United States of America", "New York","Rochester", 14623,"220 John Street","RIT"), cartsDao.getCart(1));
 
         // Invoke
@@ -138,6 +137,18 @@ public class OrdersFileDAOTest {
         assertEquals(actual.getShippingAddress(),order.getShippingAddress());
         assertEquals(actual.getCart(),order.getCart());        
 
+    }
+
+    @Test
+    public void testGetProductsPurchased() throws IOException{
+        // Setup
+        int userId = 1;
+
+        // Invoke
+        int[] products = ordersFileDao.getProductsPurchased(userId);
+
+        // Analyze
+        assertEquals(0, products.length);        
     }
 
 }

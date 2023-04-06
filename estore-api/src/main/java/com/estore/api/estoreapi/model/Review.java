@@ -45,6 +45,7 @@ public class Review {
         @JsonProperty("rating") int rating,
         @JsonProperty("comment") String comment
     ) {
+        //TODO: Validate the rating
         this.reviewId = reviewId;
         this.userId = userId;
         this.sku = sku;
