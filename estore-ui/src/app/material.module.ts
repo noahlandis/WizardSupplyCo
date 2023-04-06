@@ -20,6 +20,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [],
@@ -43,7 +44,8 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatBadgeModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatStepperModule
+    MatStepperModule,
+    MatTooltipModule
   ],
   exports:[
     MatIconModule,
@@ -65,6 +67,7 @@ import { MatStepperModule } from '@angular/material/stepper';
     MatDialogModule,
     MatSnackBarModule,
     MatStepperModule,
+    MatTooltipModule
   ]
 })
 export class MaterialModule { }

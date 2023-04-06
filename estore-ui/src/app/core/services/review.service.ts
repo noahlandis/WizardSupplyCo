@@ -2,9 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MessageService } from './message.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { catchError, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { catchError, startWith, switchMap, tap } from 'rxjs/operators';
+import { Observable, interval, of } from 'rxjs';
 import { BaseReview, Review } from '../model/review.model';
+import { UpdateService } from './update.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class ReviewService {
   constructor(
     private http: HttpClient,
     private messageService: MessageService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private updateService: UpdateService
   ) { }
 
   /** Log a ReviewService message with the MessageService */
@@ -33,10 +35,10 @@ export class ReviewService {
     const url = `${this.reviewsUrl}/${sku}/${userId}`;
     this.log('fetching review w/ sku=${sku} and userId=${userId} ...');
 
-    return this.http.get<Review>(this.reviewsUrl)
+    return this.http.get<Review>(url)
       .pipe(
         tap(_ => this.log('fetched review w/ sku=${sku} and userId=${userId}')),
-        catchError(this.handleError<Review>('getReviews', []))
+        catchError(this.handleError<Review>('getReview' + sku + userId))
       );
   }
 
@@ -45,7 +47,7 @@ export class ReviewService {
     const url = `${this.reviewsUrl}/user/${userId}`;
     this.log('fetching reviews w/ userId=${userId} ...');
 
-    return this.http.get<Review[]>(this.reviewsUrl)
+    return this.http.get<Review[]>(url)
       .pipe(
         tap(_ => this.log('fetched reviews w/ userId=${userId}')),
         catchError(this.handleError<Review[]>('getReviews', []))
@@ -53,11 +55,11 @@ export class ReviewService {
   }
 
   /** GET reviews for the product */
-  getReviewsForProduct(sku:number): Observable<Review[]> {
+getReviewsForProduct(sku:number): Observable<Review[]> {
     const url = `${this.reviewsUrl}/${sku}`;
     this.log('fetching reviews w/ sku=${sku} ...');
 
-    return this.http.get<Review[]>(this.reviewsUrl)
+    return this.http.get<Review[]>(url)
       .pipe(
         tap(_ => this.log('fetched reviews w/ sku=${sku}')),
         catchError(this.handleError<Review[]>('getReviews', []))
@@ -71,6 +73,7 @@ export class ReviewService {
       tap((newReview: Review) => {
         this.log(`created review: ${JSON.stringify(newReview)}`),
         this.displaySnackBar('Review created successfully', 'Dismiss', 3000, false);
+        this.updateService.updateReviews();
       }),
         catchError((err) => {
           this.displaySnackBar('Error creating review', 'OK', 3000, true);

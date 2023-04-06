@@ -1,0 +1,41 @@
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  width: 400px;
+  margin: 20px;
+}
+
+.card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stars-container {
+  display: flex;
+  padding-bottom: 7px;
+}
+
+.star-icon {
+  font-size: 20px;
+}
+
+.review {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -30px;
+}
+
+.close-button {
+  margin-right: 5px;
+}
+
+.comment {
+  margin-top: 40px;
+  padding-top: 2em;
+}
