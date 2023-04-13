@@ -256,7 +256,6 @@ One of the places where SonarQube flagged our code was in our fileDAO classes fo
 ![Diagram for conditional](flag-3.png)
 Another place where SonarQube flagged out code was a conditional being out of place. This is an indentation issue. The conditional is not indented properly. This is a minor issue and can be fixed by simply indenting the conditional properly.
 
-
 > _**[Sprint 4]** Discuss **future** refactoring and other design improvements your team would explore if the team had additional time._
 ​If our team had additional time, we would explore more areas where we could utilize abstraction to avoid DRY violations. For instance, our Orders,
 Carts, Inventory, and Review services all currently have handleError\<T>(operation = 'operation', result?: T), with no difference in implementation between the services. Going forward, we would make this a public function that could be called by the services that require it. In keeping with the goal of adhering to DRY, we would remove two of the 'admin-flag' attributes from our Users resource. Currently, a User has three admin-flags: 'isAdmin', 'type', and 'admin'.
@@ -278,7 +277,7 @@ We had a total of 10 stories in the acceptance testing document, which is the to
 > coverage targets, why you selected those values, and how well your
 > code coverage met your targets._
 ​
-![Model tier code coverage for backend](code-coverage-model-tier.png)
+![Model tier code coverage for backend](code-coverage-model-tier.jpg)
 ![Controller tier code coverage for backend](code-coverage-controller-tier.png)
 ![Persistence tier code coverage for backend](code-coverage-persistence-tier.png)
 
