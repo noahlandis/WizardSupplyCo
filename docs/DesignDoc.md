@@ -162,7 +162,7 @@ When a user is ready to checkout with their cart, they can navigate to the cart 
 > responsibilities.  This should be a narrative description, i.e. it has
 > a flow or "story line" that the reader can follow._
 
-The catalog component is used to render product cards that contain the product in the website. it provides a way for customer to purchase and search products. The catalog product card component displays a single card with all the details
+Our view tier includes a lot of components which renders the user interface and makes the website user-friendly. The login registeration component renders the login and registeration forms to the user. The catalog component is used to render product cards that contain the product in the website. It provides a way for customers to purchase and search products. The catalog product card component displays a single product, shows the stock of the product and allows the user to add products to cart. Clicking on the catalog product card brings the user to the details for that product. The product details component renders the reviews of the products and its details.
 
 > _**[Sprint 4]** You must  provide at least **2 sequence diagrams** as is relevant to a particular aspects 
 > of the design that you are describing.  For example, in e-store you might create a 
@@ -180,6 +180,10 @@ The catalog component is used to render product cards that contain the product i
 > _**[Sprint 4]** Provide a summary of this tier of your architecture. This
 > section will follow the same instructions that are given for the View
 > Tier above._
+
+Our ViewModel tier includese a number of services which isolate behavior involving fetching data from each of our backend API resources. These data fetching services include UsersService, CartsService, InventoryService, and OrdersService. We also have a few supporting services which do not directly call backend API endpoints, such as AuthService, UpdateService, and MessageService.
+
+These services serve as a communication layer between our feature components and the backend model tier. 
 
 > _At appropriate places as part of this narrative provide **one** or more updated and **properly labeled**
 > static models (UML class diagrams) with some details such as critical attributes and methods._
@@ -245,23 +249,24 @@ _
 > **Identify 3-4** areas within your code that have been flagged by the Static Code 
 > Analysis Tool (SonarQube) and provide your analysis and recommendations.  
 > Include any relevant screenshot(s) with each area._
-​![Diagram for static error](flag1.png)
-![Diagram for static error 2](flag2.png)
+​![Diagram for static error](flag-1.png)
+![Diagram for static error 2](flag-2.png)
 One of the places where SonarQube flagged our code was in our fileDAO classes for each of our APIs. We were not defining a variable static which is used to keep track of the ID of the object for which the API is built. Since it is not static, it is not shared across all instances of the class. This means that if we were to create a new instance of the class, the ID would be reset to 0. It currenly is not an issue because there is only one instance of the fileDAO ever made in our application. However, if we were to create a new instance of the class, it would cause issues. To fix this, we would make the variable static.
 
-![Diagram for string literal](flag3.png)
-Another place where SonarQube flagged out code was the string literals used in the log messages in the API classes. 
+![Diagram for conditional](flag-3.png)
+Another place where SonarQube flagged out code was a conditional being out of place. This is an indentation issue. The conditional is not indented properly. This is a minor issue and can be fixed by simply indenting the conditional properly.
+
 
 > _**[Sprint 4]** Discuss **future** refactoring and other design improvements your team would explore if the team had additional time._
 ​If our team had additional time, we would explore more areas where we could utilize abstraction to avoid DRY violations. For instance, our Orders,
-Carts, Inventory, and Review services all currently have handleError<T>(operation = 'operation', result?: T), with no difference in implementation between the services. Going forward, we would make this a public function that could be called by the services that require it. In keeping with the goal of adhering to DRY, we would remove two of the 'admin-flag' attributes from our Users resource. Currently, a User has three admin-flags: 'isAdmin', 'type', and 'admin'.
+Carts, Inventory, and Review services all currently have handleError\<T>(operation = 'operation', result?: T), with no difference in implementation between the services. Going forward, we would make this a public function that could be called by the services that require it. In keeping with the goal of adhering to DRY, we would remove two of the 'admin-flag' attributes from our Users resource. Currently, a User has three admin-flags: 'isAdmin', 'type', and 'admin'.
 
 In addition to adhering to DRY principles, we would change how we display the stock to follow Information Expert. For example, our Stock model currently has a 'Status' enum which is used to represent a brief description of the stock quantity, to be displayed to customers (i.e, 'Low Stock' would be displayed when there are less than 10 product's in the inventory). Instead of displaying the model's status, we calculate the status on the front end in our catalog-product-card.component.ts file via setStockStatus() method. 
 
 ## Testing
 > _This section will provide information about the testing performed
 > and the results of the testing._
-We tested our code using unit tests (guided by Jacoco), Postman, and visually with our UI. ​Our overall test coverage sits at 94%, with our Model Tier at 95%, our persistance tier at 95%, and our controller tier at 91%.
+We tested our program using unit tests (guided by Jacoco), Postman, and visually in our UI. ​Our overall test coverage sits at 94%, with our Model Tier at 95%, our persistance tier at 95%, and our controller tier at 91%.
 
 ### Acceptance Testing
 
