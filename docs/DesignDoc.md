@@ -16,7 +16,6 @@ geometry: margin=1in
   * Kanisha Agrawal
   * Noah Landis
   * Priyank Patel
-  * Brianna Vottis 
 ​
 ## Executive Summary
 ​
@@ -33,18 +32,19 @@ The back-end, powered by a Java Spring Boot API, takes care of essential element
 Wizbiz provides a platform for users to search and buy magic products. The most important user group for this website are people who want to buy magical items. The primary user goals for this project are to easily be able to find and purchase magic products online.
 ### Glossary and Acronyms
 ​
-| Term |        Definition       |
-|------|-------------------------|
-| SPA  | Single Page Application |
-| API  | Application Programming Interface |
-| DAO  | Data Access Object |
-| SKU  | Stock Keeping Unit |
-| UI   | User Interface |
-| MVC  | Model-View-Controller |
-| MVVM | Model-View-ViewModel |
-| CRUD | Create, Read, Update, Delete |
-| HTTP | Hypertext Transfer Protocol |
-| REST | Representational State Transfer |
+| Term       | Definition                                            |
+|------------|-------------------------------------------------------|
+| SPA        | Single Page Application                               |
+| API        | Application Programming Interface                     |
+| DAO        | Data Access Object                                    |
+| SKU        | Stock Keeping Unit                                    |
+| UI         | User Interface                                        |
+| MVC        | Model-View-Controller                                 |
+| MVVM       | Model-View-ViewModel                                  |
+| CRUD       | Create, Read, Update, Delete                          |
+| HTTP       | Hypertext Transfer Protocol                           |
+| REST       | Representational State Transfer                       |
+| admin flag | Property indicating whether a user is an admin or not |
 ​
 ## Requirements
 ​
@@ -61,77 +61,131 @@ This section describes the features of the application.
 A simple magic shop website that allows users to search, select, add to cart and order magic products that are in stock. The Owner of the website can manage the product by adding,deleting or editing the products displayed in the website.  
 ### MVP Features
 >  _**[Sprint 4]** Provide a list of top-level Epics and/or Stories of the MVP._
-​
-### Enhancements
-> _**[Sprint 4]** Describe what enhancements you have implemented for the project._
-​
-​
-## Application Domain
-​
-This section describes the application domain.
-​
-![Domain Model](domain-model-sprint-2.png)
 
-The major relationships in this are admin- dashboard - inventory, which represents the relationship between the admin and how the admin manages the inventory. Another one is customer-admin-user, which shows the heirarchy of users. We added order, wishlist, product review.
-​
+​-> Epic:- Login Session and authentication
+        -> Stories include:- 
+          -> Customer Registeration [UI]
+          -> Customer Login [UI]
+          -> Administrator Login [UI]
+          -> Login User [API]
+          -> LogOut User [API]
+          -> Register User [API]
+          -> Get Single User [API: Controller]
+
+-> Epic:- Shopping cart
+        -> Stories include:- 
+            -> Add to shopping cart [UI]
+            -> Remove from shopping cart [UI]
+            -> Shopping cart persistence [API: Persistence]
+
+-> Epic:- Browse Items
+        -> Stories include:-
+            -> View Catalog [UI]
+            -> View Specific Product Details [UI]
+            -> Search Items [UI]
+
+-> Epic:- Checkout
+        -> Stories include:-
+            -> OrdersDAO & OrdersFileDAO [API: Persistence]
+            -> Checkout [UI]
+
+-> Epic:- Inventory Management [UI]
+        -> Stories include:-
+            -> Add Product to Listing [UI]
+            -> Remove Product Listing [UI]
+            -> Update Product Stock [UI]
+
+-> Epic:- Ratings and Reviews
+        -> Stories include:-
+            -> Create a Single Review [API]
+            -> Get all reviews for a single SKU [API]
+            -> Delete a single review [API]
+            -> View Reviews [UI]
+            -> Delete Review [Customer]
+            -> Delete Review [Administrator]
+
+->  Stories:- 
+        -> Create new Product [API]
+        -> Get a Single Product [API]
+        -> Delete a Single Product [API]
+        -> Search for a product [API]
+        -> Get entire inventory [API]
+        -> Update a product [API]
+
+### Enhancements
+
+#### Review System
+This feature allows users to view the reviews of a given product. Reviews connsist of a 1-5 star rating, along with an optional comment. If the user is logged in as a customer, they are able to leave one review per product. Customers are able to delete their reviews. Admins have the ability to delete any review. 
+
+## Application Domain
+
+This section describes the application domain.
+
+![Domain Model](domain-model-final.png)
+
+The major relationships in this are admin-dashboard-inventory, which represents the relationship between the admin and how the admin manages the inventory. Another one is customer-admin-user, which shows the heirarchy of users. We added order, wishlist, product review.
+
 ## Architecture and Design
-​
+
 This section describes the application architecture.
-​
+
 ### Summary
-​
+
 The following Tiers/Layers model shows a high-level view of the webapp's architecture.
-​
+
 ![The Tiers & Layers of the Architecture](architecture-tiers-and-layers.png)
-​
+
 The e-store web application, is built using the Model–View–ViewModel (MVVM) architecture pattern. 
-​
+
 The Model stores the application data objects including any functionality to provide persistance. 
-​
+
 The View is the client-side SPA built with Angular utilizing HTML, CSS and TypeScript. The ViewModel provides RESTful APIs to the client (View) as well as any logic required to manipulate the data objects from the Model.
-​
+
 Both the ViewModel and Model are built using Java and Spring Framework. Details of the components within these tiers are supplied below.
-​
-​
+
 ### Overview of User Interface
-​
+
 This section describes the web interface flow; this is how the user views and interacts
 with the e-store application.
-​
-​As soon as a user visits our website, they are greeted with the site's name and an eye-catching grid of products that we offer. To access the full range of features, users can log in or register by clicking an icon located at the top right of the header which provides users with login form.
 
-Once inside the website, users can browse our vast collection of products, which are presented in an intuitive grid format. They can easily add items to their shopping cart by clicking the Add to cart button. They can also adjust the quantity of each item by using the round buttons within the cart listing page. If a user decides they no longer need a particular item, they can simply click on the delete icon to remove it from the cart. 
+As soon as a user visits our website, they are greeted with the site's name and an eye-catching grid of products that we offer. To access the full range of features, users can log in or register by clicking an icon located at the top right of the header which provides users with login form.
+
+Once inside the website, users can browse our vast collection of products, which are presented in an intuitive grid format. They can easily add items to their shopping cart by clicking the Add to cart button. They can also adjust the quantity of each item by using the round buttons within the cart listing page. If a user decides they no longer need a particular item, they can simply click on the delete icon to remove it from the cart.
 
 Our search bar is located in the header that helps users find the exact product they're looking for.
+
+When a user is ready to checkout with their cart, they can navigate to the cart view, then click the checkout button. In the checkout process, they will be guided through the checkout steps such as providing contact, shipping, and payment information. After reviewing their order and clicking order, they will be presented with an order confirmation which includes their order number, and a navigation link to return to the catalog.
 
 ### View Tier
 > _**[Sprint 4]** Provide a summary of the View Tier UI of your architecture.
 > Describe the types of components in the tier and describe their
 > responsibilities.  This should be a narrative description, i.e. it has
 > a flow or "story line" that the reader can follow._
-​
+
+The catalog component is used to render product cards that contain the product in the website. it provides a way for customer to purchase and search products. The catalog product card component displays a single card with all the details
+
 > _**[Sprint 4]** You must  provide at least **2 sequence diagrams** as is relevant to a particular aspects 
 > of the design that you are describing.  For example, in e-store you might create a 
 > sequence diagram of a customer searching for an item and adding to their cart. 
 > As these can span multiple tiers, be sure to include an relevant HTTP requests from the client-side to the server-side 
 > to help illustrate the end-to-end flow._
-​
+
 > _**[Sprint 4]** To adequately show your system, you will need to present the **class diagrams** where relevant in your design. Some additional tips:_
  >* _Class diagrams only apply to the **ViewModel** and **Model** Tier_
 >* _A single class diagram of the entire system will not be effective. You may start with one, but will be need to break it down into smaller sections to account for requirements of each of the Tier static models below._
  >* _Correct labeling of relationships with proper notation for the relationship type, multiplicities, and navigation information will be important._
  >* _Include other details such as attributes and method signatures that you think are needed to support the level of detail in your discussion._
-​
+
 ### ViewModel Tier
 > _**[Sprint 4]** Provide a summary of this tier of your architecture. This
 > section will follow the same instructions that are given for the View
 > Tier above._
-​
+
 > _At appropriate places as part of this narrative provide **one** or more updated and **properly labeled**
 > static models (UML class diagrams) with some details such as critical attributes and methods._
 > 
 ![Replace with your ViewModel Tier class diagram 1, etc.](model-placeholder.png)
-​
+
 ### Model Tier
 Our model tier (`M` in `MVC`) is built using Java and Spring Framework. The model tier is responsible for storing the application data objects and providing persistance. The model tier also exposes a set of APIs to the controller tier (`C` in `MVC`) to manipulate the data objects from the Model. The model tier is divided into three resources: `Inventory`, `User` and `Carts`. 
 
@@ -191,13 +245,24 @@ _
 > **Identify 3-4** areas within your code that have been flagged by the Static Code 
 > Analysis Tool (SonarQube) and provide your analysis and recommendations.  
 > Include any relevant screenshot(s) with each area._
-​
+​![Diagram for static error](flag1.png)
+![Diagram for static error 2](flag2.png)
+One of the places where SonarQube flagged our code was in our fileDAO classes for each of our APIs. We were not defining a variable static which is used to keep track of the ID of the object for which the API is built. Since it is not static, it is not shared across all instances of the class. This means that if we were to create a new instance of the class, the ID would be reset to 0. It currenly is not an issue because there is only one instance of the fileDAO ever made in our application. However, if we were to create a new instance of the class, it would cause issues. To fix this, we would make the variable static.
+
+![Diagram for string literal](flag3.png)
+Another place where SonarQube flagged out code was the string literals used in the log messages in the API classes. 
+
 > _**[Sprint 4]** Discuss **future** refactoring and other design improvements your team would explore if the team had additional time._
-​
+​If our team had additional time, we would explore more areas where we could utilize abstraction to avoid DRY violations. For instance, our Orders,
+Carts, Inventory, and Review services all currently have handleError<T>(operation = 'operation', result?: T), with no difference in implementation between the services. Going forward, we would make this a public function that could be called by the services that require it. In keeping with the goal of adhering to DRY, we would remove two of the 'admin-flag' attributes from our Users resource. Currently, a User has three admin-flags: 'isAdmin', 'type', and 'admin'.
+
+In addition to adhering to DRY principles, we would change how we display the stock to follow Information Expert. For example, our Stock model currently has a 'Status' enum which is used to represent a brief description of the stock quantity, to be displayed to customers (i.e, 'Low Stock' would be displayed when there are less than 10 product's in the inventory). Instead of displaying the model's status, we calculate the status on the front end in our catalog-product-card.component.ts file via setStockStatus() method. 
+
 ## Testing
 > _This section will provide information about the testing performed
 > and the results of the testing._
-​
+We tested our code using unit tests (guided by Jacoco), Postman, and visually with our UI. ​Our overall test coverage sits at 94%, with our Model Tier at 95%, our persistance tier at 95%, and our controller tier at 91%.
+
 ### Acceptance Testing
 
 We had a total of 10 stories in the acceptance testing document, which is the total number of user stories. Out of those 10 stories, 3 of those stories didn't meet the acceptance criteria that we had come up with while doing sprint planning. The tests that failed were testing features that weren't required for the sprint 2 like adding images to product. One functional requirement that we did fail is getting the button to remove a product from the inventory working. This was a good practice to explore all the test cases that could break the code. 
