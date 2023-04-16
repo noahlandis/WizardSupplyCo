@@ -249,7 +249,7 @@ _
 > **Identify 3-4** areas within your code that have been flagged by the Static Code 
 > Analysis Tool (SonarQube) and provide your analysis and recommendations.  
 > Include any relevant screenshot(s) with each area._
-​![Diagram for static error](flag-1.png)
+![Diagram]
 ![Diagram for static error 2](flag-2.png)
 One of the places where SonarQube flagged our code was in our fileDAO classes for each of our APIs. We were not defining a variable static which is used to keep track of the ID of the object for which the API is built. Since it is not static, it is not shared across all instances of the class. This means that if we were to create a new instance of the class, the ID would be reset to 0. It currenly is not an issue because there is only one instance of the fileDAO ever made in our application. However, if we were to create a new instance of the class, it would cause issues. To fix this, we would make the variable static.
 
