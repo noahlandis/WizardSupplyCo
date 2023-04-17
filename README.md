@@ -10,7 +10,6 @@ An online E-store system built in Java 11=> and **\_ _replace with other platfor
 - Noah Landis
 - Priyank Patel
 - Kanisha Agrawal
-- Brianna Vottis
 
 ## Prerequisites
 
