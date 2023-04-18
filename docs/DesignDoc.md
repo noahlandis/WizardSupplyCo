@@ -319,7 +319,6 @@ The `UpdateService` is used to update the data in the application. It is used to
 ![Review Feature Diagram](review-feature.png)
 
 
-
 ### Model Tier
 Our model tier (`M` in `MVC`) is built using Java and Spring Framework. The model tier is responsible for storing the application data objects and providing persistance. The model tier also exposes a set of APIs to the controller tier (`C` in `MVC`) to manipulate the data objects from the Model. The model tier is divided into three resources: `Inventory`, `User` and `Carts`. 
 
@@ -380,12 +379,15 @@ _
 > **Identify 3-4** areas within your code that have been flagged by the Static Code 
 > Analysis Tool (SonarQube) and provide your analysis and recommendations.  
 > Include any relevant screenshot(s) with each area._
-![Diagram]
-![Diagram for static error 2](flag-2.png)
-One of the places where SonarQube flagged our code was in our fileDAO classes for each of our APIs. We were not defining a variable static which is used to keep track of the ID of the object for which the API is built. Since it is not static, it is not shared across all instances of the class. This means that if we were to create a new instance of the class, the ID would be reset to 0. It currenly is not an issue because there is only one instance of the fileDAO ever made in our application. However, if we were to create a new instance of the class, it would cause issues. To fix this, we would make the variable static.
 
-![Diagram for conditional](flag-3.png)
+
+One of the places where SonarQube flagged our code was in our fileDAO classes for each of our APIs. We were not defining a variable static which is used to keep track of the ID of the object for which the API is built. Since it is not static, it is not shared across all instances of the class. This means that if we were to create a new instance of the class, the ID would be reset to 0. It currenly is not an issue because there is only one instance of the fileDAO ever made in our application. However, if we were to create a new instance of the class, it would cause issues. To fix this, we would make the variable static.
+![Diagram for static error 1](flag-1.png)
+
+![Diagram for static error 2](flag-2.png)
+
 Another place where SonarQube flagged out code was a conditional being out of place. This is an indentation issue. The conditional is not indented properly. This is a minor issue and can be fixed by simply indenting the conditional properly.
+![Diagram for conditional](flag-3.png)
 
 > _**[Sprint 4]** Discuss **future** refactoring and other design improvements your team would explore if the team had additional time._
 ​If our team had additional time, we would explore more areas where we could utilize abstraction to avoid DRY violations. For instance, our Orders,
@@ -396,6 +398,7 @@ In addition to adhering to DRY principles, we would change how we display the st
 ## Testing
 > _This section will provide information about the testing performed
 > and the results of the testing._
+
 We tested our program using unit tests (guided by Jacoco), Postman, and visually in our UI. ​Our overall test coverage sits at 94%, with our Model Tier at 95%, our persistance tier at 95%, and our controller tier at 91%.
 
 ### Acceptance Testing
@@ -408,8 +411,11 @@ We had a total of 10 stories in the acceptance testing document, which is the to
 > coverage targets, why you selected those values, and how well your
 > code coverage met your targets._
 ​
-![Model tier code coverage for backend](code-coverage-model-tier.jpg)
+
+![Model tier code coverage for backend](code-coverage-model-tier.png)
 ![Controller tier code coverage for backend](code-coverage-controller-tier.png)
 ![Persistence tier code coverage for backend](code-coverage-persistence-tier.png)
 
 We ensured code coverage for all public methods and thus we have high code coverage. We used mockito wherever necessary. We also used PowerMockito to mock static methods. We used Jacoco to generate the code coverage reports. We used that to monitor the code coverage.
+One of the reason we have such high code coverage is that we ensured to make the Unit tests part of the story definition of done as is done in the industry, so for every story we had, we would make sure to have Unit tests for whatever new Java code we wrote.
+We initially targeted for 100% code coverage, but it became difficult to follow as some of the private methods were difficult to make tests for and the tests weren't reaching all the cases that we put in some methods. Moreoever, at the end of the phase, our focus shifted more on the functionality of the application than the unit test targets as we were under the pressure of the deadline. Nevertheless, overall we achieved 94% code coverage, which we feel is still great.
