@@ -19,9 +19,9 @@ geometry: margin=1in
 ​
 ## Executive Summary
 ​
-Introducing Wizbiz (development codename), a captivating web application that transports the wonderful world of magical commerce into the digital age. Wizbiz offers users a spellbinding platform to explore and acquire a wide array of magical items, from wands to brooms, and everything in between.
+Introducing Sorcerer's Supply Co. (development codename), a captivating web application that transports the wonderful world of magical commerce into the digital age. Sorcerer's Supply Co. offers users a spellbinding platform to explore and acquire a wide array of magical items, from wands to brooms, and everything in between.
 
-In its present iteration, Wizbiz allows users to effortlessly create an account, peruse the diverse selection of magical items, and add desired products to their cart. Moreover, the application's owner possesses the ability to enrich the store's inventory by adding new items, as well as editing or deleting existing offerings as needed.
+In its present iteration, Sorcerer's Supply Co. allows users to effortlessly create an account, peruse the diverse selection of magical items, and add desired products to their cart. Moreover, the application's owner possesses the ability to enrich the store's inventory by adding new items, as well as editing or deleting existing offerings as needed.
 
 Built using Angular and TypeScript for the front-end, our eStore is easy to navigate and visually appealing, thanks to the Angular Material UI component library. Customers can browse through our collection of magical items effortlessly and enjoy a smooth shopping experience.
 
@@ -29,7 +29,7 @@ The back-end, powered by a Java Spring Boot API, takes care of essential element
 ​
 ### Purpose
 
-Wizbiz provides a platform for users to search and buy magic products. The most important user group for this website are people who want to buy magical items. The primary user goals for this project are to easily be able to find and purchase magic products online.
+Sorcerer's Supply Co. provides a platform for users to search and buy magic products. The most important user group for this website are people who want to buy magical items. The primary user goals for this project are to easily be able to find and purchase magic products online.
 ### Glossary and Acronyms
 ​
 | Term       | Definition                                            |
@@ -44,6 +44,7 @@ Wizbiz provides a platform for users to search and buy magic products. The most 
 | CRUD       | Create, Read, Update, Delete                          |
 | HTTP       | Hypertext Transfer Protocol                           |
 | REST       | Representational State Transfer                       |
+| DRY        | Don't Repeat Yourself                                 |
 | admin flag | Property indicating whether a user is an admin or not |
 ​
 ## Requirements
@@ -51,10 +52,14 @@ Wizbiz provides a platform for users to search and buy magic products. The most 
 This section describes the features of the application.
 ​
 1)There should be simple authentication system for both the admin and the users.
-2)Users should be able to create and account and login/logout from the website.
+
+2)Users should be able to create an account and login/logout from the website.
+
 3)Users should be able to see a list of products in the webiste and also be able to search for the products they need.
-4)Users should have full control of the items in cart and their quantities.
-5)All the data of the users should be saved to the inventory so that users can view what's in their cart when they login next time.
+
+4)Users should have full control of the items in their cart and their quantities.
+
+5)A user's data should be saved to the inventory so that the contents of their cart persists across multiple login sessions
 
 ### Definition of MVP
 ​
@@ -62,55 +67,139 @@ A simple magic shop website that allows users to search, select, add to cart and
 ### MVP Features
 >  _**[Sprint 4]** Provide a list of top-level Epics and/or Stories of the MVP._
 
-​-> Epic:- Login Session and authentication
-        -> Stories include:- 
-          -> Customer Registeration [UI]
-          -> Customer Login [UI]
-          -> Administrator Login [UI]
-          -> Login User [API]
-          -> LogOut User [API]
-          -> Register User [API]
-          -> Get Single User [API: Controller]
+MVP Features:-
+
+Minimal Authentication for Customer/Onwer Login & Logout 
+
+​-> Epic:- Login Session and Registeration 
+        -> As A user I want to be able to login/register on a seperate page/window into the estore so that my shopping cart is persistent and I can checkout my cart
+
+        Stories include:- 
+        
+          1) Customer Registeration [UI] (3)
+                  -> Story: As a Customer I want to be able to register for a Customer account so that I can buy Items.
+                
+          2) Customer Login [UI] (3)
+                  -> Story: As a Customer I want to be able to log into my Customer account so that I can buy Items.
+
+          3) Administrator Login [UI] (3)
+                  -> Story: As an Administrator I want to be able to log into my Administrator account so that I can manage the website.
+
+          4) Login User [API] (5)
+                  -> Story: As a Developer I want to submit a request to login with a username so that I can create a login session for the user.
+                
+          5) LogOut User [API] (5)
+                  -> Story:  As a Developer I want to submit a request to logout so that I can create a logout session for the user.
+                
+          6) Register User [API] (7)
+                  -> Story: As a Developer I want to submit a request to register a new user so that the user will have an account and can log in.
+
+          7) Get Single User [API: Controller] (2)
+                  -> Story: As a Developer I want to submit a request for a single user by their username so that I can access that user’s data.          
+
+Customer Functionality & Data Persistence
 
 -> Epic:- Shopping cart
-        -> Stories include:- 
-            -> Add to shopping cart [UI]
-            -> Remove from shopping cart [UI]
-            -> Shopping cart persistence [API: Persistence]
+        -> As a Customer I want to add Items to my Shopping Cart so that I can build an order.
+
+        Stories include:- 
+
+            1) Add to shopping cart [UI] (3)
+                  -> Story: As a Customer I want to add items to my shopping cart so that I can choose Items to purchase.
+
+            2) Remove from shopping cart [UI] (3)
+                  -> Story: As a Customer I want to remove items from my Shopping Cart so that I can choose not to purchase it.
+
+            3) Shopping cart persistence [API: Persistence] (3)
+                  -> Story: As a Customer I want my Shopping Cart to be saved to my account so that I can log in and out as I please.
 
 -> Epic:- Browse Items
-        -> Stories include:-
-            -> View Catalog [UI]
-            -> View Specific Product Details [UI]
-            -> Search Items [UI]
+        -> As a Customer I want to browse available Items so that I can decide what to purchase.
+
+        Stories include:-
+
+            1) View Catalog [UI] (3)
+                  -> Story: As a Customer I want to view the entire catalog so that I can choose what to purchase. 
+
+            2) View Specific Product Details [UI] (5)
+                  -> Story: As a Customer I want to view an individual item’s listing to learn more details of the item
+
+            3) Search Items [UI] (3)
+                  -> Story: As a Customer I want to use a search bar so that I can search for specific Items.
+
+-> Story: Search for a product [API] (5)
+            -> Story: As a Developer I want to submit a request to get the products in the inventory whose name contains the given text SO THAT I have access to only those products.
+
+-> Story: Get a Single Product [API] (3)
+            -> Story: As a Developer I want to submit a request to get a single product so that I can access the price and quantity.
+
+-> Story: Get entire inventory [API] (5)
+            -> Story: As a Developer I want to submit a request to get the entire inventory so that I have access to all of the products.
 
 -> Epic:- Checkout
-        -> Stories include:-
-            -> OrdersDAO & OrdersFileDAO [API: Persistence]
-            -> Checkout [UI]
+        -> As a Customer I want to browse available Items so that I can decide what to purchase.
+
+        Stories include:-
+
+            1) OrdersDAO & OrdersFileDAO [API: Persistence] (5)
+                -> Story: As a Developer I want to be able to interact with Orders resources so that a customer can create, edit, and view their order.
+
+            2) Create/Read Single Order [API: Controller] (2)
+                -> Story: As a Developer I want to be able to interact with Orders resources so that a customer can create, edit, and view their order.
+
+            3) Checkout [UI] (8)
+                 -> Story: As a Customer I want to check out so that I can purchase the items in my cart.
+
+Inventory Management
 
 -> Epic:- Inventory Management [UI]
-        -> Stories include:-
-            -> Add Product to Listing [UI]
-            -> Remove Product Listing [UI]
-            -> Update Product Stock [UI]
+        -> As an Administrator I want to manage my inventory to keep my product listings up to date.
+
+        Stories include:-
+
+            1) Add Product to Listing [UI] (2)
+                -> Story: As an Administrator I want to add new Items to the inventory so that I can expand my Item listings.
+
+            2) Remove Product Listing [UI] (2)
+                -> Story: As an Administrator I want to remove products from the inventory so that I can consolidate my Item listings.
+
+            3) Update Product Details [UI] (2)
+                -> Story: As an owner I want a button to update the product description for a products so that I can update the description of the products.
+
+-> Story: Create new Product [API] (8)
+            -> Story: AS a Developer I want to submit a request to create a new product (name, price, quantity) so that it is available to in the inventory.
+
+-> Story: Delete a Single Product [API] (3)
+            -> Story: As a Developer I WANT to submit a request to get a single product so that I can access the price and quantity.
+
+-> Story: Update a product [API] (5)
+            -> Story: As a Developer I WANT to submit a request to get the entire inventory so that I have access to all products and their details.
+
+10% feature enchantment(s)
 
 -> Epic:- Ratings and Reviews
-        -> Stories include:-
-            -> Create a Single Review [API]
-            -> Get all reviews for a single SKU [API]
-            -> Delete a single review [API]
-            -> View Reviews [UI]
-            -> Delete Review [Customer]
-            -> Delete Review [Administrator]
+        -> As a customer I want to give a product a review and a star rating.
+        -> As an Administrator and a Customer, I want to delete a review for an Item.
 
-->  Stories:- 
-        -> Create new Product [API]
-        -> Get a Single Product [API]
-        -> Delete a Single Product [API]
-        -> Search for a product [API]
-        -> Get entire inventory [API]
-        -> Update a product [API]
+        Stories include:-
+
+            1) Create a Single Review [API] (5)
+                -> Story: As a developer I want to submit a DELETE HTTP request to delete a single review so that I can add fulfill a user’s request to remove their review.
+
+            2) Get all reviews for a single SKU [API] (5)
+                -> Story: As a developer I want to make an HTTP GET request to the reviews resource using a SKU so that I can get all reviews that have been left for a given product.
+
+            3) Delete a single review [API] (5)
+                -> Story: As a developer I want to submit a POST HTTP request to create a single review so that I can add a user’s review for an item.
+
+            4) View Reviews [UI] (8)
+                -> Story: As a Customer I want to write a review and give a star rating so that I can share my current level of satisfaction.
+
+            5) Delete Review [Customer] (5)
+                -> Story: As a Customer I want to delete my reviews so that I have control over my voice.
+
+            6) Delete Review [Administrator] (5)
+                -> Story: As the estore owner I want to delete the reviews left by customers so I can maintain a positive environment in the estore owner.
 
 ### Enhancements
 
@@ -148,9 +237,9 @@ Both the ViewModel and Model are built using Java and Spring Framework. Details 
 This section describes the web interface flow; this is how the user views and interacts
 with the e-store application.
 
-As soon as a user visits our website, they are greeted with the site's name and an eye-catching grid of products that we offer. To access the full range of features, users can log in or register by clicking an icon located at the top right of the header which provides users with login form.
+As soon as a user visits our website, they are presented with the site's logo and a grid of products that we offer. To access the full range of features, users can log in or register by clicking an icon located at the top right of the header which provides users with login form.
 
-Once inside the website, users can browse our vast collection of products, which are presented in an intuitive grid format. They can easily add items to their shopping cart by clicking the Add to cart button. They can also adjust the quantity of each item by using the round buttons within the cart listing page. If a user decides they no longer need a particular item, they can simply click on the delete icon to remove it from the cart.
+Once on the website, users can browse our products, which are presented in a grid format. They can add items to their shopping cart by clicking the 'Add To Cart' button. They can also adjust the quantity of each item by using the round buttons within the cart listing page. If a user decides they no longer need a particular item, they can simply click on the delete icon to remove it from the cart.
 
 Our search bar is located in the header that helps users find the exact product they're looking for.
 
@@ -181,9 +270,21 @@ Our view tier includes a lot of components which renders the user interface and 
 > section will follow the same instructions that are given for the View
 > Tier above._
 
-Our ViewModel tier includese a number of services which isolate behavior involving fetching data from each of our backend API resources. These data fetching services include UsersService, CartsService, InventoryService, and OrdersService. We also have a few supporting services which do not directly call backend API endpoints, such as AuthService, UpdateService, and MessageService.
+Our ViewModel tier includes a number of services which isolate behavior involving fetching data from each of our backend API resources. These data fetching services include `UsersService`, `CartsService`, `InventoryService`, and `OrdersService`. We also have a few supporting services which do not directly call backend API endpoints, such as `AuthService`, `UpdateService`, and `MessageService`.
 
-These services serve as a communication layer between our feature components and the backend model tier. 
+These services serve as a communication layer between our feature components and the backend model tier.
+
+`AuthService` is the service that handles the login and registration of the users including the admin. It oversees the authentication of the users and the admin. It also handles the registration of the customers. It does so using the UsersService.This service is used throughout the application to render components based on the user's role. 
+
+The `UsersService` handles the CRUD operations of the users. It is used by the AuthService to register new users and by the AdminDashboardComponent to manage the users. It makes the actual calls to the API endpoints for login, logout, register, and get user. 
+
+The `CartsService` makes the API calls related to the carts. It makes the calls to the API endpoints for get cart, add to cart, and remove from cartremove from cart when the user is logged in as customer. It is used when a user is logged in to render components based on the user's cart.
+
+The calls to the Inventory API are made through the `InventoryService`. These include method calls to create, update, and delete products. It also makes the calls to get all products and get a single product when a user  is logged in as admin. It is used by the catalog components of the admin and the user to manage the products.
+
+When the customer tries to checkout, the `OrdersService` is used to make the API calls to the Orders API. It makes the calls to the API endpoints for create order, get order, and get all orders.
+
+The `UpdateService` is used to update the data in the application. It is used to update the view of the cart, catalog and the reviews of the products when a change is made.
 
 > _At appropriate places as part of this narrative provide **one** or more updated and **properly labeled**
 > static models (UML class diagrams) with some details such as critical attributes and methods._
@@ -213,7 +314,7 @@ Persistence is provided by the `CartsDAO` interface, and its concrete implementa
 Dependency inversion (D in SOLID) is adhered to in this project because we rely on abstraction interfaces instead of low-level concrete implementations for data storage. For data storage, we will use a Data Access Object (DAO) abstract interface, which multiple data access classes will implement. This way, at instantiation, we can directly inject the data access method we would like to use into the modules which depend only on the DAO abstraction. 
 In a more complicated eStore, the dependency inversion principle could be used to create abstractions for modules handling authentication and authorization, as well as for payment handling. We could also apply dependency inversion to make a logger interface, which is injected into modules that utilize a logger. This makes implementing different types of loggers easier.
 
-![Diagram for Dependency Inversion](depencency-inversion.png)
+![Diagram for Dependency Inversion](dependency-inversion.png)
 
 ### Dependency Injection
 Our application relies heavily on dependency injection in all tiers. In the controller tier, Spring Boot injects the InventoryFileDAO into the InventoryController class. This allows the InventoryController to use the InventoryFileDAO to access the data in the inventory. In the model tier, the InventoryFileDAO is injected into the Product class. This allows the Product class to use the InventoryFileDAO to access the data in the inventory. In the angular front-end, we use dependency injection for the services. We have a service for each of the REST API resources, a service for authentication, as well as a service to handle updating of components when their contents change. The services are injected into the components that need them. For example, we inject the InventoryService into components that need to fetch data from the inventory resource. This allows us to easily swap out the implementation of the service without having to change the components that use it.
@@ -223,6 +324,7 @@ Our application relies heavily on dependency injection in all tiers. In the cont
 ### Pure Fabrication
 Creating a software system dedicated to handling data access also adheres to the pure fabrication principle of GRASP; it isn’t directly represented in the problem domain, yet its fabrication is integral to the solution architecture. Looking back at the eStore domain model, the Inventory domain entity represents the result of using a data access layer. The data access layer is not present in the model; it merely supports the behavior of the system architecture.
 Another example of pure fabrication in our eStore would be a wishlist management system. The management system does not correspond to any particular entity in the problem domain and is designed purely to handle the management aspect of a wishlist.
+
 ![Diagram for Dependency Injection](dependency-injection.png)
 
 ### Single Responsibility
