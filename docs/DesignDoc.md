@@ -259,6 +259,12 @@ Our view tier includes a lot of components which renders the user interface and 
 > As these can span multiple tiers, be sure to include an relevant HTTP requests from the client-side to the server-side 
 > to help illustrate the end-to-end flow._
 
+One of the features in our e-store is the login system built for the customers and the admin. The following sequence diagram shows the flow of the login system.
+![Login Sequence Diagram](user-login-sequence.png)
+
+Another feature that we implemented was that the user can add products to their cart which is persistent. The following sequence diagram shows the flow of the checkout system.
+![Checkout Sequence Diagram](add-to-cart-sequence.png)
+
 > _**[Sprint 4]** To adequately show your system, you will need to present the **class diagrams** where relevant in your design. Some additional tips:_
  >* _Class diagrams only apply to the **ViewModel** and **Model** Tier_
 >* _A single class diagram of the entire system will not be effective. You may start with one, but will be need to break it down into smaller sections to account for requirements of each of the Tier static models below._
@@ -289,7 +295,30 @@ The `UpdateService` is used to update the data in the application. It is used to
 > _At appropriate places as part of this narrative provide **one** or more updated and **properly labeled**
 > static models (UML class diagrams) with some details such as critical attributes and methods._
 > 
-![Replace with your ViewModel Tier class diagram 1, etc.](model-placeholder.png)
+![Diagrams for all the services](services.png)
+
+#####Various components use these services to interact with the backend APIs. We developed these components in different modules to organize the structure and the code to make it easier to maintain. The following diagram shows the components that we built for each of the feature module that we created.
+
+######These are the components built under the admin feature module. It contains components to render the admin dashboard, catalog and to create and edit inventory items.
+![Admin Feature Diagram](admin-feature.png)
+
+
+######These are the components built under the browse catalog feature module. It contains components to render the catalog and the product details to the customer.
+![Browse Catalog Feature Diagram](browse-catalog-feature.png)
+
+
+######A user is able to navigate through the different pages of the website using the navigation bar. It contains links to the home page, the catalog, the cart and the login page.
+![Navigation Feature Diagram](navigation-feature.png)
+
+
+######One of the features of the website is that the customer can add products to their cart and also proceed to checkout until the order is placed. The following diagram shows the components that are used to render the cart and the checkout page.
+![Order Processing Diagram](order-processing-feature.png)
+
+
+######The customers can also leave a review on a product, which was our feature enhancement. The following diagram shows the components that are used to render the review form and the reviews.
+![Review Feature Diagram](review-feature.png)
+
+
 
 ### Model Tier
 Our model tier (`M` in `MVC`) is built using Java and Spring Framework. The model tier is responsible for storing the application data objects and providing persistance. The model tier also exposes a set of APIs to the controller tier (`C` in `MVC`) to manipulate the data objects from the Model. The model tier is divided into three resources: `Inventory`, `User` and `Carts`. 
