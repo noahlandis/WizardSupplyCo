@@ -274,27 +274,74 @@ One of the features of the website is that the customer can add products to thei
 ![Order Processing Diagram](order-processing-feature.png)
 
 The customers can also leave a review on a product, which was our feature enhancement. The following diagram shows the components that are used to render the review form and the reviews.
-![Review Feature Diagram](review-feature.png)
+![Review Feature Diagram](review-feature.png)                                
 
 ### ViewModel Tier
+Our ViewModel tier (the VM in M-V-VM) is comprised of a set of controller classes that handle REST API requests and responses. These controllers are responsible for managing the data model and ensuring that the data is properly formatted and validated before being sent to the client. The controllers are also responsible for handling any errors that may occur during the request/response cycle. The following diagram shows the classes that we built for the ViewModel tier.
 
+#### InventoryController
+The InventoryController class is responsible for managing the Product resource by handling REST API requests. It interacts with the InventoryDAO for data access and manipulation, ensuring a clear separation of concerns within the application. The controller supports various operations, such as retrieving a specific product by SKU, fetching all products, searching for products by name, creating new products, updating existing products, and deleting products. By providing a comprehensive set of methods, the InventoryController class enables seamless interaction between the client and the underlying data model for the Product resource.
+![Inventory Controller Diagram](InventoryController.png)
+#### UsersController
+The UsersController class manages User resources and handles their REST API requests. It communicates with the UsersDAO for data access and manipulation, maintaining a clear separation of concerns in the application. The controller supports a variety of operations such as retrieving a user by userId, creating new users, and logging users in and out. By providing a comprehensive set of methods, the UsersController class facilitates seamless interaction between the client and the underlying data model for User resources, ensuring a smooth user experience throughout the application.
+![Users Controller Diagram](UsersController.png) 
+
+#### CartsController
+Our Carts controller highlights one of the main features of our application, the cart of the customer. It communicates with the CartsDAO for data access and manipulation, maintaining a clear separation of concerns in the application. The controller supports a variety of operations such as retrieving a cart,retrieving all the carts, adding product to cart, removing prodcut from cart, reducing the quantity of the product from cart and clearing the cart.  By providing a comprehensive set of methods, the CartsController class facilitates seamless interaction between the client and the underlying data model for Cart resources, ensuring a smooth user experience throughout the application.
+![Carts Controller Diagram](CartsController.png)
+
+#### OrdersController
+Our Orders controller manages the Orders resource and handles the REST API requests. It communicates with the OrdersDAO for data access and manipulation, adhering to the separation of concerns principle. The controller supports various operations, such as getting an order, getting list of orders, creating an order and getting the products purchased by the user.By providing a comprehensive set of methods, the OrdersController class facilitates seamless interaction between the client and the underlying data model for orders resources, ensuring a smooth user experience throughout the application.
+![Orders Controller Diagram](OrdersController.png)
+
+#### ReviewController
+The ReviewController class is responsible for managing Review resources in the e-commerce application and handling their REST API requests. It communicates with the ReviewsDAO for data access and manipulation, adhering to the separation of concerns principle. The controller supports various operations, such as retrieving reviews by product SKU, retrieving reviews by user ID, creating, updating, and deleting reviews.
+
+The ReviewController class provides a comprehensive set of methods that allow for smooth interaction between the client and the underlying data model for Review resources. By offering endpoints for fetching reviews for a specific product or user, the class ensures a better user experience, allowing users to view and manage their reviews efficiently. Additionally, it facilitates interaction with product reviews for all users, which can be essential for understanding user feedback and improving products in the e-commerce application.
+![Review Controller Diagram](ReviewController.png)
 
 ### Model Tier
-Our model tier (`M` in `MVC`) is built using Java and Spring Framework. The model tier is responsible for storing the application data objects and providing persistence. The model tier also exposes a set of APIs to the controller tier (`C` in `MVC`) to manipulate the data objects from the Model. The model tier is divided into three resources: `Inventory`, `User` and `Carts`. 
+Our model tier (first M in M-V-VM) is built using Java and Spring Framework. The model tier is responsible for storing the application data objects and providing persistence. The model tier is divided into five resources: Inventory, User, Carts, Orders, and Reviews.
 
-The `Inventory` resource is responsible for storing the `Product` data objects and providing persistence via Data Access Object (DAO) classes. The `Product` class is the highest abstraction class used for storing data about a product, such as name, price, SKU (Stock Keeping Unit), images, as well an instance of a `Description` object and a `Stock` object. The `Description` class is used for storing data about a product's description such as the product's summary text, the product's tags. `Description` also encapsulates behavior related to said data. The `Stock` class is used for storing the product's stock quantity, and encapsulates behavior related to it.
+#### Inventory Resource
+The Inventory resource is responsible for storing the Product data objects and providing persistence via Data Access Object (DAO) classes. The Product class is the highest abstraction class used for storing data about a product, such as name, price, SKU (Stock Keeping Unit), images, as well an instance of a Description object and a Stock object. The Description class is used for storing data about a product's description such as the product's summary text, the product's tags. Description also encapsulates behavior related to said data. The Stock class is used for storing the product's stock quantity, and encapsulates behavior related to it.
 
-Persistence is provided by the `InventoryDAO` interface, and its concrete implementation `InventoryFileDAO`. The `ProductFileDAO` class is the layer between the product data objects and the controller tier, and provides methods for saving, loading, and altering `Product` data objects. It achieves this via serialization and deserialization of `Product` objects to and from a JSON file.
+Persistence is provided by the InventoryDAO interface, and its concrete implementation InventoryFileDAO. The ProductFileDAO class achieves this via serialization and deserialization of Product objects to and from a JSON file.
 
-The `User` resource is responsible for storing the `User` data objects and providing persistence. The primary data object stored in the `User` resource is the `User` class stores a user's ID, login state, and whether the user is an admin or not. The `User` class also encapsulates behavior related to said data.
+##### Inventory Resource Class Diagram
+![Inventory Resource Diagram](InventoryResourceClassDiagram.png)
 
-Persistence is provided by the `UsersDAO` interface, and its concrete implementation `UsersFileDAO`. The `UsersFileDAO` class is the layer between the user data objects and the controller tier, and provides methods for saving, loading, and altering `User` data objects. It achieves this via serialization and deserialization of `User` objects to and from a JSON file.
+#### User Resource
+The User resource is responsible for storing the User data objects and providing persistence. The primary data object stored in the User resource is the User class stores a user's ID, login state, and whether the user is an admin or not. The User class also encapsulates behavior related to said data.
 
-The `Carts` resource is responsible for storing the cart data objects. The primary data object stored in the `Carts` resource is the `Cart` class. The `Cart` class stores a user's ID, a map of SKUs to quantities in their cart, and an injected reference to the `InventoryDAO` singleton instance, which allows the class to calculate the total price of the cart, as well as check stock quantities before adding items to the cart. The `Cart` class also encapsulates behavior related to cart operations such as adding products, removing products, clearing the cart, and checking if the cart contains a product.
+Persistence is provided by the UsersDAO interface, and its concrete implementation UsersFileDAO. The UsersFileDAO class achieves this via serialization and deserialization of User objects to and from a JSON file.
 
-Persistence is provided by the `CartsDAO` interface, and its concrete implementation `CartsFileDAO`. The `CartsFileDAO` class is the layer between the cart data objects and the controller tier, and provides methods for saving, loading, and altering `Cart` data objects. It achieves this via serialization and deserialization of `Cart` objects to and from a JSON file.
- 
-![Model tier class diagrams for backend](class-diagrams.png)
+##### User Resource Class Diagram
+![User Resource Diagram](UsersResourceClassDiagram.png)
+
+#### Carts Resource
+The Carts resource is responsible for storing the cart data objects. The primary data object stored in the Carts resource is the Cart class. The Cart class stores a user's ID, a map of SKUs to quantities in their cart, and an injected reference to the InventoryDAO singleton instance, which allows the class to calculate the total price of the cart, as well as check stock quantities before adding items to the cart. The Cart class also encapsulates behavior related to cart operations such as adding products, removing products, clearing the cart, and checking if the cart contains a product.
+
+Persistence is provided by the CartsDAO interface, and its concrete implementation CartsFileDAO. The CartsFileDAO class achieves this via serialization and deserialization of Cart objects to and from a JSON file.
+
+##### Carts Resource Class Diagram
+![Carts Resource Diagram](CartsResourceClassDiagram.png)
+
+#### Orders Resource
+The Orders resource is responsible for handling the orders of the customers. Each order contains a order number, first name and last name, phone number, email address and shipping address of the user. It also stores an the cart of the user. The shipping address is it's own class which contains attributes like country, state, address line, etc. The Orders resource also defines the OrdersDAO interface for Order object persistence.
+
+Persistence is provided by the OrdersDAO interface, and its concrete implementation OrdersFileDAO. The OrdersFileDAO class achieves this via serialization and deserialization of Order objects to and from a JSON file.
+
+##### Orders Resource Class Diagram
+![Orders Resource Diagram](OrdersResourceClassDiagram.png)
+
+#### Reviews Resource
+The Reviews resource is responsible for storing and managing customer reviews of products sold in the e-store. The Review class is used to represent a review and contains the review ID, user ID, product SKU, rating, and a comment. The Reviews resource also defines the ReviewsDAO interface for Review object persistence.
+
+Persistence is provided by the ReviewsDAO interface, and its concrete implementation ReviewsFileDAO. The ReviewsFileDAO class achieves this via serialization and deserialization of Review objects to and from a JSON file.
+
+##### Reviews Resource Class Diagram
+![Reviews Resource Diagram](ReviewsResourceClassDiagram.png)
 ​
 ## OO Design Principles
 ### Dependency Inversion Principle (DIP)
