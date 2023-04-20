@@ -384,9 +384,11 @@ One of the places where SonarQube flagged our code was in our fileDAO classes fo
 ![Diagram for static error 1](flag-1.png)
 
 ![Diagram for static error 2](flag-2.png)
+
 Another place where SonarQube flagged out code was a conditional being out of place. This is an indentation issue. The conditional is not indented properly. This is a minor issue and can be fixed by simply indenting the conditional properly.
 
 ![Diagram for conditional](flag-3.png)
+
 ​If our team had additional time, we would explore more areas where we could utilize abstraction to avoid DRY violations. For instance, our Orders,
 Carts, Inventory, and Review services all currently have handleError\<T>(operation = 'operation', result?: T), with no difference in implementation between the services. Going forward, we would make this a public function that could be called by the services that require it. In keeping with the goal of adhering to DRY, we would remove two of the 'admin-flag' attributes from our Users' resource. Currently, a User has three admin-flags: 'isAdmin', 'type', and 'admin'.
 
